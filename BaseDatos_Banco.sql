@@ -10,3 +10,8 @@ create table Cuenta{
 
 }
 
+create table Transferencia{
+
+    
+}
+
