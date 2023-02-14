@@ -7,8 +7,8 @@ package Sistema;
 
 /**
  *
- * @author Joel Lopez
+ * @author Joel Lopez 
  */
 public class Principal {
-    
+    private int i;
 }
