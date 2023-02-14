@@ -56,3 +56,4 @@ CREATE TABLE Retiros (
     FOREIGN KEY(folio) REFERENCES Operaciones(folio)
 );
 
+#Hola brandon
