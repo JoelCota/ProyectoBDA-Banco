@@ -16,7 +16,7 @@ CREATE TABLE Clientes (
     nombre VARCHAR(50) NOT NULL,
     apellido_paterno VARCHAR(50) NOT NULL,
     apellido_materno VARCHAR(50) NOT NULL,
-    edad 
+    edad INT NOT NULL,
     id_domicilio INT NOT NULL,
     FOREIGN KEY(id_domicilio) REFERENCES Domicilios(id_domicilio)
 );
