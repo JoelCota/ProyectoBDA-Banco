@@ -18,6 +18,7 @@ CREATE TABLE Clientes (
     apellido_materno VARCHAR(50) NOT NULL,
     fecha_nacimiento DATE NOT NULL,
     edad INT NOT NULL,
+    contrasena VARCHAR(50) NOT NULL,
     id_domicilio INT NOT NULL,
     FOREIGN KEY(id_domicilio) REFERENCES Domicilios(id_domicilio)
 );
@@ -47,13 +48,13 @@ CREATE TABLE Transferencias (
     folio INT NOT NULL,
     num_cuenta_destino INT NOT NULL,
     FOREIGN KEY(folio) REFERENCES Operaciones(folio),
-    FOREIGN KEY(num_cuenta_origen) REFERENCES Cuentas(num_cuenta)
+    FOREIGN KEY(num_cuenta_destino) REFERENCES Cuentas(num_cuenta)
 ); 
 
 # CREAR TABLA RETIROS SIN CUENTA
 CREATE TABLE Retiros (
 	id_retiro INT PRIMARY KEY AUTO_INCREMENT,
-    contraseña VARCHAR(8) NOT NULL,
+    contrasena VARCHAR(8) NOT NULL,
     estado ENUM('Cobrado','No Cobrado') NOT NULL,
     folio INT NOT NULL,
     FOREIGN KEY(folio) REFERENCES Operaciones(folio)
