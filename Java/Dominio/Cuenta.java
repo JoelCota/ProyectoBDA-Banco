@@ -42,6 +42,11 @@ public class Cuenta {
         this.id_cliente = id_cliente;
     }
 
+    public Cuenta(Integer id_cliente) {
+        this.id_cliente = id_cliente;
+    }
+    
+
     public Integer getNum_cuenta() {
         return num_cuenta;
     }
