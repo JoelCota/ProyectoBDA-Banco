@@ -13,7 +13,7 @@ CREATE TABLE Domicilios (
 # CREAR TABLA CLIENTES
 CREATE TABLE Clientes (
 	id_cliente INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(50) NOT NULL,
+    nombres VARCHAR(50) NOT NULL,
     apellido_paterno VARCHAR(50) NOT NULL,
     apellido_materno VARCHAR(50) NOT NULL,
     fecha_nacimiento DATE NOT NULL,

@@ -25,27 +25,30 @@ public class Cliente {
     private String apellido_materno;
     private Date fecha_nacimiento;
     private Integer edad;
+    private String contrasena;
     private Integer id_domicilio;
 
     public Cliente() {
     }
 
-    public Cliente(Integer id_cliente, String nombres, String apellido_paterno, String apellido_materno, Date fecha_nacimiento, Integer edad, Integer id_domicilio) {
+    public Cliente(Integer id_cliente, String nombres, String apellido_paterno, String apellido_materno, Date fecha_nacimiento, Integer edad, String contrasena, Integer id_domicilio) {
         this.id_cliente = id_cliente;
         this.nombres = nombres;
         this.apellido_paterno = apellido_paterno;
         this.apellido_materno = apellido_materno;
         this.fecha_nacimiento = fecha_nacimiento;
         this.edad = edad;
+        this.contrasena = contrasena;
         this.id_domicilio = id_domicilio;
     }
 
-    public Cliente(String nombres, String apellido_paterno, String apellido_materno, Date fecha_nacimiento, Integer edad, Integer id_domicilio) {
+    public Cliente(String nombres, String apellido_paterno, String apellido_materno, Date fecha_nacimiento, Integer edad, String contrasena, Integer id_domicilio) {
         this.nombres = nombres;
         this.apellido_paterno = apellido_paterno;
         this.apellido_materno = apellido_materno;
         this.fecha_nacimiento = fecha_nacimiento;
         this.edad = edad;
+        this.contrasena = contrasena;
         this.id_domicilio = id_domicilio;
     }
 
@@ -97,6 +100,14 @@ public class Cliente {
         this.edad = edad;
     }
 
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
+
     public Integer getId_domicilio() {
         return id_domicilio;
     }
@@ -107,8 +118,8 @@ public class Cliente {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 23 * hash + Objects.hashCode(this.id_cliente);
+        int hash = 7;
+        hash = 19 * hash + Objects.hashCode(this.id_cliente);
         return hash;
     }
 
@@ -129,6 +140,6 @@ public class Cliente {
 
     @Override
     public String toString() {
-        return "Cliente{" + "id_cliente=" + id_cliente + ", nombres=" + nombres + ", apellido_paterno=" + apellido_paterno + ", apellido_materno=" + apellido_materno + ", fecha_nacimiento=" + fecha_nacimiento + ", edad=" + edad + ", id_domicilio=" + id_domicilio + '}';
+        return "Cliente{" + "id_cliente=" + id_cliente + ", nombres=" + nombres + ", apellido_paterno=" + apellido_paterno + ", apellido_materno=" + apellido_materno + ", fecha_nacimiento=" + fecha_nacimiento + ", edad=" + edad + ", contrasena=" + contrasena + ", id_domicilio=" + id_domicilio + '}';
     }
 }

@@ -12,6 +12,8 @@ import java.util.Objects;
  *
  * @author Brandon Figueroa Ugalde
  * ID: 00000233295
+ * @author Joel Antonio Lopez Cota 
+ * ID: 00000228926
  * 16/02/2023 12:03:24 AM
  */
 public class Retiro {
@@ -19,19 +21,19 @@ public class Retiro {
     private Integer id_retiro;
     private Integer contrasena;
     private String estado;
-    private String folio;
+    private Integer folio;
 
     public Retiro() {
     }
 
-    public Retiro(Integer id_retiro, Integer contrasena, String estado, String folio) {
+    public Retiro(Integer id_retiro, Integer contrasena, String estado, Integer folio) {
         this.id_retiro = id_retiro;
         this.contrasena = contrasena;
         this.estado = estado;
         this.folio = folio;
     }
 
-    public Retiro(Integer contrasena, String estado, String folio) {
+    public Retiro(Integer contrasena, String estado, Integer folio) {
         this.contrasena = contrasena;
         this.estado = estado;
         this.folio = folio;
@@ -61,11 +63,11 @@ public class Retiro {
         this.estado = estado;
     }
 
-    public String getFolio() {
+    public Integer getFolio() {
         return folio;
     }
 
-    public void setFolio(String folio) {
+    public void setFolio(Integer folio) {
         this.folio = folio;
     }
 
