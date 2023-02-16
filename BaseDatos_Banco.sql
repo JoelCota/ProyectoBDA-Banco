@@ -1,4 +1,4 @@
-# CREATE DATABASE banco;
+CREATE DATABASE banco;
 
 USE banco;
 
@@ -16,7 +16,7 @@ CREATE TABLE Clientes (
     nombre VARCHAR(50) NOT NULL,
     apellido_paterno VARCHAR(50) NOT NULL,
     apellido_materno VARCHAR(50) NOT NULL,
-    edad INT NOT NULL,
+    fecha_nacimiento DATE NOT NULL,
     id_domicilio INT NOT NULL,
     FOREIGN KEY(id_domicilio) REFERENCES Domicilios(id_domicilio)
 );
@@ -26,6 +26,7 @@ CREATE TABLE Cuentas (
 	num_cuenta INT PRIMARY KEY AUTO_INCREMENT,
 	fecha_apertura DATETIME NOT NULL,
     saldo DECIMAL(10, 4) DEFAULT 0.0000 NOT NULL,
+    estado ENUM('Activa','Cancelada') NOT NULL,
     id_cliente INT NOT NULL,
     FOREIGN KEY(id_cliente) REFERENCES Clientes(id_cliente)
 ); 
@@ -34,7 +35,7 @@ CREATE TABLE Cuentas (
 CREATE TABLE Operaciones (
 	folio INT PRIMARY KEY AUTO_INCREMENT,
 	fecha DATETIME NOT NULL,
-    monto DECIMAL(10, 4) NOT NULL,
+    monto DECIMAL(10, 4) DEFAULT 0.0100 NOT NULL,
     num_cuenta_origen INT NOT NULL,
     FOREIGN KEY(num_cuenta_origen) REFERENCES Cuentas(num_cuenta)
 ); 
@@ -42,9 +43,10 @@ CREATE TABLE Operaciones (
 # CREAR TABLA TRANSFERENCIAS
 CREATE TABLE Transferencias (
 	id_transferencia INT PRIMARY KEY AUTO_INCREMENT,
-	num_cuenta_destino INT NOT NULL,
     folio INT NOT NULL,
-    FOREIGN KEY(folio) REFERENCES Operaciones(folio)
+    num_cuenta_destino INT NOT NULL,
+    FOREIGN KEY(folio) REFERENCES Operaciones(folio),
+    FOREIGN KEY(num_cuenta_destino) REFERENCES Cuentas(num_cuenta)
 ); 
 
 # CREAR TABLA RETIROS SIN CUENTA
@@ -55,6 +57,3 @@ CREATE TABLE Retiros (
     folio INT NOT NULL,
     FOREIGN KEY(folio) REFERENCES Operaciones(folio)
 );
-
-#Hola brandon
-#Hola cota
