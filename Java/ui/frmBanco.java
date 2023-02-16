@@ -3,18 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package BancoForm;
+package ui;
+
+import ui.frmCliente;
+import ui.frmRegistro;
 
 /**
  *
  * @author Joel Lopez
  */
-public class BancoForm extends javax.swing.JFrame {
+public class frmBanco extends javax.swing.JFrame {
 
     /**
      * Creates new form BancoForm
      */
-    public BancoForm() {
+    public frmBanco() {
         initComponents();
     }
 
@@ -90,11 +93,12 @@ public class BancoForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroActionPerformed
-        // TODO add your handling code here:
+      new frmRegistro().setVisible(true);
+      this.setVisible(false);
     }//GEN-LAST:event_btnRegistroActionPerformed
 
     private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
-      ClientesForm cliente= new ClientesForm();
+      frmCliente cliente= new frmCliente();
       cliente.setVisible(true);
       this.setVisible(false);
     }//GEN-LAST:event_btnClienteActionPerformed
@@ -120,20 +124,22 @@ public class BancoForm extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(BancoForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmBanco.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(BancoForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmBanco.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(BancoForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmBanco.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(BancoForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmBanco.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
-                new BancoForm().setVisible(true);
+                new frmBanco().setVisible(true);
             }
         });
     }

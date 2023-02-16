@@ -3,7 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package BancoForm;
+package ui;
+
+import ui.ActualizarDatos;
+import ui.GeneradorRetiroSinTarjeta;
+import ui.TransferenciaForm;
 
 /**
  *
@@ -16,6 +20,9 @@ public class InterfazClienteForm extends javax.swing.JFrame {
      */
     public InterfazClienteForm() {
         initComponents();
+        if (InterfazClienteForm.EXIT_ON_CLOSE==1) {
+            
+        }
     }
 
     /**
@@ -100,7 +107,9 @@ public class InterfazClienteForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnActualizarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarDatosActionPerformed
-        // TODO add your handling code here:
+        ActualizarDatos actualizar= new ActualizarDatos();
+        actualizar.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_btnActualizarDatosActionPerformed
 
     private void btnTransferenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransferenciaActionPerformed
@@ -112,6 +121,7 @@ public class InterfazClienteForm extends javax.swing.JFrame {
     private void btnRetiroSinTarjetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRetiroSinTarjetaActionPerformed
         GeneradorRetiroSinTarjeta retiro=new  GeneradorRetiroSinTarjeta();
         retiro.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_btnRetiroSinTarjetaActionPerformed
 
     /**
