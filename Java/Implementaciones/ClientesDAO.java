@@ -81,8 +81,4 @@ public class ClientesDAO implements IClientesDAO {
             throw new PersistenciaException("No fue posible registrar cliente");
         }
     }
-
-  
-
-
 }
