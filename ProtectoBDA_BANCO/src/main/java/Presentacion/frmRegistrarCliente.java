@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Presentación;
+package Presentacion;
 
 import Dominio.Cliente;
 import Excepciones.PersistenciaException;
@@ -100,7 +100,7 @@ public class frmRegistrarCliente extends javax.swing.JFrame {
         jButton2.setText("jButton2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Registro Cliente");
+        setTitle("Registrar Cliente");
 
         lblNombre.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblNombre.setText("Nombre");
