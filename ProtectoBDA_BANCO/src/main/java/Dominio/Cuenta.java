@@ -5,7 +5,6 @@
 package Dominio;
 
 // Importaciones
-
 import java.sql.Date;
 import java.util.Objects;
 
@@ -14,6 +13,8 @@ import java.util.Objects;
  *
  * @author Brandon Figueroa Ugalde
  * ID: 00000233295
+ * @author Joel Antonio Lopez Cota 
+ * ID: 00000228926
  * 15/02/2023 11:53:23 PM
  */
 public class Cuenta {
@@ -25,6 +26,10 @@ public class Cuenta {
     private Integer id_cliente;
 
     public Cuenta() {
+    }
+
+    public Cuenta(Integer num_cuenta) {
+        this.num_cuenta = num_cuenta;
     }
 
     public Cuenta(Integer num_cuenta, Date fecha_hora_apertura, Float saldo, String estado, Integer id_cliente) {
@@ -41,11 +46,6 @@ public class Cuenta {
         this.estado = estado;
         this.id_cliente = id_cliente;
     }
-
-    public Cuenta(Integer id_cliente) {
-        this.id_cliente = id_cliente;
-    }
-    
 
     public Integer getNum_cuenta() {
         return num_cuenta;

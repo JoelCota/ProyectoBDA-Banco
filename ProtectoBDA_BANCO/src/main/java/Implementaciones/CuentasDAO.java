@@ -48,14 +48,14 @@ public class CuentasDAO implements ICuentasDAO{
      */
     @Override
     public Cuenta cancelarCuenta(int num_cuenta) throws PersistenciaException {
-        try (Connection conexion = GENERADOR_CONEXIONES.crearConexiones();
+        try (Connection conexion = GENERADOR_CONEXIONES.crearConexion();
             PreparedStatement comandoBase = conexion.prepareStatement("Select num_cuenta from Clientes where codigo=?");){
             comandoBase.setInt(1, num_cuenta);
             ResultSet resultado = comandoBase.executeQuery();
             Cuenta cuenta = null;
             if (resultado.next()) {
                 Integer numeroCuenta=resultado.getInt("num_cuenta");
-                cuenta=new Cuenta(numeroCuenta);
+                cuenta= new Cuenta(numeroCuenta);
             }
             PreparedStatement comando = conexion.prepareStatement("Update cuentas set estado='Cancelada' WHERE num_cuenta=?;");
             comando.setInt(1, num_cuenta);
@@ -68,7 +68,4 @@ public class CuentasDAO implements ICuentasDAO{
         }
         return null;
     }
-
-    
-    
 }

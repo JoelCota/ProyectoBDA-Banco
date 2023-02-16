@@ -1,14 +1,22 @@
+/**
+ * IConexionBD.java
+ */
 
 package Interfaces;
 
+// Importaciones
 import java.sql.Connection;
 import java.sql.SQLException;
+
 /**
-* @author Brandon Figueroa Ugalde
+ * Esta clase permite implementar una interface de tipo ConexionBD.
+ *
+ * @author Brandon Figueroa Ugalde
  * ID: 00000233295
  * @author Joel Antonio Lopez Cota 
  * ID: 00000228926
+ * 15/02/2023 01:12:13 PM
  */
 public interface IConexionBD {
-  Connection crearConexiones() throws SQLException;  
+    Connection crearConexion() throws SQLException;
 }

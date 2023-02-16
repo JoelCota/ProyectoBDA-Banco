@@ -12,6 +12,8 @@ import java.util.Objects;
  *
  * @author Brandon Figueroa Ugalde
  * ID: 00000233295
+ * @author Joel Antonio Lopez Cota 
+ * ID: 00000228926
  * 15/02/2023 06:17:45 PM
  */
 public class Domicilio {
