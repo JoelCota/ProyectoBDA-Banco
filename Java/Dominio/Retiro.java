@@ -20,10 +20,19 @@ public class Retiro {
     private Integer contrasena;
     private String estado;
     private String folio;
-
+    private Operacion operacion;
+    
     public Retiro() {
     }
 
+    public Retiro(Integer id_retiro, Integer contrasena, String estado, String folio, Operacion operacion) {
+        this.id_retiro = id_retiro;
+        this.contrasena = contrasena;
+        this.estado = estado;
+        this.folio = folio;
+        this.operacion = operacion;
+    }
+    
     public Retiro(Integer id_retiro, Integer contrasena, String estado, String folio) {
         this.id_retiro = id_retiro;
         this.contrasena = contrasena;
@@ -35,6 +44,19 @@ public class Retiro {
         this.contrasena = contrasena;
         this.estado = estado;
         this.folio = folio;
+    }
+
+    public Retiro(Integer contrasena, String folio) {
+        this.contrasena = contrasena;
+        this.folio = folio;
+    }
+
+    public Operacion getOperacion() {
+        return operacion;
+    }
+
+    public void setOperacion(Operacion operacion) {
+        this.operacion = operacion;
     }
 
     public Integer getId_retiro() {
