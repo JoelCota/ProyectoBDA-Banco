@@ -2,8 +2,7 @@ package implementaciones;
 
 import dominio.Cliente;
 import excepciones.PersistenciaException;
-import interfaces.IClientesDAO;
-import interfaces.IConexionBD;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,6 +12,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import Interfaces.IClientesDAO;
+import Interfaces.IConexionBD;
 
 public class ClientesDAO implements IClientesDAO {
 
