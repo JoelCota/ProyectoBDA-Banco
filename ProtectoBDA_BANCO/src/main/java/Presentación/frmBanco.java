@@ -6,7 +6,7 @@
 package Presentación;
 
 import Presentación.frmCliente;
-import Presentación.frmRegistro;
+import Presentación.frmRegistrarCliente;
 
 /**
  *
@@ -93,7 +93,7 @@ public class frmBanco extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroActionPerformed
-      new frmRegistro().setVisible(true);
+
       this.setVisible(false);
     }//GEN-LAST:event_btnRegistroActionPerformed
 
