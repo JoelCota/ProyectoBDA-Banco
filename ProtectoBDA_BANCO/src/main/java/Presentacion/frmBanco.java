@@ -15,8 +15,8 @@ import java.util.logging.Logger;
  * @author Joel Lopez
  */
 public class frmBanco extends javax.swing.JFrame {
-    
-    private static final Logger LOG = Logger.getLogger(frmRegistrarCliente.class.getName());
+
+    private static final Logger LOG = Logger.getLogger(frmBanco.class.getName());
     private final IClientesDAO clientesDAO;
 
     /**
@@ -26,7 +26,7 @@ public class frmBanco extends javax.swing.JFrame {
         this.clientesDAO = clientesDAO;
         initComponents();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -99,12 +99,13 @@ public class frmBanco extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroActionPerformed
-      new frmRegistrarCliente(clientesDAO).setVisible(true);
+      frmRegistrarCliente registro = new frmRegistrarCliente(this.clientesDAO);
+      registro.setVisible(true);
       this.setVisible(false);
     }//GEN-LAST:event_btnRegistroActionPerformed
 
     private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
-      frmCliente cliente= new frmCliente();
+      frmCliente cliente = new frmCliente();
       cliente.setVisible(true);
       this.setVisible(false);
     }//GEN-LAST:event_btnClienteActionPerformed

@@ -5,6 +5,10 @@
  */
 package Presentacion;
 
+import Implementaciones.ClientesDAO;
+import Implementaciones.ConexionBD;
+import Interfaces.IClientesDAO;
+import Interfaces.IConexionBD;
 import Presentacion.frmInterfazCliente;
 
 /**
@@ -12,6 +16,13 @@ import Presentacion.frmInterfazCliente;
  * @author Joel Lopez
  */
 public class frmCliente extends javax.swing.JFrame {
+    
+    IConexionBD manejadorConexiones = new ConexionBD(
+                "jdbc:mysql://localhost/banco",
+                "root",
+                "233295"
+        );
+    IClientesDAO clientesDAO = new ClientesDAO(manejadorConexiones);
 
     /**
      * Creates new form ClientesForm
@@ -110,7 +121,7 @@ public class frmCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnIniciarSesionClienteActionPerformed
 
     private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
-        frmBanco banco= new frmBanco();
+        frmBanco banco = new frmBanco(clientesDAO);
         banco.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAtrasActionPerformed
