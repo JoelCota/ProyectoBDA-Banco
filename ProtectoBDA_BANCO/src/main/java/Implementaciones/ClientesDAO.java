@@ -63,13 +63,14 @@ public class ClientesDAO implements IClientesDAO {
     }
     
     @Override
-    public Cliente iniciarSesion(Integer id_cliente) {
+    public Cliente iniciarSesion(Integer id_cliente, String contrasena) {
         String consulta = "SELECT id_cliente,nombres,apellido_paterno,apellido_materno,fecha_nacimiento,edad,id_domicilio"
-                        + " FROM clientes WHERE id_cliente = ?";
+                        + " FROM clientes WHERE id_cliente = ? and contrasena=?";
         try (
                 Connection conexion = MANEJADOR_CONEXIONES.crearConexion();
                 PreparedStatement comando = conexion.prepareStatement(consulta);) {
             comando.setInt(1, id_cliente);
+            comando.setString(2, contrasena);
             ResultSet resultado = comando.executeQuery();
             Cliente cliente = null;
             if (resultado.next()) {

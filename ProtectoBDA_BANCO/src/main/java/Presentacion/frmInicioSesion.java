@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
  *
  * @author Joel Lopez
  */
-public class frmCliente extends javax.swing.JFrame {
+public class frmInicioSesion extends javax.swing.JFrame {
     
     IConexionBD manejadorConexiones = new ConexionBD(
                 "jdbc:mysql://localhost/banco",
@@ -29,20 +29,20 @@ public class frmCliente extends javax.swing.JFrame {
     /**
      * Creates new form ClientesForm
      */
-    public frmCliente() {
+    public frmInicioSesion() {
         initComponents();
     }
     
-    private Cliente inicioSesion(Integer numeroCuenta,String contrasena){
-        if (clientesDAO.consultar(numeroCuenta).getContrasena()==contrasena) {
-           frmInterfazCliente  frmICliente= new frmInterfazCliente();
+    private void inicioSesion(Integer numeroCuenta,String contrasena){
+        Cliente cliente=clientesDAO.iniciarSesion(numeroCuenta, contrasena);
+        if (!clientesDAO.iniciarSesion(numeroCuenta, contrasena).equals(this)) {
+           frmInterfazCliente  frmICliente= new frmInterfazCliente(cliente);
            frmICliente.setVisible(true);
            this.dispose();
         }
         else{
-            JOptionPane.showMessageDialog(rootPane, "Hola");
+            JOptionPane.showMessageDialog(rootPane, "Error al iniciar sesion");
         }
-        return null;
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -57,8 +57,8 @@ public class frmCliente extends javax.swing.JFrame {
         lblNumeroCliente = new javax.swing.JLabel();
         lnlContraseña = new javax.swing.JLabel();
         txtNumeroCliente = new javax.swing.JTextField();
-        txtContraseña = new javax.swing.JTextField();
         btnAtras = new javax.swing.JButton();
+        pswCliente = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Clientes");
@@ -92,19 +92,20 @@ public class frmCliente extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(49, 49, 49)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(128, 128, 128)
+                        .addComponent(btnIniciarSesionCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(49, 49, 49)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblNumeroCliente, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lnlContraseña, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtContraseña)
-                            .addComponent(txtNumeroCliente)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnIniciarSesionCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(pswCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                            .addComponent(txtNumeroCliente))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(92, 92, 92))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -123,7 +124,7 @@ public class frmCliente extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lnlContraseña)
-                    .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pswCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(btnIniciarSesionCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(57, 57, 57))
@@ -135,7 +136,7 @@ public class frmCliente extends javax.swing.JFrame {
 
     private void btnIniciarSesionClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionClienteActionPerformed
         Integer id_cliente=Integer.parseInt(this.txtNumeroCliente.getText());
-        String contrasena=this.txtContraseña.getText();
+        String contrasena=this.pswCliente.getText();
         inicioSesion(id_cliente,contrasena);
     }//GEN-LAST:event_btnIniciarSesionClienteActionPerformed
 
@@ -159,7 +160,7 @@ public class frmCliente extends javax.swing.JFrame {
     private javax.swing.JButton btnIniciarSesionCliente;
     private javax.swing.JLabel lblNumeroCliente;
     private javax.swing.JLabel lnlContraseña;
-    private javax.swing.JTextField txtContraseña;
+    private javax.swing.JPasswordField pswCliente;
     private javax.swing.JTextField txtNumeroCliente;
     // End of variables declaration//GEN-END:variables
 }

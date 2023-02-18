@@ -25,22 +25,23 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace min="-2" pref="128" max="-2" attributes="0"/>
+                      <Component id="btnIniciarSesionCliente" min="-2" pref="168" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lblNumeroCliente" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Component id="lnlContraseña" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="txtContraseña" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="pswCliente" pref="130" max="32767" attributes="0"/>
                           <Component id="txtNumeroCliente" max="32767" attributes="0"/>
                       </Group>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="79" max="-2" attributes="0"/>
-                      <Component id="btnIniciarSesionCliente" min="-2" pref="168" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace min="-2" pref="92" max="-2" attributes="0"/>
@@ -65,7 +66,7 @@
               <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lnlContraseña" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtContraseña" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="pswCliente" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="30" max="32767" attributes="0"/>
               <Component id="btnIniciarSesionCliente" min="-2" pref="51" max="-2" attributes="0"/>
@@ -98,8 +99,6 @@
         <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtNumeroClienteKeyTyped"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtContrase&#xf1;a">
-    </Component>
     <Component class="javax.swing.JButton" name="btnAtras">
       <Properties>
         <Property name="text" type="java.lang.String" value="Atras"/>
@@ -107,6 +106,8 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAtrasActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="pswCliente">
     </Component>
   </SubComponents>
 </Form>

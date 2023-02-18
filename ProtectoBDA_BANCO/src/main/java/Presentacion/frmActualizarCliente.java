@@ -5,7 +5,7 @@
  */
 package Presentacion;
 
-import Presentacion.frmCliente;
+import Presentacion.frmInicioSesion;
 
 /**
  *
@@ -160,7 +160,7 @@ public class frmActualizarCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        frmCliente cf= new frmCliente();
+        frmInicioSesion cf= new frmInicioSesion();
        cf.setVisible(true);
        this.setVisible(false);
     }//GEN-LAST:event_formWindowClosing

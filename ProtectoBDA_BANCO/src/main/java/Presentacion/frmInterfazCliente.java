@@ -5,6 +5,7 @@
  */
 package Presentacion;
 
+import Dominio.Cliente;
 import Presentacion.frmActualizarCliente;
 import Presentacion.frmRetiro;
 import Presentacion.frmTransferencia;
@@ -15,14 +16,16 @@ import Presentacion.frmTransferencia;
  */
 public class frmInterfazCliente extends javax.swing.JFrame {
 
+    private Cliente cliente;
+
     /**
      * Creates new form InterfazClienteForm
+     *
+     * @param cliente
      */
-    public frmInterfazCliente() {
+    public frmInterfazCliente(Cliente cliente) {
+        this.cliente = cliente;
         initComponents();
-        if (frmInterfazCliente.EXIT_ON_CLOSE==1) {
-            
-        }
     }
 
     /**
@@ -34,7 +37,7 @@ public class frmInterfazCliente extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        lblBienvenido = new javax.swing.JLabel();
         btnActualizarDatos = new javax.swing.JButton();
         btnTransferencia = new javax.swing.JButton();
         btnRetiroSinTarjeta = new javax.swing.JButton();
@@ -43,7 +46,7 @@ public class frmInterfazCliente extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle(" Bienvenido");
 
-        jLabel1.setText("Bienvenido");
+        lblBienvenido.setText("Bienvenido: "+cliente.getNombres()+" "+cliente.getApellido_paterno()+" "+cliente.getApellido_materno());
 
         btnActualizarDatos.setText("Actualizar Datos");
         btnActualizarDatos.addActionListener(new java.awt.event.ActionListener() {
@@ -81,8 +84,8 @@ public class frmInterfazCliente extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblBienvenido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(btnCerrarSesion))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(218, Short.MAX_VALUE)
@@ -97,7 +100,7 @@ public class frmInterfazCliente extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                    .addComponent(lblBienvenido)
                     .addComponent(btnCerrarSesion))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 133, Short.MAX_VALUE)
                 .addComponent(btnActualizarDatos)
@@ -113,29 +116,28 @@ public class frmInterfazCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnActualizarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarDatosActionPerformed
-        frmActualizarCliente actualizar= new frmActualizarCliente();
+        frmActualizarCliente actualizar = new frmActualizarCliente();
         actualizar.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnActualizarDatosActionPerformed
 
     private void btnTransferenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransferenciaActionPerformed
-    frmTransferencia transf= new frmTransferencia();
-    transf.setVisible(true);
-    this.setVisible(false);
+        frmTransferencia transf = new frmTransferencia();
+        transf.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_btnTransferenciaActionPerformed
 
     private void btnRetiroSinTarjetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRetiroSinTarjetaActionPerformed
-        frmRetiro retiro=new  frmRetiro();
+        frmRetiro retiro = new frmRetiro();
         retiro.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnRetiroSinTarjetaActionPerformed
 
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
-    frmCliente cliente=new frmCliente();
-    cliente.setVisible(true);
-    this.dispose();
+        frmInicioSesion cliente = new frmInicioSesion();
+        cliente.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -143,6 +145,6 @@ public class frmInterfazCliente extends javax.swing.JFrame {
     private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnRetiroSinTarjeta;
     private javax.swing.JButton btnTransferencia;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel lblBienvenido;
     // End of variables declaration//GEN-END:variables
 }

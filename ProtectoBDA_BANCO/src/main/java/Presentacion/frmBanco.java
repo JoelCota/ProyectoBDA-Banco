@@ -7,7 +7,7 @@ package Presentacion;
 
 import Interfaces.IClientesDAO;
 import Interfaces.IConexionBD;
-import Presentacion.frmCliente;
+import Presentacion.frmInicioSesion;
 import Presentacion.frmRegistrarCliente;
 import java.util.logging.Logger;
 
@@ -106,7 +106,7 @@ public class frmBanco extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegistroActionPerformed
 
     private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
-      frmCliente cliente = new frmCliente();
+      frmInicioSesion cliente = new frmInicioSesion();
       cliente.setVisible(true);
       this.setVisible(false);
     }//GEN-LAST:event_btnClienteActionPerformed
