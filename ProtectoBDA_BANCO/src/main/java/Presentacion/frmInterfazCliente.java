@@ -44,7 +44,7 @@ public class frmInterfazCliente extends javax.swing.JFrame {
 
     private void cargarTablaCuentas() {
         try {
-            List<Cuenta> listaCuentas = this.clientesDAO.consultarListaCuentas(configPaginado);
+            List<Cuenta> listaCuentas = this.clientesDAO.consultarListaCuentas(configPaginado,cliente);
             DefaultTableModel modeloTabla = (DefaultTableModel) this.tblCuentas.getModel();
             modeloTabla.setRowCount(0);
             for (Cuenta cuenta : listaCuentas) {

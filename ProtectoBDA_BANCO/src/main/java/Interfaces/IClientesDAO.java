@@ -27,5 +27,5 @@ public interface IClientesDAO {
 
     Domicilio insertarDomicilio(Domicilio domicilio) throws PersistenciaException;
     
-    List<Cuenta> consultarListaCuentas(ConfiguracionPaginado configPaginado) throws PersistenciaException;
+    List<Cuenta> consultarListaCuentas(ConfiguracionPaginado configPaginado,Cliente cliente) throws PersistenciaException;
 }

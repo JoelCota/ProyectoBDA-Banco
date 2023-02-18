@@ -162,13 +162,14 @@ public class ClientesDAO implements IClientesDAO {
     
      
     @Override
-    public List<Cuenta> consultarListaCuentas(ConfiguracionPaginado configPaginado) throws PersistenciaException{
-        String codigoSQL= "Select num_cuenta,saldo from cuentas limit ? offset ?";
+    public List<Cuenta> consultarListaCuentas(ConfiguracionPaginado configPaginado,Cliente cliente) throws PersistenciaException{
+        String codigoSQL= "Select num_cuenta,saldo from cuentas where id_cliente=? limit ? offset ?";
         List<Cuenta> listaCuentas= new LinkedList();
         try(Connection conexion = MANEJADOR_CONEXIONES.crearConexion();
             PreparedStatement comandoBase = conexion.prepareStatement(codigoSQL);){
-            comandoBase.setInt(1, configPaginado.getOffSet());
-            comandoBase.setInt(2, configPaginado.getNumeroPagina());
+            comandoBase.setInt(1, cliente.getId_cliente());
+            comandoBase.setInt(2, configPaginado.getOffSet());
+            comandoBase.setInt(3, configPaginado.getNumeroPagina());
             ResultSet resultado = comandoBase.executeQuery();
             Cuenta cuenta=null;
                while(resultado.next()){
