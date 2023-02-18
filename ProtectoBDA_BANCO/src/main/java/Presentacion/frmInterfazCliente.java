@@ -8,7 +8,6 @@ package Presentacion;
 import Dominio.Cliente;
 import Dominio.Cuenta;
 import Excepciones.PersistenciaException;
-import Implementaciones.ClientesDAO;
 import Interfaces.IClientesDAO;
 import java.util.List;
 import java.util.logging.Level;
@@ -112,10 +111,7 @@ public class frmInterfazCliente extends javax.swing.JFrame {
 
         tblCuentas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
                 "No. Cuenta", "Saldo"
@@ -137,6 +133,10 @@ public class frmInterfazCliente extends javax.swing.JFrame {
             }
         });
         pnlTablaCuentas.setViewportView(tblCuentas);
+        if (tblCuentas.getColumnModel().getColumnCount() > 0) {
+            tblCuentas.getColumnModel().getColumn(0).setResizable(false);
+            tblCuentas.getColumnModel().getColumn(1).setResizable(false);
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -157,7 +157,7 @@ public class frmInterfazCliente extends javax.swing.JFrame {
                                 .addComponent(pnlTablaCuentas, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblBienvenido, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
+                                .addComponent(lblBienvenido, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnCerrarSesion)))))
                 .addGap(17, 17, 17))
@@ -171,7 +171,7 @@ public class frmInterfazCliente extends javax.swing.JFrame {
                     .addComponent(btnCerrarSesion))
                 .addGap(18, 18, 18)
                 .addComponent(pnlTablaCuentas, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnActualizarDatos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnTransferencia, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
