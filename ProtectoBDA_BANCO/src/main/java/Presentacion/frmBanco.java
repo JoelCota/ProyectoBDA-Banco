@@ -7,7 +7,6 @@ package Presentacion;
 
 import Interfaces.IClientesDAO;
 import Interfaces.IConexionBD;
-import Interfaces.IDomicilioDAO;
 import Presentacion.frmCliente;
 import Presentacion.frmRegistrarCliente;
 import java.util.logging.Logger;
@@ -20,15 +19,12 @@ public class frmBanco extends javax.swing.JFrame {
 
     private static final Logger LOG = Logger.getLogger(frmBanco.class.getName());
     private final IClientesDAO clientesDAO;
-    private final IDomicilioDAO domicilioDAO;
     /**
      * Creates new form BancoForm
      * @param clientesDAO
-     * @param domicilioDAO
      */
-    public frmBanco(IClientesDAO clientesDAO,IDomicilioDAO domicilioDAO) {
+    public frmBanco(IClientesDAO clientesDAO) {
         this.clientesDAO = clientesDAO;
-        this.domicilioDAO= domicilioDAO;
         initComponents();
     }
     
@@ -104,7 +100,7 @@ public class frmBanco extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroActionPerformed
-      frmRegistrarCliente registro = new frmRegistrarCliente(this.clientesDAO,this.domicilioDAO);
+      frmRegistrarCliente registro = new frmRegistrarCliente(this.clientesDAO);
       registro.setVisible(true);
       this.setVisible(false);
     }//GEN-LAST:event_btnRegistroActionPerformed

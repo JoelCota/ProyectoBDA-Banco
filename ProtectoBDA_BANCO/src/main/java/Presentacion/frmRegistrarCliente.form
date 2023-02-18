@@ -124,59 +124,67 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="lblNombre">
       <Properties>
+        <Property name="text" type="java.lang.String" value="Nombre"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Dialog" size="14" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Nombre"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblApellidoPaterno">
       <Properties>
+        <Property name="text" type="java.lang.String" value="Apellido Paterno"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Dialog" size="14" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Apellido Paterno"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblApellidoMaterno">
       <Properties>
+        <Property name="text" type="java.lang.String" value="Apellido Materno"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Dialog" size="14" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Apellido Materno"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblFechaNacimiento">
       <Properties>
+        <Property name="text" type="java.lang.String" value="Fecha Nacimiento"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Dialog" size="14" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Fecha Nacimiento"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblContrasena">
       <Properties>
+        <Property name="text" type="java.lang.String" value="Contrase&#xf1;a"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Dialog" size="14" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Contrase&#xf1;a"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtNombre">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtNombreActionPerformed"/>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtNombreKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtApellidoPaterno">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtApellidoPaternoKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtApellidoMaterno">
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtApellidoMaternoActionPerformed"/>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtApellidoMaternoKeyTyped"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnGuardar">
       <Properties>
+        <Property name="text" type="java.lang.String" value="Guardar"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Dialog" size="14" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Guardar"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGuardarActionPerformed"/>
@@ -184,10 +192,10 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnCancelar">
       <Properties>
+        <Property name="text" type="java.lang.String" value="Cancelar"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Dialog" size="14" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Cancelar"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelarActionPerformed"/>
@@ -205,26 +213,26 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblCalle">
       <Properties>
+        <Property name="text" type="java.lang.String" value="Calle"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="15" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Calle"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblColonia">
       <Properties>
+        <Property name="text" type="java.lang.String" value="Colonia"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="15" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Colonia"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblNoCasa">
       <Properties>
+        <Property name="text" type="java.lang.String" value="No. Casa"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="15" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="No. Casa"/>
       </Properties>
     </Component>
   </SubComponents>

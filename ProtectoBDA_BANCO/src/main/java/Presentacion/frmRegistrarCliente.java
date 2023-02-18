@@ -9,10 +9,9 @@ import Dominio.Cliente;
 import Dominio.Domicilio;
 import Excepciones.PersistenciaException;
 import Implementaciones.ConexionBD;
-import Implementaciones.DomicilioDAO;
 import Interfaces.IClientesDAO;
 import Interfaces.IConexionBD;
-import Interfaces.IDomicilioDAO;
+import java.awt.event.KeyEvent;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -25,16 +24,14 @@ import javax.swing.JOptionPane;
 public class frmRegistrarCliente extends javax.swing.JFrame {
     private static final Logger LOG = Logger.getLogger(frmRegistrarCliente.class.getName());
     private final IClientesDAO clientesDAO;
-    private final IDomicilioDAO domicilioDAO;
     /**
      * Creates new form ClientesForm
      *
      * @param clientesDAO
      */
-    public frmRegistrarCliente(IClientesDAO clientesDAO,IDomicilioDAO domicilioDAO) {
+    public frmRegistrarCliente(IClientesDAO clientesDAO) {
         this.setTitle("Agregar cliente");
         this.clientesDAO = clientesDAO;
-        this.domicilioDAO=domicilioDAO;
         initComponents();
     }
 
@@ -58,7 +55,7 @@ public class frmRegistrarCliente extends javax.swing.JFrame {
     public Domicilio guardarDomicilio(){
         try{
             Domicilio domicilio=this.extraerDatosDomicilio();
-            Domicilio domicilioGuardado= this.domicilioDAO.insertar(domicilio);
+            Domicilio domicilioGuardado= clientesDAO.insertarDomicilio(domicilio);
             return domicilioGuardado;
         }catch (PersistenciaException ex) {
             ex.getMessage();
@@ -119,51 +116,73 @@ public class frmRegistrarCliente extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        lblNombre.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblNombre.setText("Nombre");
+        lblNombre.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
 
-        lblApellidoPaterno.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblApellidoPaterno.setText("Apellido Paterno");
+        lblApellidoPaterno.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
 
-        lblApellidoMaterno.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblApellidoMaterno.setText("Apellido Materno");
+        lblApellidoMaterno.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
 
-        lblFechaNacimiento.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblFechaNacimiento.setText("Fecha Nacimiento");
+        lblFechaNacimiento.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
 
-        lblContrasena.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblContrasena.setText("Contraseña");
+        lblContrasena.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+
+        txtNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreActionPerformed(evt);
+            }
+        });
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
+
+        txtApellidoPaterno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtApellidoPaternoKeyTyped(evt);
+            }
+        });
 
         txtApellidoMaterno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtApellidoMaternoActionPerformed(evt);
             }
         });
+        txtApellidoMaterno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtApellidoMaternoKeyTyped(evt);
+            }
+        });
 
-        btnGuardar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnGuardar.setText("Guardar");
+        btnGuardar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
             }
         });
 
-        btnCancelar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnCancelar.setText("Cancelar");
+        btnCancelar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
             }
         });
 
-        lblCalle.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         lblCalle.setText("Calle");
+        lblCalle.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
 
-        lblColonia.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         lblColonia.setText("Colonia");
+        lblColonia.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
 
-        lblNoCasa.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         lblNoCasa.setText("No. Casa");
+        lblNoCasa.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -257,7 +276,33 @@ public class frmRegistrarCliente extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         dispose();
+        new frmBanco(clientesDAO).setVisible(true);
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreActionPerformed
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        char txt=evt.getKeyChar();
+        if (!(Character.isAlphabetic(txt))) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtApellidoPaternoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoPaternoKeyTyped
+       char txt=evt.getKeyChar();
+        if (!(Character.isAlphabetic(txt))) {
+            evt.consume();
+        } 
+    }//GEN-LAST:event_txtApellidoPaternoKeyTyped
+
+    private void txtApellidoMaternoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoMaternoKeyTyped
+        char txt=evt.getKeyChar();
+        if (!(Character.isAlphabetic(txt))) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtApellidoMaternoKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

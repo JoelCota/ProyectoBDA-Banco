@@ -7,10 +7,8 @@ package Principal;
 // Importaciones
 import Implementaciones.ClientesDAO;
 import Implementaciones.ConexionBD;
-import Implementaciones.DomicilioDAO;
 import Interfaces.IClientesDAO;
 import Interfaces.IConexionBD;
-import Interfaces.IDomicilioDAO;
 import Presentacion.frmBanco;
 
 /**
@@ -34,11 +32,10 @@ public class Banco {
     public static void main(String[] args) {
       
         IConexionBD manejadorConexiones = new ConexionBD(
-                "jdbc:mysql://localhost/banco","root","contraseña"
+                "jdbc:mysql://localhost/banco","root","13553Lop?"
         );
         IClientesDAO clientesDAO = new ClientesDAO(manejadorConexiones);
-         IDomicilioDAO domicilioDAO = new DomicilioDAO(manejadorConexiones);
-        new frmBanco(clientesDAO,domicilioDAO).setVisible(true);
+        new frmBanco(clientesDAO).setVisible(true);
         
     }
 }

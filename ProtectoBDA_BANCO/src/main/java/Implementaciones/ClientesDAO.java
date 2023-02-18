@@ -5,6 +5,7 @@ package Implementaciones;
 
 // Importaciones
 import Dominio.Cliente;
+import Dominio.Domicilio;
 import Interfaces.IClientesDAO;
 import Interfaces.IConexionBD;
 import Excepciones.PersistenciaException;
@@ -125,6 +126,33 @@ public class ClientesDAO implements IClientesDAO {
         } catch (SQLException ex) {
             LOG.log(Level.SEVERE, ex.getMessage());
             throw new PersistenciaException("No se pudo insertar al cliente: " + ex.getMessage());
+        }
+    }
+    
+    @Override
+    public Domicilio insertarDomicilio(Domicilio domicilio) throws PersistenciaException {
+        String codigoSQL = "INSERT INTO domicilios (calle, numero, colonia)"
+                         + " VALUES (?, ?, ?)";
+        try (
+                Connection conexion = MANEJADOR_CONEXIONES.crearConexion();
+                PreparedStatement comando = conexion.prepareStatement(codigoSQL, Statement.RETURN_GENERATED_KEYS);) {
+            // INSERTAR
+            comando.setString(1, domicilio.getCalle());
+            comando.setString(2, domicilio.getColonia());
+            comando.setString(3, domicilio.getNumero());
+            comando.executeUpdate();
+            ResultSet llavesGeneradas = comando.getGeneratedKeys();
+            if (llavesGeneradas.next()) {
+                // CONSULTAR ID
+                Integer llavePrimaria = llavesGeneradas.getInt(Statement.RETURN_GENERATED_KEYS);
+                domicilio.setId_domicilio(llavePrimaria);
+                return domicilio;
+            }
+            LOG.log(Level.WARNING, "Se inserto el domicilio pero no se generó id.");
+            throw new PersistenciaException("Se inserto el domicilio pero no se generó id.");
+        } catch (SQLException ex) {
+            LOG.log(Level.SEVERE, ex.getMessage());
+            throw new PersistenciaException("No se pudo insertar al domicilio: " + ex.getMessage());
         }
     }
 }

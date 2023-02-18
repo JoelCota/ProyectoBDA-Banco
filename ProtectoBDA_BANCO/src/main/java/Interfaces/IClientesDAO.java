@@ -6,6 +6,7 @@ package Interfaces;
 
 // Importaciones
 import Dominio.Cliente;
+import Dominio.Domicilio;
 import Excepciones.PersistenciaException;
 
 /**
@@ -23,5 +24,6 @@ public interface IClientesDAO {
     Cliente insertar(Cliente cliente) throws PersistenciaException;
     
       Cliente iniciarSesion(Integer id_cliente);
+      Domicilio insertarDomicilio(Domicilio domicilio) throws PersistenciaException;
 }
 

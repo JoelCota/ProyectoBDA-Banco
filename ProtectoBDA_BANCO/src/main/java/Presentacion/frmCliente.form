@@ -94,6 +94,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtNumeroCliente">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtNumeroClienteKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtContrase&#xf1;a">
     </Component>

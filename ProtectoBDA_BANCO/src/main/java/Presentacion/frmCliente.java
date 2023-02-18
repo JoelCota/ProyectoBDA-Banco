@@ -74,6 +74,12 @@ public class frmCliente extends javax.swing.JFrame {
 
         lnlContraseña.setText("Contraseña");
 
+        txtNumeroCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNumeroClienteKeyTyped(evt);
+            }
+        });
+
         btnAtras.setText("Atras");
         btnAtras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -138,6 +144,13 @@ public class frmCliente extends javax.swing.JFrame {
         banco.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAtrasActionPerformed
+
+    private void txtNumeroClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumeroClienteKeyTyped
+       char txt=evt.getKeyChar();
+        if (!(Character.isDigit(txt))) {
+            evt.consume();
+        }  // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumeroClienteKeyTyped
 
 
 
