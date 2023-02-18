@@ -202,14 +202,26 @@
       </Events>
     </Component>
     <Component class="javax.swing.JPasswordField" name="txtContrasena">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtContrasenaKeyTyped"/>
+      </Events>
     </Component>
     <Component class="com.github.lgooddatepicker.components.DatePicker" name="datePicker1">
     </Component>
     <Component class="javax.swing.JTextField" name="txtColonia">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtColoniaKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtCalle">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCalleKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtNoCasa">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtNoCasaKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblCalle">
       <Properties>

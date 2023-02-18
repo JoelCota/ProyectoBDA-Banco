@@ -17,13 +17,16 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author 52644
  */
 public class frmRegistrarCliente extends javax.swing.JFrame {
+
     private static final Logger LOG = Logger.getLogger(frmRegistrarCliente.class.getName());
     private final IClientesDAO clientesDAO;
+
     /**
      * Creates new form ClientesForm
      *
@@ -45,42 +48,58 @@ public class frmRegistrarCliente extends javax.swing.JFrame {
         return new Cliente(nombres, apellido_paterno, apellido_materno, fecha, contrasena, id_domicilio);
     }
 
-    public Domicilio extraerDatosDomicilio(){
-        String calle= this.txtCalle.getText();
-        String colonia=this.txtColonia.getText();
-        String numero= this.txtNoCasa.getText();
-        return new Domicilio(calle,colonia,numero);
+    public Domicilio extraerDatosDomicilio() {
+        String calle = this.txtCalle.getText();
+        String colonia = this.txtColonia.getText();
+        String numero = this.txtNoCasa.getText();
+        System.out.println(numero.length());
+        return new Domicilio(calle, colonia, numero);
     }
-    
-    public Domicilio guardarDomicilio(){
-        try{
-            Domicilio domicilio=this.extraerDatosDomicilio();
-            Domicilio domicilioGuardado= clientesDAO.insertarDomicilio(domicilio);
+
+    public Domicilio guardarDomicilio() {
+        try {
+            Domicilio domicilio = this.extraerDatosDomicilio();
+            Domicilio domicilioGuardado = clientesDAO.insertarDomicilio(domicilio);
             return domicilioGuardado;
-        }catch (PersistenciaException ex) {
+        } catch (PersistenciaException ex) {
             ex.getMessage();
         }
         return null;
     }
-    
+
     public void guardar() {
         try {
             Cliente cliente = this.extraerDatosCliente();
             Cliente clienteGuardado = this.clientesDAO.insertar(cliente);
             // VALIDAR
             this.mostrarMensajeClienteGuardado(clienteGuardado);
-            
+
         } catch (PersistenciaException ex) {
             this.mostrarErrorAlGuardarCliente();
         }
     }
 
     private void mostrarMensajeClienteGuardado(Cliente cliente) {
-        JOptionPane.showMessageDialog(this, "Se insertó el cliente: " + cliente.getId_cliente() +"\n Nombre:"+ cliente.getNombres());
+        JOptionPane.showMessageDialog(this, "Se insertó el cliente: " + cliente.getId_cliente() + "\n Nombre: " + cliente.getNombres());
+        this.txtApellidoMaterno.setText("");
+         this.txtApellidoPaterno.setText("");
+         this.txtCalle.setText("");
+         this.txtColonia.setText("");
+         this.txtNombre.setText("");
+         this.txtNoCasa.setText("");
+         this.txtContrasena.setText("");
+         this.datePicker1.setText("");
     }
 
     private void mostrarErrorAlGuardarCliente() {
         JOptionPane.showMessageDialog(this, "No se pudo insertar el cliente.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    private void validacionCamposAlfabeto(java.awt.event.KeyEvent evt) {
+        char txt = evt.getKeyChar();
+        if (!(Character.isAlphabetic(txt) || txt == KeyEvent.VK_SPACE)) {
+            evt.consume();
+        }
     }
 
     /**
@@ -172,6 +191,30 @@ public class frmRegistrarCliente extends javax.swing.JFrame {
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
+            }
+        });
+
+        txtContrasena.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtContrasenaKeyTyped(evt);
+            }
+        });
+
+        txtColonia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtColoniaKeyTyped(evt);
+            }
+        });
+
+        txtCalle.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCalleKeyTyped(evt);
+            }
+        });
+
+        txtNoCasa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNoCasaKeyTyped(evt);
             }
         });
 
@@ -284,25 +327,36 @@ public class frmRegistrarCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNombreActionPerformed
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
-        char txt=evt.getKeyChar();
-        if (!(Character.isAlphabetic(txt))) {
-            evt.consume();
-        }
+        validacionCamposAlfabeto(evt);
     }//GEN-LAST:event_txtNombreKeyTyped
 
     private void txtApellidoPaternoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoPaternoKeyTyped
-       char txt=evt.getKeyChar();
-        if (!(Character.isAlphabetic(txt))) {
-            evt.consume();
-        } 
+        validacionCamposAlfabeto(evt);
     }//GEN-LAST:event_txtApellidoPaternoKeyTyped
 
     private void txtApellidoMaternoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoMaternoKeyTyped
-        char txt=evt.getKeyChar();
-        if (!(Character.isAlphabetic(txt))) {
+        validacionCamposAlfabeto(evt);
+
+    }//GEN-LAST:event_txtApellidoMaternoKeyTyped
+
+    private void txtCalleKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCalleKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCalleKeyTyped
+
+    private void txtColoniaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtColoniaKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtColoniaKeyTyped
+
+    private void txtNoCasaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNoCasaKeyTyped
+        char txt = evt.getKeyChar();
+        if (!(Character.isLetterOrDigit(txt) || txt == 45)) {
             evt.consume();
         }
-    }//GEN-LAST:event_txtApellidoMaternoKeyTyped
+    }//GEN-LAST:event_txtNoCasaKeyTyped
+
+    private void txtContrasenaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtContrasenaKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtContrasenaKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
