@@ -41,6 +41,16 @@ public class Cliente {
         this.id_domicilio = id_domicilio;
     }
 
+    public Cliente(String nombres, String apellido_paterno, String apellido_materno, String fecha_nacimiento, String contrasena, Integer id_domicilio) {
+        this.nombres = nombres;
+        this.apellido_paterno = apellido_paterno;
+        this.apellido_materno = apellido_materno;
+        this.fecha_nacimiento = fecha_nacimiento;
+        this.contrasena = contrasena;
+        this.id_domicilio = id_domicilio;
+    }
+
+    
     public Cliente(Integer id_cliente, String nombres, String apellido_paterno, String apellido_materno, String fecha_nacimiento, Integer edad, Integer id_domicilio) {
         this.id_cliente = id_cliente;
         this.nombres = nombres;

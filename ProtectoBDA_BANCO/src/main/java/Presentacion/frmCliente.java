@@ -5,11 +5,13 @@
  */
 package Presentacion;
 
+import Dominio.Cliente;
 import Implementaciones.ClientesDAO;
 import Implementaciones.ConexionBD;
 import Interfaces.IClientesDAO;
 import Interfaces.IConexionBD;
 import Presentacion.frmInterfazCliente;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,7 +22,7 @@ public class frmCliente extends javax.swing.JFrame {
     IConexionBD manejadorConexiones = new ConexionBD(
                 "jdbc:mysql://localhost/banco",
                 "root",
-                "233295"
+                "13553Lop?"
         );
     IClientesDAO clientesDAO = new ClientesDAO(manejadorConexiones);
 
@@ -30,7 +32,18 @@ public class frmCliente extends javax.swing.JFrame {
     public frmCliente() {
         initComponents();
     }
-
+    
+    private Cliente inicioSesion(Integer numeroCuenta,String contrasena){
+        if (clientesDAO.consultar(numeroCuenta).getContrasena()==contrasena) {
+           frmInterfazCliente  frmICliente= new frmInterfazCliente();
+           frmICliente.setVisible(true);
+           this.dispose();
+        }
+        else{
+            JOptionPane.showMessageDialog(rootPane, "Hola");
+        }
+        return null;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -115,9 +128,9 @@ public class frmCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIniciarSesionClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionClienteActionPerformed
-       frmInterfazCliente interfaz= new frmInterfazCliente();
-       interfaz.setVisible(true);
-       this.setVisible(false);
+        Integer id_cliente=Integer.parseInt(this.txtNumeroCliente.getText());
+        String contrasena=this.txtContraseña.getText();
+        inicioSesion(id_cliente,contrasena);
     }//GEN-LAST:event_btnIniciarSesionClienteActionPerformed
 
     private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed

@@ -28,7 +28,7 @@ import java.util.logging.Logger;
 public class ClientesDAO implements IClientesDAO {
     
     private static final Logger LOG = Logger.getLogger(ClientesDAO.class.getName());
-    private final IConexionBD MANEJADOR_CONEXIONES;
+    public final IConexionBD MANEJADOR_CONEXIONES;
 
     public ClientesDAO(IConexionBD manejadorConexiones) {
         this.MANEJADOR_CONEXIONES = manejadorConexiones;
@@ -36,6 +36,33 @@ public class ClientesDAO implements IClientesDAO {
 
     @Override
     public Cliente consultar(Integer id_cliente) {
+        String consulta = "SELECT id_cliente,nombres,apellido_paterno,apellido_materno,fecha_nacimiento,edad,id_domicilio"
+                        + " FROM clientes WHERE id_cliente = ?";
+        try (
+                Connection conexion = MANEJADOR_CONEXIONES.crearConexion();
+                PreparedStatement comando = conexion.prepareStatement(consulta);) {
+            comando.setInt(1, id_cliente);
+            ResultSet resultado = comando.executeQuery();
+            Cliente cliente = null;
+            if (resultado.next()) {
+                Integer idCliente = resultado.getInt("id_cliente");
+                String nombres = resultado.getString("nombres");
+                String apellidoPaterno = resultado.getString("apellido_paterno");
+                String apellidoMaterno = resultado.getString("apellido_materno");
+                String fecha_nacimiento = resultado.getString("fecha_nacimiento");
+                Integer edad = resultado.getInt("edad");
+                Integer id_domicilio = resultado.getInt("id_domicilio");
+                cliente = new Cliente(idCliente, nombres, apellidoPaterno, apellidoMaterno, fecha_nacimiento, edad, id_domicilio);
+            }
+            return cliente;
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+            return null;
+        }
+    }
+    
+    @Override
+    public Cliente iniciarSesion(Integer id_cliente) {
         String consulta = "SELECT id_cliente,nombres,apellido_paterno,apellido_materno,fecha_nacimiento,edad,id_domicilio"
                         + " FROM clientes WHERE id_cliente = ?";
         try (
@@ -82,7 +109,7 @@ public class ClientesDAO implements IClientesDAO {
             comando.setString(2, cliente.getApellido_paterno());
             comando.setString(3, cliente.getApellido_materno());
             comando.setString(4, cliente.getFecha_nacimiento());
-            comando.setInt(5, cliente.getEdad());
+            comando.setInt(5, 11);
             comando.setString(6, cliente.getContrasena());
             comando.setInt(7, cliente.getId_domicilio());
             comando.executeUpdate();

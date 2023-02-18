@@ -6,61 +6,80 @@
 package Presentacion;
 
 import Dominio.Cliente;
+import Dominio.Domicilio;
 import Excepciones.PersistenciaException;
+import Implementaciones.ConexionBD;
+import Implementaciones.DomicilioDAO;
 import Interfaces.IClientesDAO;
+import Interfaces.IConexionBD;
+import Interfaces.IDomicilioDAO;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-
 /**
  *
  * @author 52644
  */
 public class frmRegistrarCliente extends javax.swing.JFrame {
-
     private static final Logger LOG = Logger.getLogger(frmRegistrarCliente.class.getName());
     private final IClientesDAO clientesDAO;
-
+    private final IDomicilioDAO domicilioDAO;
     /**
      * Creates new form ClientesForm
      *
      * @param clientesDAO
      */
-    public frmRegistrarCliente(IClientesDAO clientesDAO) {
+    public frmRegistrarCliente(IClientesDAO clientesDAO,IDomicilioDAO domicilioDAO) {
         this.setTitle("Agregar cliente");
         this.clientesDAO = clientesDAO;
+        this.domicilioDAO=domicilioDAO;
         initComponents();
     }
 
-    private Cliente extraerDatosFormulario() {
-        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("uuuu-MM-d");
+    private Cliente extraerDatosCliente() {
         String nombres = this.txtNombre.getText();
         String apellido_paterno = this.txtApellidoPaterno.getText();
         String apellido_materno = this.txtApellidoMaterno.getText();
-        String fecha = this.txtFechaNacimiento.getText();
-//        OffsetDateTime fechaNacimiento = OffsetDateTime.parse(fecha);
-//        String fecha_nacimiento = fechaNacimiento.format(formatoFecha);
-        Integer edad = Integer.valueOf(this.txtEdad.getText());
+        String fecha = datePicker1.getDateStringOrEmptyString();
         String contrasena = this.txtContrasena.getText();
-        Integer id_domicilio = 2; // TODO: CAMBIAR POR EL VALOR DEL COMBO
-        return new Cliente(nombres, apellido_paterno, apellido_materno, fecha, edad, contrasena, id_domicilio);
+        Integer id_domicilio = guardarDomicilio().getId_domicilio(); // TODO: CAMBIAR POR EL VALOR DEL COMBO
+        return new Cliente(nombres, apellido_paterno, apellido_materno, fecha, contrasena, id_domicilio);
     }
 
+    public Domicilio extraerDatosDomicilio(){
+        String calle= this.txtCalle.getText();
+        String colonia=this.txtColonia.getText();
+        String numero= this.txtNoCasa.getText();
+        return new Domicilio(calle,colonia,numero);
+    }
+    
+    public Domicilio guardarDomicilio(){
+        try{
+            Domicilio domicilio=this.extraerDatosDomicilio();
+            Domicilio domicilioGuardado= this.domicilioDAO.insertar(domicilio);
+            return domicilioGuardado;
+        }catch (PersistenciaException ex) {
+            ex.getMessage();
+        }
+        return null;
+    }
+    
     public void guardar() {
         try {
-            Cliente cliente = this.extraerDatosFormulario();
+            Cliente cliente = this.extraerDatosCliente();
             Cliente clienteGuardado = this.clientesDAO.insertar(cliente);
             // VALIDAR
             this.mostrarMensajeClienteGuardado(clienteGuardado);
+            
         } catch (PersistenciaException ex) {
             this.mostrarErrorAlGuardarCliente();
         }
     }
 
     private void mostrarMensajeClienteGuardado(Cliente cliente) {
-        JOptionPane.showConfirmDialog(this, "Se insertó el cliente: " + cliente.getId_cliente(), "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Se insertó el cliente: " + cliente.getId_cliente() +"\n Nombre:"+ cliente.getNombres());
     }
 
     private void mostrarErrorAlGuardarCliente() {
@@ -80,19 +99,21 @@ public class frmRegistrarCliente extends javax.swing.JFrame {
         lblNombre = new javax.swing.JLabel();
         lblApellidoPaterno = new javax.swing.JLabel();
         lblApellidoMaterno = new javax.swing.JLabel();
-        lblDireccion = new javax.swing.JLabel();
         lblFechaNacimiento = new javax.swing.JLabel();
-        lblEdad = new javax.swing.JLabel();
         lblContrasena = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         txtApellidoPaterno = new javax.swing.JTextField();
         txtApellidoMaterno = new javax.swing.JTextField();
-        txtFechaNacimiento = new javax.swing.JTextField();
-        txtEdad = new javax.swing.JTextField();
-        txtContrasena = new javax.swing.JTextField();
-        cbxDireccion = new javax.swing.JComboBox<>();
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        txtContrasena = new javax.swing.JPasswordField();
+        datePicker1 = new com.github.lgooddatepicker.components.DatePicker();
+        txtColonia = new javax.swing.JTextField();
+        txtCalle = new javax.swing.JTextField();
+        txtNoCasa = new javax.swing.JTextField();
+        lblCalle = new javax.swing.JLabel();
+        lblColonia = new javax.swing.JLabel();
+        lblNoCasa = new javax.swing.JLabel();
 
         jButton2.setText("jButton2");
 
@@ -107,14 +128,8 @@ public class frmRegistrarCliente extends javax.swing.JFrame {
         lblApellidoMaterno.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblApellidoMaterno.setText("Apellido Materno");
 
-        lblDireccion.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        lblDireccion.setText("Domicilio");
-
         lblFechaNacimiento.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblFechaNacimiento.setText("Fecha Nacimiento");
-
-        lblEdad.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        lblEdad.setText("Edad");
 
         lblContrasena.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblContrasena.setText("Contraseña");
@@ -124,27 +139,6 @@ public class frmRegistrarCliente extends javax.swing.JFrame {
                 txtApellidoMaternoActionPerformed(evt);
             }
         });
-
-        txtFechaNacimiento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFechaNacimientoActionPerformed(evt);
-            }
-        });
-
-        txtEdad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEdadActionPerformed(evt);
-            }
-        });
-
-        txtContrasena.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtContrasenaActionPerformed(evt);
-            }
-        });
-
-        cbxDireccion.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        cbxDireccion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnGuardar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnGuardar.setText("Guardar");
@@ -162,51 +156,49 @@ public class frmRegistrarCliente extends javax.swing.JFrame {
             }
         });
 
+        lblCalle.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        lblCalle.setText("Calle");
+
+        lblColonia.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        lblColonia.setText("Colonia");
+
+        lblNoCasa.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        lblNoCasa.setText("No. Casa");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(41, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblContrasena, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblApellidoMaterno, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblApellidoPaterno, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblFechaNacimiento, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblNombre, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblCalle, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblColonia, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblNoCasa, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtNoCasa, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtColonia)
+                    .addComponent(datePicker1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtApellidoMaterno, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                    .addComponent(txtApellidoPaterno)
+                    .addComponent(txtCalle, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                    .addComponent(txtContrasena))
+                .addGap(50, 50, 50))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(75, 75, 75)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblApellidoMaterno)
-                            .addComponent(lblApellidoPaterno)
-                            .addComponent(lblFechaNacimiento)
-                            .addComponent(lblNombre)
-                            .addComponent(lblEdad))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(21, 21, 21)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(txtApellidoMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
-                                        .addComponent(txtApellidoPaterno))))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(txtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(txtEdad, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
-                                        .addComponent(txtFechaNacimiento, javax.swing.GroupLayout.Alignment.LEADING)))
-                                .addGap(3, 3, 3))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(200, 200, 200)
+                        .addGap(147, 147, 147)
                         .addComponent(btnCancelar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(53, 53, 53)
-                        .addComponent(btnGuardar))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblContrasena)
-                            .addComponent(lblDireccion))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbxDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(3, 3, 3)))
-                .addContainerGap(26, Short.MAX_VALUE))
+                    .addComponent(btnGuardar))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -226,24 +218,28 @@ public class frmRegistrarCliente extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblFechaNacimiento)
-                    .addComponent(txtFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(datePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblEdad)
-                    .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                    .addComponent(txtCalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCalle))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtColonia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblColonia))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNoCasa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNoCasa))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblContrasena)
                     .addComponent(txtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDireccion)
-                    .addComponent(cbxDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
+                .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
                     .addComponent(btnGuardar))
-                .addGap(23, 23, 23))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         pack();
@@ -251,6 +247,7 @@ public class frmRegistrarCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        guardarDomicilio();
         guardar();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -262,36 +259,26 @@ public class frmRegistrarCliente extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void txtFechaNacimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaNacimientoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFechaNacimientoActionPerformed
-
-    private void txtEdadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEdadActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtEdadActionPerformed
-
-    private void txtContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtContrasenaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtContrasenaActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
-    private javax.swing.JComboBox<String> cbxDireccion;
+    private com.github.lgooddatepicker.components.DatePicker datePicker1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel lblApellidoMaterno;
     private javax.swing.JLabel lblApellidoPaterno;
+    private javax.swing.JLabel lblCalle;
+    private javax.swing.JLabel lblColonia;
     private javax.swing.JLabel lblContrasena;
-    private javax.swing.JLabel lblDireccion;
-    private javax.swing.JLabel lblEdad;
     private javax.swing.JLabel lblFechaNacimiento;
+    private javax.swing.JLabel lblNoCasa;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JTextField txtApellidoMaterno;
     private javax.swing.JTextField txtApellidoPaterno;
-    private javax.swing.JTextField txtContrasena;
-    private javax.swing.JTextField txtEdad;
-    private javax.swing.JTextField txtFechaNacimiento;
+    private javax.swing.JTextField txtCalle;
+    private javax.swing.JTextField txtColonia;
+    private javax.swing.JPasswordField txtContrasena;
+    private javax.swing.JTextField txtNoCasa;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }

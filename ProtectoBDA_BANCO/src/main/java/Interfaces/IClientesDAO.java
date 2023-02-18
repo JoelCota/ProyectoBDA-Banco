@@ -21,5 +21,7 @@ public interface IClientesDAO {
     Cliente consultar(Integer id_cliente);
     
     Cliente insertar(Cliente cliente) throws PersistenciaException;
+    
+      Cliente iniciarSesion(Integer id_cliente);
 }
 

@@ -5,13 +5,13 @@
 package Principal;
 
 // Importaciones
-import Dominio.Cliente;
 import Implementaciones.ClientesDAO;
 import Implementaciones.ConexionBD;
+import Implementaciones.DomicilioDAO;
 import Interfaces.IClientesDAO;
 import Interfaces.IConexionBD;
+import Interfaces.IDomicilioDAO;
 import Presentacion.frmBanco;
-import Presentacion.frmRegistrarCliente;
 
 /**
  * Esta clase se utiliza para realizar consultas creando la conexión a la base
@@ -26,19 +26,19 @@ import Presentacion.frmRegistrarCliente;
  * 15/02/2023 06:08:02 PM
  */
 public class Banco {
-
+ 
     /**
      * Método main() en el que se invocan a los métodos de las clase #######.
      * @param args Los argumentos en la línea de comando
      */
     public static void main(String[] args) {
+      
         IConexionBD manejadorConexiones = new ConexionBD(
-                "jdbc:mysql://localhost/banco",
-                "root",
-                "233295"
+                "jdbc:mysql://localhost/banco","root","contraseña"
         );
         IClientesDAO clientesDAO = new ClientesDAO(manejadorConexiones);
-        new frmBanco(clientesDAO).setVisible(true);
+         IDomicilioDAO domicilioDAO = new DomicilioDAO(manejadorConexiones);
+        new frmBanco(clientesDAO,domicilioDAO).setVisible(true);
         
     }
 }
