@@ -5,8 +5,11 @@ package Interfaces;
 
 // Importaciones
 import Dominio.Cliente;
+import Dominio.Cuenta;
 import Dominio.Domicilio;
 import Excepciones.PersistenciaException;
+import java.util.List;
+import utils.ConfiguracionPaginado;
 
 /**
  * Esta clase permite implementar una interface de tipo ClientesDAO.
@@ -23,4 +26,6 @@ public interface IClientesDAO {
     Cliente iniciarSesion(Integer id_cliente,String contrasena);
 
     Domicilio insertarDomicilio(Domicilio domicilio) throws PersistenciaException;
+    
+    List<Cuenta> consultarListaCuentas(ConfiguracionPaginado configPaginado) throws PersistenciaException;
 }

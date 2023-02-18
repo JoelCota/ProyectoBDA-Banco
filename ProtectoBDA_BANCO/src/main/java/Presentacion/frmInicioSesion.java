@@ -18,25 +18,21 @@ import javax.swing.JOptionPane;
  * @author Joel Lopez
  */
 public class frmInicioSesion extends javax.swing.JFrame {
-    
-    IConexionBD manejadorConexiones = new ConexionBD(
-                "jdbc:mysql://localhost/banco",
-                "root",
-                "13553Lop?"
-        );
-    IClientesDAO clientesDAO = new ClientesDAO(manejadorConexiones);
+
+    IClientesDAO clientesDAO;
 
     /**
      * Creates new form ClientesForm
      */
-    public frmInicioSesion() {
+    public frmInicioSesion(IClientesDAO clientesDAO) {
+        this.clientesDAO=clientesDAO;
         initComponents();
     }
     
     private void inicioSesion(Integer numeroCuenta,String contrasena){
         Cliente cliente=clientesDAO.iniciarSesion(numeroCuenta, contrasena);
         if (!clientesDAO.iniciarSesion(numeroCuenta, contrasena).equals(this)) {
-           frmInterfazCliente  frmICliente= new frmInterfazCliente(cliente);
+           frmInterfazCliente  frmICliente= new frmInterfazCliente(clientesDAO,cliente);
            frmICliente.setVisible(true);
            this.dispose();
         }

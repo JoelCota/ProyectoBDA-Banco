@@ -5,6 +5,7 @@ package Implementaciones;
 
 // Importaciones
 import Dominio.Cliente;
+import Dominio.Cuenta;
 import Dominio.Domicilio;
 import Interfaces.IClientesDAO;
 import Interfaces.IConexionBD;
@@ -14,8 +15,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import utils.ConfiguracionPaginado;
 
 /**
  * Esta clase permite consultar los clientes por medio de su ID.
@@ -155,4 +159,29 @@ public class ClientesDAO implements IClientesDAO {
             throw new PersistenciaException("No se pudo insertar al domicilio: " + ex.getMessage());
         }
     }
+    
+     
+    @Override
+    public List<Cuenta> consultarListaCuentas(ConfiguracionPaginado configPaginado) throws PersistenciaException{
+        String codigoSQL= "Select num_cuenta,saldo from cuentas limit ? offset ?";
+        List<Cuenta> listaCuentas= new LinkedList();
+        try(Connection conexion = MANEJADOR_CONEXIONES.crearConexion();
+            PreparedStatement comandoBase = conexion.prepareStatement(codigoSQL);){
+            comandoBase.setInt(1, configPaginado.getOffSet());
+            comandoBase.setInt(2, configPaginado.getNumeroPagina());
+            ResultSet resultado = comandoBase.executeQuery();
+            Cuenta cuenta=null;
+               while(resultado.next()){
+                Integer num_cuenta = resultado.getInt("num_cuenta");
+                Float saldo = resultado.getFloat("saldo");
+                cuenta = new Cuenta(num_cuenta,saldo);
+                listaCuentas.add(cuenta);
+            }
+            return listaCuentas;
+        }catch(SQLException ex){
+            System.err.println(ex.getMessage());
+            throw new PersistenciaException("Error al consultar la lista", ex);
+        }
+    }
+   
 }

@@ -106,7 +106,7 @@ public class frmBanco extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegistroActionPerformed
 
     private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
-      frmInicioSesion cliente = new frmInicioSesion();
+      frmInicioSesion cliente = new frmInicioSesion(this.clientesDAO);
       cliente.setVisible(true);
       this.setVisible(false);
     }//GEN-LAST:event_btnClienteActionPerformed

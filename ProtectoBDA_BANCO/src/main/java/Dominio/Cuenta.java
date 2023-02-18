@@ -28,6 +28,11 @@ public class Cuenta {
     public Cuenta() {
     }
 
+    public Cuenta(Integer num_cuenta, Float saldo) {
+        this.num_cuenta = num_cuenta;
+        this.saldo = saldo;
+    }
+    
     public Cuenta(Integer num_cuenta) {
         this.num_cuenta = num_cuenta;
     }

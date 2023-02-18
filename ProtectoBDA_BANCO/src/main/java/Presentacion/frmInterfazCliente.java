@@ -6,9 +6,15 @@
 package Presentacion;
 
 import Dominio.Cliente;
-import Presentacion.frmActualizarCliente;
-import Presentacion.frmRetiro;
-import Presentacion.frmTransferencia;
+import Dominio.Cuenta;
+import Excepciones.PersistenciaException;
+import Implementaciones.ClientesDAO;
+import Interfaces.IClientesDAO;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import utils.ConfiguracionPaginado;
 
 /**
  *
@@ -16,16 +22,42 @@ import Presentacion.frmTransferencia;
  */
 public class frmInterfazCliente extends javax.swing.JFrame {
 
-    private Cliente cliente;
+    private final Cliente cliente;
+    private final IClientesDAO clientesDAO;
+    private final ConfiguracionPaginado configPaginado;
+    private static final Logger LOG = Logger.getLogger(frmInterfazCliente.class.getName());
 
+    
     /**
      * Creates new form InterfazClienteForm
      *
+     * @param clientesDAO
      * @param cliente
      */
-    public frmInterfazCliente(Cliente cliente) {
+    public frmInterfazCliente(IClientesDAO clientesDAO, Cliente cliente) {
+        this.clientesDAO = clientesDAO;
         this.cliente = cliente;
         initComponents();
+        this.configPaginado = new ConfiguracionPaginado(1, 5);
+        this.cargarTablaCuentas();
+
+    }
+
+    private void cargarTablaCuentas() {
+        try {
+            List<Cuenta> listaCuentas = this.clientesDAO.consultarListaCuentas(configPaginado);
+            DefaultTableModel modeloTabla = (DefaultTableModel) this.tblCuentas.getModel();
+            modeloTabla.setRowCount(0);
+            for (Cuenta cuenta : listaCuentas) {
+                Object[] fila = {
+                   cuenta.getNum_cuenta(),
+                   cuenta.getSaldo()
+                };
+                modeloTabla.addRow(fila);
+            }
+        } catch (PersistenciaException ex) {
+            LOG.log(Level.SEVERE, ex.getMessage());
+        }
     }
 
     /**
@@ -42,6 +74,8 @@ public class frmInterfazCliente extends javax.swing.JFrame {
         btnTransferencia = new javax.swing.JButton();
         btnRetiroSinTarjeta = new javax.swing.JButton();
         btnCerrarSesion = new javax.swing.JButton();
+        pnlTablaCuentas = new javax.swing.JScrollPane();
+        tblCuentas = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle(" Bienvenido");
@@ -76,6 +110,34 @@ public class frmInterfazCliente extends javax.swing.JFrame {
             }
         });
 
+        tblCuentas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "No. Cuenta", "Saldo"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Double.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        pnlTablaCuentas.setViewportView(tblCuentas);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -83,16 +145,21 @@ public class frmInterfazCliente extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(lblBienvenido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnCerrarSesion))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(218, Short.MAX_VALUE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(btnActualizarDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnTransferencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnRetiroSinTarjeta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(btnRetiroSinTarjeta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(pnlTablaCuentas, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblBienvenido, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnCerrarSesion)))))
                 .addGap(17, 17, 17))
         );
         layout.setVerticalGroup(
@@ -102,7 +169,9 @@ public class frmInterfazCliente extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblBienvenido)
                     .addComponent(btnCerrarSesion))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 133, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(pnlTablaCuentas, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addComponent(btnActualizarDatos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnTransferencia, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -134,7 +203,7 @@ public class frmInterfazCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRetiroSinTarjetaActionPerformed
 
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
-        frmInicioSesion cliente = new frmInicioSesion();
+        frmInicioSesion cliente = new frmInicioSesion(clientesDAO);
         cliente.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
@@ -146,5 +215,7 @@ public class frmInterfazCliente extends javax.swing.JFrame {
     private javax.swing.JButton btnRetiroSinTarjeta;
     private javax.swing.JButton btnTransferencia;
     private javax.swing.JLabel lblBienvenido;
+    private javax.swing.JScrollPane pnlTablaCuentas;
+    private javax.swing.JTable tblCuentas;
     // End of variables declaration//GEN-END:variables
 }
