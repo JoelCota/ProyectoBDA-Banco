@@ -6,7 +6,7 @@ USE banco;
 CREATE TABLE Domicilios (
 	id_domicilio INT PRIMARY KEY AUTO_INCREMENT,
 	calle VARCHAR(100) NOT NULL,
-    numero VARCHAR(10) NOT NULL,
+    numero VARCHAR(50) NOT NULL,
     colonia VARCHAR(100) NOT NULL
 ); 
 
@@ -17,7 +17,7 @@ CREATE TABLE Clientes (
     apellido_paterno VARCHAR(50) NOT NULL,
     apellido_materno VARCHAR(50) NOT NULL,
     fecha_nacimiento DATE NOT NULL,
-    edad INT NOT NULL,
+    edad INT,
     contrasena VARCHAR(50) NOT NULL,
     id_domicilio INT NOT NULL,
     FOREIGN KEY(id_domicilio) REFERENCES Domicilios(id_domicilio)
@@ -59,3 +59,12 @@ CREATE TABLE Retiros (
     folio INT NOT NULL,
     FOREIGN KEY(folio) REFERENCES Operaciones(folio)
 );
+
+delimiter //
+create trigger insertar_edad before insert on clientes
+for each row 
+begin
+SET new.edad = (FLOOR(DATEDIFF(CURDATE(), new.fecha_nacimiento) / 365));
+end//
+delimiter ;
+
