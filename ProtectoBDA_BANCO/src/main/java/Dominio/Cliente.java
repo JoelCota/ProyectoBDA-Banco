@@ -80,6 +80,23 @@ public class Cliente {
         this.id_domicilio = id_domicilio;
     }
 
+    public Cliente(String nombres, String apellido_paterno, String apellido_materno, String fecha, String contrasena) {
+         this.nombres = nombres;
+        this.apellido_paterno = apellido_paterno;
+        this.apellido_materno = apellido_materno;
+        this.fecha_nacimiento = fecha;
+        this.contrasena = contrasena;
+    }
+
+    public Cliente(int id_cliente, String nombres, String apellido_paterno, String apellido_materno, String fecha, String contrasena) {
+        this.id_cliente = id_cliente;
+        this.nombres = nombres;
+        this.apellido_paterno = apellido_paterno;
+        this.apellido_materno = apellido_materno;
+        this.fecha_nacimiento = fecha;
+        this.contrasena = contrasena;
+    }
+
     public Integer getId_cliente() {
         return id_cliente;
     }

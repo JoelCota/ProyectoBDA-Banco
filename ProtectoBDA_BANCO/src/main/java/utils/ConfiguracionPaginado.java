@@ -10,7 +10,8 @@ package utils;
  * @author Joel Lopez
  */
 public class ConfiguracionPaginado {
-    private int   numeroPagina;
+
+    private int numeroPagina;
     private int elementosPagina;
 
     public ConfiguracionPaginado(int numeroPagina, int elementosPagina) {
@@ -19,8 +20,8 @@ public class ConfiguracionPaginado {
     }
 
     public ConfiguracionPaginado() {
-        this.numeroPagina=1;
-        this.elementosPagina=5;
+        this.numeroPagina = 1;
+        this.elementosPagina = 5;
     }
 
     public int getNumeroPagina() {
@@ -38,17 +39,17 @@ public class ConfiguracionPaginado {
     public void setElementosPagina(int elementosPagina) {
         this.elementosPagina = elementosPagina;
     }
-    
-    public int getOffSet(){
+
+    public int getOffSet() {
         return this.numeroPagina * this.elementosPagina;
     }
-        
-    public void avanzarPagina(){
+
+    public void avanzarPagina() {
         this.numeroPagina++;
     }
-    
-    public void atrasPagina(){
-        if (this.numeroPagina>0) {
+
+    public void atrasPagina() {
+        if (this.numeroPagina > 0) {
             this.numeroPagina--;
         }
     }

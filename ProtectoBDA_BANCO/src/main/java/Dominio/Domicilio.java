@@ -26,7 +26,7 @@ public class Domicilio {
     public Domicilio() {
     }
 
-    public Domicilio(Integer id_domicilio, String colonia, String calle, String numero) {
+    public Domicilio(Integer id_domicilio, String calle, String numero, String colonia) {
         this.id_domicilio = id_domicilio;
         this.colonia = colonia;
         this.calle = calle;

@@ -24,8 +24,14 @@ public interface IClientesDAO {
     Cliente insertar(Cliente cliente) throws PersistenciaException;
 
     Cliente iniciarSesion(Integer id_cliente,String contrasena);
+    
+    Cliente actualizarCliente(Cliente cliente)throws PersistenciaException;
+    
+    Domicilio consultarDomicilio(Integer id_domicilio);
 
     Domicilio insertarDomicilio(Domicilio domicilio) throws PersistenciaException;
+    
+    Domicilio actualizarDomicilio(Domicilio domicilio) throws PersistenciaException;
     
     List<Cuenta> consultarListaCuentas(ConfiguracionPaginado configPaginado,Cliente cliente) throws PersistenciaException;
 }

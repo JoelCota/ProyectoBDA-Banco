@@ -68,7 +68,7 @@ public class ClientesDAO implements IClientesDAO {
     
     @Override
     public Cliente iniciarSesion(Integer id_cliente, String contrasena) {
-        String consulta = "SELECT id_cliente,nombres,apellido_paterno,apellido_materno,fecha_nacimiento,edad,id_domicilio"
+        String consulta = "SELECT id_cliente,nombres,apellido_paterno,apellido_materno,fecha_nacimiento,contrasena,edad,id_domicilio"
                         + " FROM clientes WHERE id_cliente = ? and contrasena=?";
         try (
                 Connection conexion = MANEJADOR_CONEXIONES.crearConexion();
@@ -85,7 +85,8 @@ public class ClientesDAO implements IClientesDAO {
                 String fecha_nacimiento = resultado.getString("fecha_nacimiento");
                 Integer edad = resultado.getInt("edad");
                 Integer id_domicilio = resultado.getInt("id_domicilio");
-                cliente = new Cliente(idCliente, nombres, apellidoPaterno, apellidoMaterno, fecha_nacimiento, edad, id_domicilio);
+                String contrasenaCliente=resultado.getString("contrasena");
+                cliente = new Cliente(idCliente, nombres, apellidoPaterno, apellidoMaterno, fecha_nacimiento, edad,contrasenaCliente, id_domicilio);
             }
             return cliente;
         } catch (SQLException ex) {
@@ -142,8 +143,8 @@ public class ClientesDAO implements IClientesDAO {
                 PreparedStatement comando = conexion.prepareStatement(codigoSQL, Statement.RETURN_GENERATED_KEYS);) {
             // INSERTAR
             comando.setString(1, domicilio.getCalle());
-            comando.setString(2, domicilio.getColonia());
-            comando.setString(3, domicilio.getNumero());
+            comando.setString(2, domicilio.getNumero());
+            comando.setString(3, domicilio.getColonia());
             comando.executeUpdate();
             ResultSet llavesGeneradas = comando.getGeneratedKeys();
             if (llavesGeneradas.next()) {
@@ -161,15 +162,15 @@ public class ClientesDAO implements IClientesDAO {
     }
     
      
+    
     @Override
     public List<Cuenta> consultarListaCuentas(ConfiguracionPaginado configPaginado,Cliente cliente) throws PersistenciaException{
-        String codigoSQL= "Select num_cuenta,saldo from cuentas where id_cliente=? limit ? offset ?";
+        String codigoSQL= "Select num_cuenta,saldo from cuentas where id_cliente=? limit ?";
         List<Cuenta> listaCuentas= new LinkedList();
         try(Connection conexion = MANEJADOR_CONEXIONES.crearConexion();
             PreparedStatement comandoBase = conexion.prepareStatement(codigoSQL);){
-            comandoBase.setInt(1, cliente.getId_cliente());
             comandoBase.setInt(2, configPaginado.getOffSet());
-            comandoBase.setInt(3, configPaginado.getNumeroPagina());
+            comandoBase.setInt(1, cliente.getId_cliente());
             ResultSet resultado = comandoBase.executeQuery();
             Cuenta cuenta=null;
                while(resultado.next()){
@@ -183,6 +184,75 @@ public class ClientesDAO implements IClientesDAO {
             System.err.println(ex.getMessage());
             throw new PersistenciaException("Error al consultar la lista", ex);
         }
+    }
+
+   
+    @Override
+    public Domicilio actualizarDomicilio(Domicilio domicilio) throws PersistenciaException {
+        String codigoSQL = "UPDATE domicilios set calle=?, numero=?, colonia=? where id_domicilio=?";
+        try (
+                Connection conexion = MANEJADOR_CONEXIONES.crearConexion();
+                PreparedStatement comando = conexion.prepareStatement(codigoSQL, Statement.RETURN_GENERATED_KEYS);) {
+            // INSERTAR
+            comando.setString(1, domicilio.getCalle());
+            comando.setString(2, domicilio.getColonia());
+            comando.setString(3, domicilio.getNumero());
+            comando.setInt(4, domicilio.getId_domicilio());
+            comando.executeUpdate();
+            if (comando.execute()) {
+                  return domicilio;
+            }
+        } catch (SQLException ex) {
+            LOG.log(Level.SEVERE, ex.getMessage());
+            throw new PersistenciaException("No se pudo actualizar al domicilio: " + ex.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public Cliente actualizarCliente(Cliente cliente) throws PersistenciaException {
+       String codigoSQL = "UPDATE Clientes SET nombres=?, apellido_paterno=?, apellido_materno=?, fecha_nacimiento=?, contrasena=? where id_cliente=?";
+        try (
+                Connection conexion = MANEJADOR_CONEXIONES.crearConexion();
+                PreparedStatement comando = conexion.prepareStatement(codigoSQL, Statement.RETURN_GENERATED_KEYS);) {
+            comando.setString(1, cliente.getNombres());
+            comando.setString(2, cliente.getApellido_paterno());
+            comando.setString(3, cliente.getApellido_materno());
+            comando.setString(4, cliente.getFecha_nacimiento());
+            comando.setString(5, cliente.getContrasena());
+            comando.setInt(6, cliente.getId_cliente());
+            comando.executeUpdate();
+            if (comando.execute()) {
+                return cliente;
+            }
+        } catch (SQLException ex) {
+            LOG.log(Level.SEVERE, ex.getMessage());
+            throw new PersistenciaException("No se pudo insertar al cliente: " + ex.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public Domicilio consultarDomicilio(Integer id_domicilio) {
+      String consulta = "SELECT id_domicilio,calle,numero,colonia from domicilios where id_domicilio=?";
+        try (
+                Connection conexion = MANEJADOR_CONEXIONES.crearConexion();
+                PreparedStatement comando = conexion.prepareStatement(consulta);) {
+            comando.setInt(1, id_domicilio);
+            ResultSet resultado = comando.executeQuery();
+            Domicilio domicilio = null;
+            if (resultado.next()) {
+                Integer idDomicilio = resultado.getInt("id_domicilio");
+                String calle = resultado.getString("calle");
+                String numero = resultado.getString("numero");
+                String colonia = resultado.getString("colonia");
+                domicilio=new Domicilio(idDomicilio,calle, numero, colonia);
+            }
+            return domicilio;
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+            return null;
+        } 
     }
    
 }

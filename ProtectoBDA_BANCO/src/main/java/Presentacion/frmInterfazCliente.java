@@ -36,6 +36,7 @@ public class frmInterfazCliente extends javax.swing.JFrame {
     public frmInterfazCliente(IClientesDAO clientesDAO, Cliente cliente) {
         this.clientesDAO = clientesDAO;
         this.cliente = cliente;
+        System.out.println(cliente);
         initComponents();
         this.configPaginado = new ConfiguracionPaginado(1, 5);
         this.cargarTablaCuentas();
@@ -75,6 +76,7 @@ public class frmInterfazCliente extends javax.swing.JFrame {
         btnCerrarSesion = new javax.swing.JButton();
         pnlTablaCuentas = new javax.swing.JScrollPane();
         tblCuentas = new javax.swing.JTable();
+        jComboBox1 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle(" Bienvenido");
@@ -138,6 +140,13 @@ public class frmInterfazCliente extends javax.swing.JFrame {
             tblCuentas.getColumnModel().getColumn(1).setResizable(false);
         }
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -154,12 +163,13 @@ public class frmInterfazCliente extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(pnlTablaCuentas, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblBienvenido, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+                                .addComponent(lblBienvenido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnCerrarSesion)))))
+                                .addComponent(btnCerrarSesion))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(pnlTablaCuentas, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 133, Short.MAX_VALUE)
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(17, 17, 17))
         );
         layout.setVerticalGroup(
@@ -170,7 +180,9 @@ public class frmInterfazCliente extends javax.swing.JFrame {
                     .addComponent(lblBienvenido)
                     .addComponent(btnCerrarSesion))
                 .addGap(18, 18, 18)
-                .addComponent(pnlTablaCuentas, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlTablaCuentas, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnActualizarDatos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -185,7 +197,7 @@ public class frmInterfazCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnActualizarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarDatosActionPerformed
-        frmActualizarCliente actualizar = new frmActualizarCliente();
+        frmActualizarCliente actualizar = new frmActualizarCliente(cliente,clientesDAO);
         actualizar.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnActualizarDatosActionPerformed
@@ -208,12 +220,17 @@ public class frmInterfazCliente extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+      
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizarDatos;
     private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnRetiroSinTarjeta;
     private javax.swing.JButton btnTransferencia;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel lblBienvenido;
     private javax.swing.JScrollPane pnlTablaCuentas;
     private javax.swing.JTable tblCuentas;

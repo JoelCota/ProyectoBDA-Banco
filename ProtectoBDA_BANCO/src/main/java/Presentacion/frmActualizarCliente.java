@@ -5,7 +5,14 @@
  */
 package Presentacion;
 
+import Dominio.Cliente;
+import Dominio.Domicilio;
+import Excepciones.PersistenciaException;
+import Interfaces.IClientesDAO;
 import Presentacion.frmInicioSesion;
+import java.awt.event.KeyEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -13,13 +20,93 @@ import Presentacion.frmInicioSesion;
  */
 public class frmActualizarCliente extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ActualizarDatos
-     */
-    public frmActualizarCliente() {
+    private final Cliente cliente;
+     private final IClientesDAO clientesDAO;
+      private static final Logger LOG = Logger.getLogger(frmInterfazCliente.class.getName());
+
+    public frmActualizarCliente(Cliente cliente, IClientesDAO clientesDAO) {
+        this.cliente = cliente;
+        this.clientesDAO = clientesDAO;
         initComponents();
     }
 
+     private Cliente extraerDatosCliente() {
+         String nombres,apellido_paterno,apellido_materno,fecha,contrasena;
+         int id_cliente;
+         if (this.txtNombre.getText().isEmpty()) {
+             nombres = cliente.getNombres();
+         }else{
+               nombres = this.txtNombre.getText();
+         }
+         if (this.txtApellidoPaterno.getText().isEmpty()) {
+             apellido_paterno=cliente.getApellido_paterno();
+         }else{
+            apellido_paterno = this.txtApellidoPaterno.getText();
+         }
+          if (this.txtApellidoMaterno.getText().isEmpty()) {
+             apellido_materno=cliente.getApellido_materno();
+         }else{
+            apellido_materno = this.txtApellidoMaterno.getText();
+         }
+          if (datePicker1.getDateStringOrEmptyString().isEmpty()) {
+             fecha=cliente.getFecha_nacimiento();
+         }else{
+              fecha = datePicker1.getDateStringOrEmptyString();
+          }
+         if (this.txtContrasena.getText().isEmpty()) {
+             contrasena=cliente.getContrasena();
+         }else{
+               contrasena = this.txtContrasena.getText(); 
+         }
+         id_cliente=cliente.getId_cliente();
+        return new Cliente(id_cliente,nombres, apellido_paterno, apellido_materno, fecha, contrasena);
+    }
+
+    public Domicilio extraerDatosDomicilio() {
+        String calle, numero, colonia;
+        Domicilio domicilio=clientesDAO.consultarDomicilio(cliente.getId_domicilio());
+        if (this.txtCalle.getText().isEmpty()) {
+          calle=domicilio.getCalle();
+        }else{
+         calle = this.txtCalle.getText();
+        }
+        if (this.txtColonia.getText().isEmpty()) {
+            colonia=domicilio.getColonia();
+        }else{
+            colonia = this.txtColonia.getText();
+        }
+        if (this.txtNoCasa.getText().isEmpty()) {
+            numero=domicilio.getNumero();
+        }else{
+            numero = this.txtNoCasa.getText();
+        }
+        return new Domicilio(cliente.getId_domicilio(),calle, colonia, numero);
+    }
+
+
+    private void validacionCamposAlfabeto(java.awt.event.KeyEvent evt) {
+        char txt = evt.getKeyChar();
+        if (!(Character.isAlphabetic(txt) || txt == KeyEvent.VK_SPACE)) {
+            evt.consume();
+        }
+    }
+    
+    private void actualizarCliente(){
+        try {
+            clientesDAO.actualizarCliente(extraerDatosCliente());
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(frmActualizarCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
+    private void actualizarDomicilio() {
+           try {
+            clientesDAO.actualizarDomicilio(extraerDatosDomicilio());
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(frmActualizarCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,20 +116,24 @@ public class frmActualizarCliente extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
+        lblColonia = new javax.swing.JLabel();
         txtApellidoPaterno = new javax.swing.JTextField();
-        txtColonia = new javax.swing.JTextField();
+        lblNoCasa = new javax.swing.JLabel();
         txtApellidoMaterno = new javax.swing.JTextField();
-        txtCalle = new javax.swing.JTextField();
-        txtNumeroCasa = new javax.swing.JTextField();
         btnActualizar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        txtContrasena = new javax.swing.JPasswordField();
+        lblNombre = new javax.swing.JLabel();
+        datePicker1 = new com.github.lgooddatepicker.components.DatePicker();
+        lblApellidoPaterno = new javax.swing.JLabel();
+        txtColonia = new javax.swing.JTextField();
+        lblApellidoMaterno = new javax.swing.JLabel();
+        txtCalle = new javax.swing.JTextField();
+        lblFechaNacimiento = new javax.swing.JLabel();
+        txtNoCasa = new javax.swing.JTextField();
+        lblContrasena = new javax.swing.JLabel();
+        lblCalle = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Actualizar Cliente");
@@ -56,26 +147,49 @@ public class frmActualizarCliente extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Nombre");
-
-        jLabel2.setText("Apellido Paterno");
-
-        jLabel3.setText("Apellido Materno");
-
-        jLabel4.setText("Colonia");
-
-        jLabel5.setText("Calle");
-
-        jLabel6.setText("Numero de Casa");
-
         txtNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNombreActionPerformed(evt);
             }
         });
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
 
+        lblColonia.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        lblColonia.setText("Colonia");
+
+        txtApellidoPaterno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtApellidoPaternoKeyTyped(evt);
+            }
+        });
+
+        lblNoCasa.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        lblNoCasa.setText("No. Casa");
+
+        txtApellidoMaterno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtApellidoMaternoActionPerformed(evt);
+            }
+        });
+        txtApellidoMaterno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtApellidoMaternoKeyTyped(evt);
+            }
+        });
+
+        btnActualizar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
 
+        btnCancelar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -83,110 +197,205 @@ public class frmActualizarCliente extends javax.swing.JFrame {
             }
         });
 
+        txtContrasena.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtContrasenaKeyTyped(evt);
+            }
+        });
+
+        lblNombre.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        lblNombre.setText("Nombre");
+
+        lblApellidoPaterno.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        lblApellidoPaterno.setText("Apellido Paterno");
+
+        txtColonia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtColoniaKeyTyped(evt);
+            }
+        });
+
+        lblApellidoMaterno.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        lblApellidoMaterno.setText("Apellido Materno");
+
+        txtCalle.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCalleKeyTyped(evt);
+            }
+        });
+
+        lblFechaNacimiento.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        lblFechaNacimiento.setText("Fecha Nacimiento");
+
+        txtNoCasa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNoCasaKeyTyped(evt);
+            }
+        });
+
+        lblContrasena.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        lblContrasena.setText("Contraseña");
+
+        lblCalle.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        lblCalle.setText("Calle");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(38, 38, 38)
+                .addContainerGap(29, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(btnActualizar)
-                        .addComponent(jLabel6)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtColonia, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCalle, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNumeroCasa, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblContrasena, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblApellidoMaterno, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblApellidoPaterno, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblFechaNacimiento, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblNombre, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblCalle, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblColonia, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblNoCasa, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtNoCasa, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtColonia)
+                            .addComponent(datePicker1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtApellidoMaterno, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
                             .addComponent(txtApellidoPaterno)
-                            .addComponent(txtApellidoMaterno))
-                        .addGap(29, 29, 29))
-                    .addGroup(layout.createSequentialGroup()
+                            .addComponent(txtCalle, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                            .addComponent(txtContrasena))
+                        .addGap(50, 50, 50))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnActualizar)
                         .addGap(18, 18, 18)
                         .addComponent(btnCancelar)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(88, 88, 88))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNombre))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
+                    .addComponent(lblApellidoPaterno)
                     .addComponent(txtApellidoPaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
+                    .addComponent(lblApellidoMaterno)
                     .addComponent(txtApellidoMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtColonia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblFechaNacimiento)
+                    .addComponent(datePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(txtCalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
-                    .addComponent(txtNumeroCasa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCalle))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnActualizar)
-                    .addComponent(btnCancelar))
-                .addContainerGap(12, Short.MAX_VALUE))
+                    .addComponent(txtColonia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblColonia))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNoCasa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNoCasa))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblContrasena)
+                    .addComponent(txtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCancelar)
+                    .addComponent(btnActualizar))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombreActionPerformed
-
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
     }//GEN-LAST:event_formWindowClosed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        frmInicioSesion cf= new frmInicioSesion();
-       cf.setVisible(true);
-       this.setVisible(false);
+
     }//GEN-LAST:event_formWindowClosing
 
+    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreActionPerformed
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        validacionCamposAlfabeto(evt);
+    }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtApellidoPaternoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoPaternoKeyTyped
+        validacionCamposAlfabeto(evt);
+    }//GEN-LAST:event_txtApellidoPaternoKeyTyped
+
+    private void txtApellidoMaternoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidoMaternoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtApellidoMaternoActionPerformed
+
+    private void txtApellidoMaternoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoMaternoKeyTyped
+        validacionCamposAlfabeto(evt);
+    }//GEN-LAST:event_txtApellidoMaternoKeyTyped
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        actualizarDomicilio();
+        actualizarCliente();
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-       frmInterfazCliente interfaz=new frmInterfazCliente();
-       interfaz.setVisible(true);
-       this.dispose();
+        dispose();
+        new frmBanco(clientesDAO).setVisible(true);
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtContrasenaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtContrasenaKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtContrasenaKeyTyped
+
+    private void txtColoniaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtColoniaKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtColoniaKeyTyped
+
+    private void txtCalleKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCalleKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCalleKeyTyped
+
+    private void txtNoCasaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNoCasaKeyTyped
+        char txt = evt.getKeyChar();
+        if (!(Character.isLetterOrDigit(txt) || txt == 45)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNoCasaKeyTyped
 
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
+    private com.github.lgooddatepicker.components.DatePicker datePicker1;
+    private javax.swing.JLabel lblApellidoMaterno;
+    private javax.swing.JLabel lblApellidoPaterno;
+    private javax.swing.JLabel lblCalle;
+    private javax.swing.JLabel lblColonia;
+    private javax.swing.JLabel lblContrasena;
+    private javax.swing.JLabel lblFechaNacimiento;
+    private javax.swing.JLabel lblNoCasa;
+    private javax.swing.JLabel lblNombre;
     private javax.swing.JTextField txtApellidoMaterno;
     private javax.swing.JTextField txtApellidoPaterno;
     private javax.swing.JTextField txtCalle;
     private javax.swing.JTextField txtColonia;
+    private javax.swing.JPasswordField txtContrasena;
+    private javax.swing.JTextField txtNoCasa;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtNumeroCasa;
     // End of variables declaration//GEN-END:variables
+
 }
