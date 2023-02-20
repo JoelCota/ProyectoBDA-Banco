@@ -11,36 +11,42 @@ CREATE TABLE Domicilios (
 ); 
 
 # CREAR TABLA CLIENTES
-CREATE TABLE Clientes (
-	id_cliente INT PRIMARY KEY AUTO_INCREMENT,
-    nombres VARCHAR(50) NOT NULL,
-    apellido_paterno VARCHAR(50) NOT NULL,
-    apellido_materno VARCHAR(50) NOT NULL,
-    fecha_nacimiento DATE NOT NULL,
-    edad INT,
-    contrasena VARCHAR(50) NOT NULL,
-    id_domicilio INT NOT NULL,
-    FOREIGN KEY(id_domicilio) REFERENCES Domicilios(id_domicilio)
+CREATE TABLE `clientes` (
+  `id_cliente` int NOT NULL AUTO_INCREMENT,
+  `nombres` varchar(50) NOT NULL,
+  `apellido_paterno` varchar(50) NOT NULL,
+  `apellido_materno` varchar(50) NOT NULL,
+  `fecha_nacimiento` date NOT NULL,
+  `edad` int DEFAULT NULL,
+  `contrasena` varchar(50) NOT NULL,
+  `id_domicilio` int DEFAULT NULL,
+  PRIMARY KEY (`id_cliente`),
+  KEY `clientes_ibfk_1` (`id_domicilio`),
+  CONSTRAINT `clientes_ibfk_1` FOREIGN KEY (`id_domicilio`) REFERENCES `domicilios` (`id_domicilio`)
 );
 
 # CREAR TABLA CUENTAS
-CREATE TABLE Cuentas (
-	num_cuenta INT PRIMARY KEY AUTO_INCREMENT,
-	fecha_apertura DATETIME NOT NULL,
-    saldo DECIMAL(10, 4) DEFAULT 0.0000 NOT NULL,
-    estado ENUM('Activa','Cancelada') NOT NULL,
-    id_cliente INT NOT NULL,
-    FOREIGN KEY(id_cliente) REFERENCES Clientes(id_cliente)
-); 
+CREATE TABLE `cuentas` (
+  `num_cuenta` int NOT NULL AUTO_INCREMENT,
+  `fecha_apertura` datetime DEFAULT CURRENT_TIMESTAMP,
+  `saldo` decimal(10,2) DEFAULT '0.00',
+  `estado` enum('Activa','Cancelada') DEFAULT 'Activa',
+  `id_cliente` int NOT NULL,
+  PRIMARY KEY (`num_cuenta`),
+  KEY `id_cliente` (`id_cliente`),
+  CONSTRAINT `cuentas_ibfk_1` FOREIGN KEY (`id_cliente`) REFERENCES `clientes` (`id_cliente`)
+) ;
 
 # CREAR TABLA OPERACIONES
-CREATE TABLE Operaciones (
-	folio INT PRIMARY KEY AUTO_INCREMENT,
-	fecha DATETIME NOT NULL,
-    monto DECIMAL(10, 4) DEFAULT 0.0100 NOT NULL,
-    num_cuenta_origen INT NOT NULL,
-    FOREIGN KEY(num_cuenta_origen) REFERENCES Cuentas(num_cuenta)
-); 
+CREATE TABLE `operaciones` (
+  `folio` int NOT NULL AUTO_INCREMENT,
+  `fecha` datetime DEFAULT CURRENT_TIMESTAMP,
+  `monto` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `num_cuenta_origen` int NOT NULL,
+  PRIMARY KEY (`folio`),
+  KEY `num_cuenta_origen` (`num_cuenta_origen`),
+  CONSTRAINT `operaciones_ibfk_1` FOREIGN KEY (`num_cuenta_origen`) REFERENCES `cuentas` (`num_cuenta`)
+) ; 
 
 # CREAR TABLA TRANSFERENCIAS
 CREATE TABLE Transferencias (
@@ -67,4 +73,3 @@ begin
 SET new.edad = (FLOOR(DATEDIFF(CURDATE(), new.fecha_nacimiento) / 365));
 end//
 delimiter ;
-
