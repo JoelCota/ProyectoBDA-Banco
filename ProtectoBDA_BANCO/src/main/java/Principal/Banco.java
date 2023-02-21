@@ -40,7 +40,7 @@ public class Banco {
     public static void main(String[] args) {
       
         IConexionBD manejadorConexiones = new ConexionBD(
-                "jdbc:mysql://localhost/banco","root","233295"
+                "jdbc:mysql://localhost/banco","root","13553Lop?"
         );
         IDomicilioDAO domicilioDAO= new DomicilioDAO(manejadorConexiones);
         ICuentasDAO cuentasDAO= new CuentasDAO(manejadorConexiones);

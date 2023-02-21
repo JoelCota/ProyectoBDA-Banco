@@ -124,7 +124,7 @@ public class frmRetiro extends javax.swing.JFrame {
 
     private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
     JOptionPane.showMessageDialog(this, "Su Folio es:+" +" Su contraseña es:");
-    new frmInterfazCliente().setVisible(true);
+    new frmInterfazCliente(cliente,clientesDAO,cuentasDAO,transferenciasDAO,operacionesDAO,domicilioDAO).setVisible(true);
     this.dispose();
     }//GEN-LAST:event_btnGenerarActionPerformed
 
