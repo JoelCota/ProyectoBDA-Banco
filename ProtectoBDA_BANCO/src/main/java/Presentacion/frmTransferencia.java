@@ -126,7 +126,7 @@ public class frmTransferencia extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEnviarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-       frmInterfazCliente interfaz=new frmInterfazCliente();
+       frmInterfazCliente interfaz = new frmInterfazCliente();
        interfaz.setVisible(true);
        this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
