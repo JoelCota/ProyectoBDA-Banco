@@ -15,6 +15,7 @@ import Interfaces.ITransferenciasDAO;
 import Presentacion.frmInicioSesion;
 import Presentacion.frmRegistrarCliente;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -125,7 +126,7 @@ public class frmBanco extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClienteActionPerformed
 
     private void btnNoCliente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNoCliente1ActionPerformed
-        // TODO add your handling code here:
+         JOptionPane.showMessageDialog(this, "Sistema No Disponible");
     }//GEN-LAST:event_btnNoCliente1ActionPerformed
 
 

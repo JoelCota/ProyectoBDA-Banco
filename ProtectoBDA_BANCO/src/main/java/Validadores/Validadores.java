@@ -46,4 +46,26 @@ public class Validadores {
         }
         return false;
     }
+    
+    
+     public boolean validaNombre(String s) {
+        String patron = "^(?=.{2,30}$)[A-Za-z]+(\\s[A-Za-z]+)?$";
+
+        Pattern p = Pattern.compile(patron);
+
+        Matcher matcher = p.matcher(s);
+
+        return matcher.matches();
+    }
+
+    public boolean validaApellido(String s) {
+        String patron = "^[a-zA-ZñÑ]{3,20}$";
+
+        Pattern p = Pattern.compile(patron);
+
+        Matcher matcher = p.matcher(s);
+
+        return matcher.matches();
+    }
 }
+

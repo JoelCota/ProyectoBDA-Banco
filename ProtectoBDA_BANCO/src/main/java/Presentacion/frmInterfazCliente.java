@@ -224,9 +224,7 @@ public class frmInterfazCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTransferenciaActionPerformed
 
     private void btnRetiroSinTarjetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRetiroSinTarjetaActionPerformed
-        frmRetiro retiro = new frmRetiro(cliente,clientesDAO,cuentasDAO,transferenciasDAO,operacionesDAO,domicilioDAO);
-        retiro.setVisible(true);
-        this.setVisible(false);
+        JOptionPane.showMessageDialog(this, "Sistema No Disponible");
     }//GEN-LAST:event_btnRetiroSinTarjetaActionPerformed
 
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
