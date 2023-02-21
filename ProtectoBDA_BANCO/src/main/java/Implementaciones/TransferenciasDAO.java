@@ -38,7 +38,7 @@ public class TransferenciasDAO implements ITransferenciasDAO {
 
     @Override
     public Transferencia insertar(Transferencia transferencia) throws PersistenciaException {
-        String codigoSQL = "INSERT INTO Transferencias (ID, num_cuenta_destino)"
+        String codigoSQL = "INSERT INTO Transferencias (folio, num_cuenta_destino)"
                 + " VALUES (?, ?)";
         try (
                 Connection conexion = MANEJADOR_CONEXIONES.crearConexion(); PreparedStatement comando = conexion.prepareStatement(codigoSQL, Statement.RETURN_GENERATED_KEYS);) {
@@ -84,19 +84,7 @@ public class TransferenciasDAO implements ITransferenciasDAO {
     }
 
     @Override
-    public Integer realizarTransferencia(Transferencia transferencia) throws PersistenciaException {
-        OperacionesDAO opera = null;
-        CuentasDAO cuenta = null;
-        Operacion operacion = opera.consultar(transferencia.getFolio());
-        Cuenta cuentaOrigen = cuenta.consultar(operacion.getNum_cuenta_origen());
-        Cuenta cuentaDestino = cuenta.consultar(transferencia.getNum_cuenta_destino());
-        if (cuentaOrigen.getSaldo() == 0) return 0; // La cuenta origen tiene 0 pesos de saldo
-        else if (cuentaOrigen.getSaldo() > operacion.getMonto_pesos()) return 1; // El monto de transferencia es mayor al saldo de la cuenta
-        else if (Objects.equals(cuentaOrigen.getNum_cuenta(), cuentaDestino.getNum_cuenta())) return 2; // La cuenta de origen es la misma que la cuenta destino
-        else if ("Cancelada".equals(cuentaOrigen.getEstado())) return 3; // La cuenta de origen está cancelada
-        else if ("Cancelada".equals(cuentaDestino.getEstado())) return 4; // La cuenta de destino está cancelada
-        else if (operacion.getMonto_pesos() <= 0) return 5; // Si el monto a transferir es igual o menor a 0
-        else {
+    public Integer realizarTransferencia(Transferencia transferencia,Operacion operacion) throws PersistenciaException {
             String transaccion = "START TRANSACTION;\n"
                     + " UPDATE cuentas SET saldo = saldo - ? WHERE num_cuenta = ?;\n" // Cuenta origen
                     + " UPDATE cuentas SET saldo = saldo + ? WHERE num_cuenta = ?;\n" // Cuenta destino
@@ -115,4 +103,4 @@ public class TransferenciasDAO implements ITransferenciasDAO {
             }
         } 
     }
-}
+

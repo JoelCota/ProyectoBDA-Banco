@@ -7,15 +7,21 @@ package Presentacion;
 
 import Dominio.Cliente;
 import Dominio.Cuenta;
+import Dominio.Operacion;
+import Dominio.Transferencia;
 import Excepciones.PersistenciaException;
 import Interfaces.IClientesDAO;
 import Interfaces.ICuentasDAO;
 import Interfaces.IDomicilioDAO;
 import Interfaces.IOperacionesDAO;
 import Interfaces.ITransferenciasDAO;
+import static java.lang.Float.parseFloat;
+import static java.lang.Integer.parseInt;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -56,6 +62,21 @@ public class frmTransferencia extends javax.swing.JFrame {
             LOG.log(Level.SEVERE, ex.getMessage());
         }
     }
+    
+    public void realizarTransferencia(){
+          int cbxCuentaOrigen =parseInt(this.cbxCuentas.getItemAt(this.cbxCuentas.getSelectedIndex()));
+          Operacion operacion=new Operacion(parseFloat(this.txtSaldo.getText()),cbxCuentaOrigen,"Transferencia");
+        try {
+            Operacion nuevaOperacion= operacionesDAO.insertar(operacion);
+             Transferencia transferencia=new Transferencia(parseInt(this.txtCuentaDestino.getText()),nuevaOperacion.getFolio());
+         transferenciasDAO.realizarTransferencia(transferenciasDAO.insertar(transferencia),nuevaOperacion);
+            JOptionPane.showMessageDialog(this,"Se realizo la transaccion correctamente");
+            new frmInterfazCliente(cliente,clientesDAO,cuentasDAO,transferenciasDAO,operacionesDAO,domicilioDAO).setVisible(true);
+             this.dispose();
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(frmTransferencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -69,7 +90,7 @@ public class frmTransferencia extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         lblNumeroCuentaDestino = new javax.swing.JLabel();
         lblSaldo = new javax.swing.JLabel();
-        txtNoCuenta = new javax.swing.JTextField();
+        txtCuentaDestino = new javax.swing.JTextField();
         txtSaldo = new javax.swing.JTextField();
         btnEnviar = new javax.swing.JButton();
         lblCuentaOrigen = new javax.swing.JLabel();
@@ -85,6 +106,12 @@ public class frmTransferencia extends javax.swing.JFrame {
         lblNumeroCuentaDestino.setText("Cuenta Destino");
 
         lblSaldo.setText("Saldo a enviar");
+
+        txtCuentaDestino.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCuentaDestinoKeyTyped(evt);
+            }
+        });
 
         btnEnviar.setText("Enviar");
         btnEnviar.addActionListener(new java.awt.event.ActionListener() {
@@ -122,7 +149,7 @@ public class frmTransferencia extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtSaldo)
-                            .addComponent(txtNoCuenta)
+                            .addComponent(txtCuentaDestino)
                             .addComponent(cbxCuentas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(30, 30, 30))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -144,7 +171,7 @@ public class frmTransferencia extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNumeroCuentaDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNoCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCuentaDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -161,7 +188,7 @@ public class frmTransferencia extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
-        // TODO add your handling code here:
+      realizarTransferencia();
     }//GEN-LAST:event_btnEnviarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -169,6 +196,13 @@ public class frmTransferencia extends javax.swing.JFrame {
         interfaz.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtCuentaDestinoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCuentaDestinoKeyTyped
+         char txt=evt.getKeyChar();
+        if (!(Character.isDigit(txt))) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCuentaDestinoKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -179,7 +213,7 @@ public class frmTransferencia extends javax.swing.JFrame {
     private javax.swing.JLabel lblCuentaOrigen;
     private javax.swing.JLabel lblNumeroCuentaDestino;
     private javax.swing.JLabel lblSaldo;
-    private javax.swing.JTextField txtNoCuenta;
+    private javax.swing.JTextField txtCuentaDestino;
     private javax.swing.JTextField txtSaldo;
     // End of variables declaration//GEN-END:variables
 }

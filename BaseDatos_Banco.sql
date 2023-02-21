@@ -18,7 +18,7 @@ CREATE TABLE `clientes` (
   `apellido_materno` varchar(50) NOT NULL,
   `fecha_nacimiento` date NOT NULL,
   `edad` int DEFAULT NULL,
-  `contrasena` varchar(50) NOT NULL,
+  `contrasena` blob(8) NOT NULL,
   `id_domicilio` int DEFAULT NULL,
   PRIMARY KEY (`id_cliente`),
   KEY `clientes_ibfk_1` (`id_domicilio`),
@@ -43,6 +43,7 @@ CREATE TABLE `operaciones` (
   `fecha` datetime DEFAULT CURRENT_TIMESTAMP,
   `monto` decimal(10,2) NOT NULL DEFAULT '0.00',
   `num_cuenta_origen` int NOT NULL,
+  `tipo` ENUM("Transferencia", "Retiro") NOT NULL,
   PRIMARY KEY (`folio`),
   KEY `num_cuenta_origen` (`num_cuenta_origen`),
   CONSTRAINT `operaciones_ibfk_1` FOREIGN KEY (`num_cuenta_origen`) REFERENCES `cuentas` (`num_cuenta`)
@@ -73,3 +74,6 @@ begin
 SET new.edad = (FLOOR(DATEDIFF(CURDATE(), new.fecha_nacimiento) / 365));
 end//
 delimiter ;
+
+select * from clientes;
+SELECT id_cliente,nombres,apellido_paterno,apellido_materno,fecha_nacimiento,aes_decrypt(contrasena,'hunter2'),edad,id_domicilio FROM clientes WHERE id_cliente = 1 and 12345678 = aes_decrypt(contrasena,'hunter2');

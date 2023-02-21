@@ -6,8 +6,11 @@ package Interfaces;
 
 // Importaciones
 import Dominio.Cuenta;
+import Dominio.Operacion;
 import Dominio.Transferencia;
 import Excepciones.PersistenciaException;
+import Implementaciones.CuentasDAO;
+import Implementaciones.OperacionesDAO;
 
 /**
  * Esta clase permite implementar una interface de tipo TransferenciasDAO.
@@ -22,5 +25,5 @@ public interface ITransferenciasDAO {
     
     Transferencia insertar(Transferencia transferencia) throws PersistenciaException;
     
-    Integer realizarTransferencia(Transferencia transferencia) throws PersistenciaException;
+    Integer realizarTransferencia(Transferencia transferencia,Operacion operacion) throws PersistenciaException;
 }

@@ -38,7 +38,7 @@ public class OperacionesDAO implements IOperacionesDAO {
 
     @Override
     public Operacion consultar(Integer folio) {
-        String consulta = "SELECT folio, fecha, monto, num_cuenta_origen"
+        String consulta = "SELECT folio, fecha, monto, num_cuenta_origen,tipo"
                 + " FROM operaciones WHERE folio = ?";
         try (
                 Connection conexion = MANEJADOR_CONEXIONES.crearConexion(); PreparedStatement comando = conexion.prepareStatement(consulta);) {
@@ -50,7 +50,8 @@ public class OperacionesDAO implements IOperacionesDAO {
                 String fecha = resultado.getString("fecha");
                 Float monto = resultado.getFloat("monto");
                 Integer numCuentaOrigen = resultado.getInt("num_cuenta_origen");
-                operacion = new Operacion(folioOperacion, fecha, monto, numCuentaOrigen);
+                String tipoTransaccion=resultado.getString("tipo");
+                operacion = new Operacion(folioOperacion, fecha, monto, numCuentaOrigen,tipoTransaccion);
             }
             return operacion;
         } catch (SQLException ex) {
@@ -61,21 +62,20 @@ public class OperacionesDAO implements IOperacionesDAO {
 
     @Override
     public Operacion insertar(Operacion operacion) throws PersistenciaException {
-        String insercion = "INSERT INTO Operaciones (monto, num_cuenta_origen)"
-                + " VALUES (?, ?)";
+        String insercion = "INSERT INTO Operaciones (monto, num_cuenta_origen,tipo)"
+                + " VALUES (?, ?,?)";
         try (
                 Connection conexion = MANEJADOR_CONEXIONES.crearConexion(); PreparedStatement comando = conexion.prepareStatement(insercion, Statement.RETURN_GENERATED_KEYS);) {
             // INSERTAR
             comando.setFloat(1, operacion.getMonto_pesos());
             comando.setInt(2, operacion.getNum_cuenta_origen());
+            comando.setString(3, operacion.getTipoTransaccion());
             comando.executeUpdate();
             ResultSet llavesGeneradas = comando.getGeneratedKeys();
             if (llavesGeneradas.next()) {
                 // CONSULTAR ID Y FECHA
                 Integer llavePrimaria = llavesGeneradas.getInt(Statement.RETURN_GENERATED_KEYS);
-                String fechaOperacion = llavesGeneradas.getNString("fecha");
                 operacion.setFolio(llavePrimaria);
-                operacion.setFecha_hora(fechaOperacion);
                 return operacion;
             }
             LOG.log(Level.WARNING, "Se inserto la operacion pero no se generó folio.");

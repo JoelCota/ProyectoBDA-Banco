@@ -5,6 +5,7 @@
 package Dominio;
 
 // Importaciones
+import Dominio.*;
 import java.util.Objects;
 
 /**

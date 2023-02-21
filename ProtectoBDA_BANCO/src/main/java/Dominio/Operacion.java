@@ -1,7 +1,6 @@
 /**
  * Operacion.java
  */
-
 package Dominio;
 
 // Importaciones
@@ -10,38 +9,52 @@ import java.util.Objects;
 /**
  * Esta clase permite crear objetos de tipo Operacion.
  *
- * @author Brandon Figueroa Ugalde
- * ID: 00000233295
- * @author Joel Antonio Lopez Cota 
- * ID: 00000228926
- * 15/02/2023 11:56:45 PM
+ * @author Brandon Figueroa Ugalde ID: 00000233295
+ * @author Joel Antonio Lopez Cota ID: 00000228926 15/02/2023 11:56:45 PM
  */
 public class Operacion {
+
     // Atributos
     private Integer folio;
     private String fecha_hora;
     private Float monto_pesos;
     private Integer num_cuenta_origen;
+    private String tipoTransaccion;
 
     public Operacion() {
     }
 
-    public Operacion(Integer folio, String fecha_hora, Float monto_pesos, Integer num_cuenta_origen) {
+    public Operacion(Integer folio, String fecha_hora, Float monto_pesos, Integer num_cuenta_origen, String tipoTransaccion) {
         this.folio = folio;
         this.fecha_hora = fecha_hora;
         this.monto_pesos = monto_pesos;
         this.num_cuenta_origen = num_cuenta_origen;
+        this.tipoTransaccion = tipoTransaccion;
     }
 
-    public Operacion(String fecha_hora, Float monto_pesos, Integer num_cuenta_origen) {
+    public Operacion(String fecha_hora, Float monto_pesos, Integer num_cuenta_origen, String tipoTransaccion) {
         this.fecha_hora = fecha_hora;
         this.monto_pesos = monto_pesos;
         this.num_cuenta_origen = num_cuenta_origen;
+        this.tipoTransaccion = tipoTransaccion;
+
     }
 
-    public Operacion(Float monto_pesos, Integer num_cuenta_origen) {
+    public Operacion(Float monto_pesos, Integer num_cuenta_origen, String tipoTransaccion) {
         this.monto_pesos = monto_pesos;
         this.num_cuenta_origen = num_cuenta_origen;
+        this.tipoTransaccion = tipoTransaccion;
+
+    }
+
+   
+
+    public String getTipoTransaccion() {
+        return tipoTransaccion;
+    }
+
+    public void setTipoTransaccion(String tipoTransaccion) {
+        this.tipoTransaccion = tipoTransaccion;
     }
 
     public Integer getFolio() {
