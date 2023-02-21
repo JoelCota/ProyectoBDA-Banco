@@ -9,10 +9,8 @@ import java.util.Objects;
 /**
  * Esta clase permite crear objetos de tipo Cliente.
  *
- * @author Brandon Figueroa Ugalde
- * ID: 00000233295
- * @author Joel Antonio Lopez Cota 
- * ID: 00000228926
+ * @author Brandon Figueroa Ugalde ID: 00000233295
+ * @author Joel Antonio Lopez Cota ID: 00000228926
  */
 public class Cliente {
 
@@ -306,6 +304,7 @@ public class Cliente {
 
     /**
      * Metodo que permite setear el id del domiiclio del cliente
+     *
      * @param id_domicilio es el id del domicilio a setear
      */
     public void setId_domicilio(Integer id_domicilio) {
@@ -314,6 +313,7 @@ public class Cliente {
 
     /**
      * Metodo hash code
+     *
      * @return el hash
      */
     @Override
@@ -346,6 +346,7 @@ public class Cliente {
 
     /**
      * Metodo to string
+     *
      * @return los datos en string
      */
     @Override

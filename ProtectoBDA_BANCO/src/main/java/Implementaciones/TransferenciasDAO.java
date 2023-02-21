@@ -29,9 +29,15 @@ import java.util.logging.Logger;
  */
 public class TransferenciasDAO implements ITransferenciasDAO {
 
+    // Atributos
     private static final Logger LOG = Logger.getLogger(ClientesDAO.class.getName());
     public final IConexionBD MANEJADOR_CONEXIONES;
 
+    /**
+    * Constructor que crea y maneja la conexión a la base de datos
+    * 
+    * @param manejadorConexiones Manejador de conexiones
+    */
     public TransferenciasDAO(IConexionBD manejadorConexiones) {
         this.MANEJADOR_CONEXIONES = manejadorConexiones;
     }

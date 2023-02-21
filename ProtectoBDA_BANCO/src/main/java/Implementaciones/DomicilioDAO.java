@@ -17,23 +17,35 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Esta clase permite implementar los métodos para acceder y consultar a los datos
- * de Cuentas.
+ * Esta clase permite implementar los métodos para acceder y consultar a los
+ * datos de Cuentas.
  *
- * @author Brandon Figueroa Ugalde
- * ID: 00000233295
- * @author Joel Antonio Lopez Cota 
- * ID: 00000228926
+ * @author Brandon Figueroa Ugalde ID: 00000233295
+ * @author Joel Antonio Lopez Cota ID: 00000228926
  */
-public class DomicilioDAO implements IDomicilioDAO{
-      
-  private static final Logger LOG = Logger.getLogger(ClientesDAO.class.getName());
+public class DomicilioDAO implements IDomicilioDAO {
+
+    // Atributos
+    private static final Logger LOG = Logger.getLogger(ClientesDAO.class.getName());
     public final IConexionBD MANEJADOR_CONEXIONES;
 
+    /**
+     * Constructor que crea y maneja la conexión a la base de datos
+     *
+     * @param manejadorConexiones Manejador de conexiones
+     */
     public DomicilioDAO(IConexionBD MANEJADOR_CONEXIONES) {
         this.MANEJADOR_CONEXIONES = MANEJADOR_CONEXIONES;
     }
-   @Override
+
+    /**
+     * Metodo que permite insertar un domicilio
+     *
+     * @param domicilio es el domicilio a insertar
+     * @return el domicilio insertado
+     * @throws PersistenciaException se lanza en caso de error
+     */
+    @Override
     public Domicilio insertarDomicilio(Domicilio domicilio) throws PersistenciaException {
         String codigoSQL = "INSERT INTO domicilios (calle, numero, colonia)"
                 + " VALUES (?, ?, ?)";
@@ -59,6 +71,13 @@ public class DomicilioDAO implements IDomicilioDAO{
         }
     }
 
+    /**
+     * Metodo que permite actualizar el domicilio
+     *
+     * @param domicilio objeto domicilio con los valores que se van a actualizar
+     * @return el domicilio con los datos ya actualizados
+     * @throws PersistenciaException se lanza en caso de error
+     */
     @Override
     public Domicilio actualizarDomicilio(Domicilio domicilio) throws PersistenciaException {
         String codigoSQL = "UPDATE domicilios set calle=?, numero=?, colonia=? where id_domicilio=?";
@@ -79,7 +98,13 @@ public class DomicilioDAO implements IDomicilioDAO{
         }
         return null;
     }
-    
+
+    /**
+     * Metodo que permite consultar el domicilio de la base de datos
+     *
+     * @param id_domicilio es el id con el que se consultara el domicilio
+     * @return el domicilio que se consulto con sus atributos
+     */
     @Override
     public Domicilio consultarDomicilio(Integer id_domicilio) {
         String consulta = "SELECT id_domicilio,calle,numero,colonia from domicilios where id_domicilio=?";
@@ -100,5 +125,5 @@ public class DomicilioDAO implements IDomicilioDAO{
             System.err.println(ex.getMessage());
             return null;
         }
-    }    
+    }
 }

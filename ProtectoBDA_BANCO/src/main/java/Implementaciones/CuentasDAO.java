@@ -1,7 +1,6 @@
 /**
  * CuentasDAO.java
  */
-
 package Implementaciones;
 
 // Importaciones
@@ -22,23 +21,33 @@ import java.util.logging.Logger;
 import utils.ConfiguracionPaginado;
 
 /**
- * Esta clase permite implementar los métodos para acceder y consultar a los datos
- * de Cuentas.
+ * Esta clase permite implementar los métodos para acceder y consultar a los
+ * datos de Cuentas.
  *
- * @author Brandon Figueroa Ugalde
- * ID: 00000233295
- * @author Joel Antonio Lopez Cota 
- * ID: 00000228926
+ * @author Brandon Figueroa Ugalde ID: 00000233295
+ * @author Joel Antonio Lopez Cota ID: 00000228926
  */
 public class CuentasDAO implements ICuentasDAO {
-    
-  private static final Logger LOG = Logger.getLogger(ClientesDAO.class.getName());
+
+    // Atributos
+    private static final Logger LOG = Logger.getLogger(ClientesDAO.class.getName());
     public final IConexionBD MANEJADOR_CONEXIONES;
-    
+
+    /**
+     * Constructor que crea y maneja la conexión a la base de datos
+     *
+     * @param manejadorConexiones Manejador de conexiones
+     */
     public CuentasDAO(IConexionBD manejadorConexiones) {
         this.MANEJADOR_CONEXIONES = manejadorConexiones;
     }
 
+    /**
+     * Metodo que permite consultar una cuenta por medio de su número
+     *
+     * @param num_cuenta numero de la cuenta que se desea consultar
+     * @return la cuenta a consultar
+     */
     @Override
     public Cuenta consultar(Integer num_cuenta) {
         String consulta = "SELECT num_cuenta, fecha_apertura, saldo, estado, id_cliente"
@@ -51,7 +60,7 @@ public class CuentasDAO implements ICuentasDAO {
             if (resultado.next()) {
                 Integer numCuenta = resultado.getInt("num_cuenta");
                 String fecha_apertura = resultado.getString("fecha_apertura");
-                Float saldo = resultado.getFloat("saldo"); 
+                Float saldo = resultado.getFloat("saldo");
                 String estado = resultado.getString("estado");
                 Integer id_cliente = resultado.getInt("id_cliente");
                 cuenta = new Cuenta(num_cuenta, fecha_apertura, saldo, estado, id_cliente);
@@ -62,7 +71,14 @@ public class CuentasDAO implements ICuentasDAO {
             return null;
         }
     }
-    
+
+    /**
+     * Metodo que permite insertar una cuenta en la base de datos
+     *
+     * @param cuenta es la cuenta que se desea insertar
+     * @return una objeto del tipo cuenta con su id
+     * @throws PersistenciaException
+     */
     @Override
     public Cuenta insertarCuenta(Cuenta cuenta) throws PersistenciaException {
         String codigoSQL = "INSERT INTO cuentas (saldo,id_cliente)"
@@ -88,6 +104,13 @@ public class CuentasDAO implements ICuentasDAO {
         }
     }
 
+    /**
+     * Metodo que permite cancelar una cuenta
+     *
+     * @param cuenta es la cuenta que se desea cancelar
+     * @return la cuenta cancelada
+     * @throws PersistenciaException se lanza en caso de erro
+     */
     @Override
     public Cuenta cancelarCuenta(Cuenta cuenta) throws PersistenciaException {
         String codigoSQL = "UPDATE cuentas SET estado='Cancelada' where id_cliente=? and num_cuenta=?";
@@ -107,6 +130,14 @@ public class CuentasDAO implements ICuentasDAO {
     }
 
     // Límite y paginado
+    /**
+     * Metodo que permite consultar la lista de cuentas
+     *
+     * @param configPaginado la configuracion del paginado
+     * @param cliente el cliente al que se desea consultar las cuentas
+     * @return una lista con las cuentas del cliente
+     * @throws PersistenciaException se lanza en caso de error
+     */
     @Override
     public List<Cuenta> consultarListaCuentas(ConfiguracionPaginado configPaginado, Cliente cliente) throws PersistenciaException {
         String codigoSQL = "Select num_cuenta,saldo,estado from cuentas where id_cliente=? order by estado";
@@ -130,6 +161,13 @@ public class CuentasDAO implements ICuentasDAO {
     }
 
     // Límite y paginado
+    /**
+     * Metodo que permite consultar la lsita de cuentas
+     *
+     * @param cliente es el cliente al que se le desea consultar las cuentas
+     * @return una lista con las cuentas que tiene el cliente
+     * @throws PersistenciaException se lanza en caso de error
+     */
     @Override
     public List<Cuenta> consultarListaCuentas(Cliente cliente) throws PersistenciaException {
         String codigoSQL = "Select num_cuenta from cuentas where id_cliente=? and estado='Activa'";

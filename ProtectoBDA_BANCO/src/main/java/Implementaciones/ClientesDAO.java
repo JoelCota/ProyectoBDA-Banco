@@ -7,28 +7,21 @@ package Implementaciones;
 import Interfaces.IConexionBD;
 import Interfaces.IClientesDAO;
 import Dominio.Cliente;
-import Dominio.Cuenta;
-import Dominio.Domicilio;
 import Excepciones.PersistenciaException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import utils.ConfiguracionPaginado;
 
 /**
- * Esta clase permite implementar los métodos para acceder y consultar a los datos
- * de Clientes.
+ * Esta clase permite implementar los métodos para acceder y consultar a los
+ * datos de Clientes.
  *
- * @author Brandon Figueroa Ugalde
- * ID: 00000233295
- * @author Joel Antonio Lopez Cota 
- * ID: 00000228926
+ * @author Brandon Figueroa Ugalde ID: 00000233295
+ * @author Joel Antonio Lopez Cota ID: 00000228926
  */
 public class ClientesDAO implements IClientesDAO {
 
@@ -37,14 +30,21 @@ public class ClientesDAO implements IClientesDAO {
     public final IConexionBD MANEJADOR_CONEXIONES;
 
     /**
-    * Constructor que crea y maneja la conexión a la base de datos
-    * 
-    * @param manejadorConexiones Manejador de conexiones
-    */
+     * Constructor que crea y maneja la conexión a la base de datos
+     *
+     * @param manejadorConexiones Manejador de conexiones
+     */
     public ClientesDAO(IConexionBD manejadorConexiones) {
         this.MANEJADOR_CONEXIONES = manejadorConexiones;
     }
 
+    /**
+     * Metodo que permite consultar el cliente en base al id
+     *
+     * @param id_cliente el id del cliente a consultar
+     * @return un atributo de tipo cliente con los atributos del cliente
+     * consultado
+     */
     @Override
     public Cliente consultar(Integer id_cliente) {
         String consulta = "SELECT id_cliente,nombres,apellido_paterno,apellido_materno,fecha_nacimiento,edad,id_domicilio"
@@ -71,6 +71,14 @@ public class ClientesDAO implements IClientesDAO {
         }
     }
 
+    /**
+     * Metodo que permite insertar un cliente en la base de datos
+     *
+     * @param id_cliente es el cliente a insertar
+     * @param contrasena constraseña de inicio de sesión
+     * @return un cliente inicializado con todos los atributos
+     * @throws PersistenciaException Se genera en caso de error
+     */
     @Override
     public Cliente iniciarSesion(Integer id_cliente, String contrasena) {
         String consulta = "SELECT id_cliente,nombres,apellido_paterno,apellido_materno,fecha_nacimiento,aes_decrypt(contrasena,'hunter2'),edad,id_domicilio"
@@ -137,7 +145,14 @@ public class ClientesDAO implements IClientesDAO {
         }
     }
 
-
+    /**
+     * Metodo que permite actualizar el cliente en base a otro cliente
+     *
+     * @param cliente es el atributo cliente que servira para actualizar los
+     * datos
+     * @return el cliente con los datos actualizados
+     * @throws PersistenciaException se genera en caso de error de persistencia
+     */
     @Override
     public Cliente actualizarCliente(Cliente cliente) throws PersistenciaException {
         String codigoSQL = "UPDATE Clientes SET nombres=?, apellido_paterno=?, apellido_materno=?, fecha_nacimiento=?, contrasena=? where id_cliente=?";
@@ -159,6 +174,4 @@ public class ClientesDAO implements IClientesDAO {
         }
         return null;
     }
-
-
 }

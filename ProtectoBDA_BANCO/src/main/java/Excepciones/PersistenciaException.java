@@ -1,17 +1,13 @@
 /**
  * PersistenciaException.java
  */
-
 package Excepciones;
 
 /**
  * Esta clase permite crear excepciones de tipo Persistencia.
  *
- * @author Brandon Figueroa Ugalde
- * ID: 00000233295
- * @author Joel Antonio Lopez Cota 
- * ID: 00000228926
- * 15/02/2023 01:34:49 PM
+ * @author Brandon Figueroa Ugalde ID: 00000233295
+ * @author Joel Antonio Lopez Cota ID: 00000228926
  */
 public class PersistenciaException extends Exception {
 
@@ -62,4 +58,3 @@ public class PersistenciaException extends Exception {
         super(msj, causa, enableSuppression, writableStackTrace);
     }
 }
-

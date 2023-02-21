@@ -9,10 +9,8 @@ import java.util.Objects;
 /**
  * Esta clase permite crear objetos de tipo Operacion.
  *
- * @author Brandon Figueroa Ugalde
- * ID: 00000233295
- * @author Joel Antonio Lopez Cota 
- * ID: 00000228926
+ * @author Brandon Figueroa Ugalde ID: 00000233295
+ * @author Joel Antonio Lopez Cota ID: 00000228926
  */
 public class Operacion {
 
@@ -75,64 +73,82 @@ public class Operacion {
         this.tipoTransaccion = tipoTransaccion;
 
     }
+
     /**
      * Metodo que permite acceder al tipo de transaccion
+     *
      * @return el tipo de transaccion de la operacion
      */
     public String getTipoTransaccion() {
         return tipoTransaccion;
     }
+
     /**
      * Metodo que setea el tipo de transaccion
+     *
      * @param tipoTransaccion es el tipo de transaccicon de la operacion
      */
     public void setTipoTransaccion(String tipoTransaccion) {
         this.tipoTransaccion = tipoTransaccion;
     }
+
     /**
      * Metodo que permite acceder al folio
+     *
      * @return el folio de la operacion
      */
     public Integer getFolio() {
         return folio;
     }
+
     /**
      * Metodo que permite setear el folio de la operacion
+     *
      * @param folio es el folio a setear
      */
     public void setFolio(Integer folio) {
         this.folio = folio;
     }
+
     /**
      * Metodo que te permite acceder a la fecha y hora de la operacion
+     *
      * @return la fecha y hora de la operacion
      */
     public String getFecha_hora() {
         return fecha_hora;
     }
+
     /**
      * Metodo que permite setear la fecha y hora de la opepracion
+     *
      * @param fecha_hora es la fecha hora a setear
      */
     public void setFecha_hora(String fecha_hora) {
         this.fecha_hora = fecha_hora;
     }
+
     /**
      * Metodo que permite acceder al monto en pesos
+     *
      * @return el monto en pesos
      */
     public Float getMonto_pesos() {
         return monto_pesos;
     }
+
     /**
      * Metodo que permite setear el monto de pesos de la operacion
+     *
      * @param monto_pesos es el monto en pesos de la operacion
      */
     public void setMonto_pesos(Float monto_pesos) {
         this.monto_pesos = monto_pesos;
     }
+
     /**
      * Metodo que permite acceder al numero cuenta de origen
+     *
      * @return el numero cuenta origen
      */
     public Integer getNum_cuenta_origen() {

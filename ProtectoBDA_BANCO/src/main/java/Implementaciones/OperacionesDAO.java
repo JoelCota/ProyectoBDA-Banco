@@ -1,13 +1,9 @@
-
-
 package Implementaciones;
 
 // Importaciones
 import Interfaces.IOperacionesDAO;
 import Interfaces.IConexionBD;
-import Implementaciones.*;
 import Dominio.Operacion;
-import Dominio.Transferencia;
 import Excepciones.PersistenciaException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,18 +18,29 @@ import java.util.logging.Logger;
  * Operaciones.
  *
  * @author Brandon Figueroa Ugalde ID: 00000233295
- * @author Joel Antonio Lopez Cota ID: 00000228926
- * 18/02/2023 01:46:55 PM
+ * @author Joel Antonio Lopez Cota ID: 00000228926 18/02/2023 01:46:55 PM
  */
 public class OperacionesDAO implements IOperacionesDAO {
-    
-    private static final Logger LOG = Logger.getLogger(OperacionesDAO.class.getName());
+
+    // Atributos
+    private static final Logger LOG = Logger.getLogger(ClientesDAO.class.getName());
     public final IConexionBD MANEJADOR_CONEXIONES;
 
+    /**
+     * Constructor que crea y maneja la conexión a la base de datos
+     *
+     * @param manejadorConexiones Manejador de conexiones
+     */
     public OperacionesDAO(IConexionBD manejadorConexiones) {
         this.MANEJADOR_CONEXIONES = manejadorConexiones;
     }
 
+    /**
+     * Metodo que permite consultar una operacion en la base de datos
+     *
+     * @param folio es el folio que permite consultar la operacion
+     * @return el objeto operacion con todos sus atributos
+     */
     @Override
     public Operacion consultar(Integer folio) {
         String consulta = "SELECT folio, fecha, monto, num_cuenta_origen,tipo"
@@ -48,8 +55,8 @@ public class OperacionesDAO implements IOperacionesDAO {
                 String fecha = resultado.getString("fecha");
                 Float monto = resultado.getFloat("monto");
                 Integer numCuentaOrigen = resultado.getInt("num_cuenta_origen");
-                String tipoTransaccion=resultado.getString("tipo");
-                operacion = new Operacion(folioOperacion, fecha, monto, numCuentaOrigen,tipoTransaccion);
+                String tipoTransaccion = resultado.getString("tipo");
+                operacion = new Operacion(folioOperacion, fecha, monto, numCuentaOrigen, tipoTransaccion);
             }
             return operacion;
         } catch (SQLException ex) {
@@ -58,6 +65,13 @@ public class OperacionesDAO implements IOperacionesDAO {
         }
     }
 
+    /**
+     * Metodo que permite insertar una operacion en la base de datos
+     *
+     * @param operacion es la operacion que se desea insertar
+     * @return el objeto operacion con sus atributos insertados
+     * @throws PersistenciaException
+     */
     @Override
     public Operacion insertar(Operacion operacion) throws PersistenciaException {
         String insercion = "INSERT INTO Operaciones (monto, num_cuenta_origen,tipo)"

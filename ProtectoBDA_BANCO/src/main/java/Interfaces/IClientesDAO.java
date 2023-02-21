@@ -19,6 +19,7 @@ import utils.ConfiguracionPaginado;
  * 15/02/2023 01:34:02 PM
  */
 public interface IClientesDAO {
+    
     /**
      * Metodo que permite consultar el cliente en base al id
      * @param id_cliente el id del cliente a consultar

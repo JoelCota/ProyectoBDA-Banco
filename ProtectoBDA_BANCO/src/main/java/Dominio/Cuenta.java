@@ -9,10 +9,8 @@ import java.util.Objects;
 /**
  * Esta clase permite crear objetos de tipo Cuenta.
  *
- * @author Brandon Figueroa Ugalde
- * ID: 00000233295
- * @author Joel Antonio Lopez Cota 
- * ID: 00000228926
+ * @author Brandon Figueroa Ugalde ID: 00000233295
+ * @author Joel Antonio Lopez Cota ID: 00000228926
  */
 public class Cuenta {
 
@@ -31,6 +29,7 @@ public class Cuenta {
 
     /**
      * Constructor que inicia los datos del paramtro
+     *
      * @param num_cuenta es el numero de cuenta a setear
      * @param saldo es el saldo a setear
      */
@@ -41,6 +40,7 @@ public class Cuenta {
 
     /**
      * Constructor que inicia los datos del paramtro
+     *
      * @param num_cuenta es el numero de cuenta a setear
      * @param id_cliente es el id del cliente a setear
      */
@@ -51,6 +51,7 @@ public class Cuenta {
 
     /**
      * Constructor que inicia los datos del paramtro
+     *
      * @param num_cuenta es el numero de cuenta a setear
      */
     public Cuenta(Integer num_cuenta) {
@@ -58,7 +59,8 @@ public class Cuenta {
     }
 
     /**
-      * Constructor que inicia los datos del paramtro
+     * Constructor que inicia los datos del paramtro
+     *
      * @param saldo es el saldo a setear
      * @param id_cliente es el id del cliente a setear
      */
@@ -68,7 +70,8 @@ public class Cuenta {
     }
 
     /**
-      * Constructor que inicia los datos del paramtro
+     * Constructor que inicia los datos del paramtro
+     *
      * @param num_cuenta es el numero de cuenta a setear
      * @param saldo es el saldo a setear
      * @param estado es el estado a setear
@@ -81,6 +84,7 @@ public class Cuenta {
 
     /**
      * Constructor que inicia los datos del paramtro
+     *
      * @param num_cuenta es el numero de cuenta a setear
      * @param fecha_hora_apertura es la fecha de apertura a setear
      * @param saldo es el saldo a setear
@@ -97,6 +101,7 @@ public class Cuenta {
 
     /**
      * Constructor que inicia los datos del paramtro
+     *
      * @param fecha_hora_apertura es la fecha de apertura a setear
      * @param saldo es el saldo a setear
      * @param estado es el estado a setear
@@ -110,7 +115,8 @@ public class Cuenta {
     }
 
     /**
-     * Metodo que permite acceder al numero de cuenta 
+     * Metodo que permite acceder al numero de cuenta
+     *
      * @return el numero de cuenta de la cuenta
      */
     public Integer getNum_cuenta() {
@@ -119,6 +125,7 @@ public class Cuenta {
 
     /**
      * Metodo que permite setear el numero de cuenta
+     *
      * @param num_cuenta es el numero de cuenta a setear
      */
     public void setNum_cuenta(Integer num_cuenta) {
@@ -127,6 +134,7 @@ public class Cuenta {
 
     /**
      * Metodo que permite acceder a la fecha de apertura de la cuenta
+     *
      * @return la fecha de apertura de la cuenta
      */
     public String getFecha_hora_apertura() {
@@ -135,6 +143,7 @@ public class Cuenta {
 
     /**
      * Metodo que permite acceder a la fecha de apertura
+     *
      * @param fecha_hora_apertura es la fecha que se desea setear
      */
     public void setFecha_hora_apertura(String fecha_hora_apertura) {
@@ -143,6 +152,7 @@ public class Cuenta {
 
     /**
      * Metodo que permite acceder al saldo de la cuenta
+     *
      * @return el saldo de la cuenta
      */
     public Float getSaldo() {
@@ -151,6 +161,7 @@ public class Cuenta {
 
     /**
      * Metodo que permite setear el valor del saldo
+     *
      * @param saldo es el saldo a setear
      */
     public void setSaldo(Float saldo) {
@@ -159,6 +170,7 @@ public class Cuenta {
 
     /**
      * Metodo que permite accceder al estado de la cuenta
+     *
      * @return el estado del cliente
      */
     public String getEstado() {
@@ -167,6 +179,7 @@ public class Cuenta {
 
     /**
      * Metodo uqe permite setear el estado de la cuenta
+     *
      * @param estado es el estado de la cuenta
      */
     public void setEstado(String estado) {
@@ -175,7 +188,8 @@ public class Cuenta {
 
     /**
      * Metodo que permite acceder al id cliente
-     * @return el id  del cliente
+     *
+     * @return el id del cliente
      */
     public Integer getId_cliente() {
         return id_cliente;
@@ -183,6 +197,7 @@ public class Cuenta {
 
     /**
      * Metodo que setea el id del cliente
+     *
      * @param id_cliente es el id que se desea setear
      */
     public void setId_cliente(Integer id_cliente) {

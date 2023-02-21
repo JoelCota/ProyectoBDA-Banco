@@ -9,10 +9,8 @@ import java.util.Objects;
 /**
  * Esta clase permite crear objetos de tipo Domicilio.
  *
- * @author Brandon Figueroa Ugalde
- * ID: 00000233295
- * @author Joel Antonio Lopez Cota 
- * ID: 00000228926
+ * @author Brandon Figueroa Ugalde ID: 00000233295
+ * @author Joel Antonio Lopez Cota ID: 00000228926
  */
 public class Domicilio {
 
@@ -21,6 +19,7 @@ public class Domicilio {
     private String colonia;
     private String calle;
     private String numero;
+
     /**
      * Constructor vacio
      */
@@ -54,58 +53,74 @@ public class Domicilio {
         this.calle = calle;
         this.numero = numero;
     }
+
     /**
      * Metodo que permite acceder al id del domicilio
+     *
      * @return el id del domicilio
      */
     public Integer getId_domicilio() {
         return id_domicilio;
     }
+
     /**
      * Metodo que permite setear el id del domicilio
+     *
      * @param id_domicilio es el id a setear
      */
     public void setId_domicilio(Integer id_domicilio) {
         this.id_domicilio = id_domicilio;
     }
+
     /**
-     * Metodo que permite acceder a la colonia 
+     * Metodo que permite acceder a la colonia
+     *
      * @return la colonia del domicilio
      */
     public String getColonia() {
         return colonia;
     }
+
     /**
      * Metodo que permite setear la colonia en el domicilio
+     *
      * @param colonia es la colonia que se desea setear
      */
     public void setColonia(String colonia) {
         this.colonia = colonia;
     }
+
     /**
      * Metodo que permite acceder a la calle del domicilio
+     *
      * @return la calle del domicilio
      */
     public String getCalle() {
         return calle;
     }
+
     /**
      * Metodo que permite setear la calle del domicilio
+     *
      * @param calle es la calle a setear
      */
     public void setCalle(String calle) {
         this.calle = calle;
     }
+
     /**
      * Metodo que permite acceder al numero del domicilio
+     *
      * @return el numero del domicilio
      */
     public String getNumero() {
         return numero;
     }
+
     /**
      * Metodo que permite setear el numero del cliente
-     * @param numero 
+     *
+     * @param numero
      */
     public void setNumero(String numero) {
         this.numero = numero;
