@@ -108,6 +108,9 @@
       </Events>
     </Component>
     <Component class="javax.swing.JPasswordField" name="pswCliente">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="pswClienteKeyTyped"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

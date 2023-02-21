@@ -52,6 +52,7 @@ public class frmInicioSesion extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Contraseña y/o usuario incorrecto");
         }
     }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -92,6 +93,12 @@ public class frmInicioSesion extends javax.swing.JFrame {
         btnAtras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAtrasActionPerformed(evt);
+            }
+        });
+
+        pswCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                pswClienteKeyTyped(evt);
             }
         });
 
@@ -156,10 +163,17 @@ public class frmInicioSesion extends javax.swing.JFrame {
 
     private void txtNumeroClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumeroClienteKeyTyped
        char txt=evt.getKeyChar();
-        if (!(Character.isDigit(txt))) {
+       if (!(Character.isDigit(txt))) {
             evt.consume();
         }  // TODO add your handling code here:
     }//GEN-LAST:event_txtNumeroClienteKeyTyped
+
+    private void pswClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pswClienteKeyTyped
+      if(pswCliente.getText().length() >= 8)
+    {
+        evt.consume();
+    }
+    }//GEN-LAST:event_pswClienteKeyTyped
 
 
 
@@ -171,4 +185,5 @@ public class frmInicioSesion extends javax.swing.JFrame {
     private javax.swing.JPasswordField pswCliente;
     private javax.swing.JTextField txtNumeroCliente;
     // End of variables declaration//GEN-END:variables
+
 }

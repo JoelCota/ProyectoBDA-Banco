@@ -12,6 +12,9 @@ import java.util.regex.Pattern;
  * @author aroco
  */
 public class Validadores {
+
+    public Validadores() {
+    }
     
     
     /**
@@ -21,6 +24,21 @@ public class Validadores {
      */
     public boolean validaContrasena(String con){
         String patron = "^(?i)(?=.*[a-z])(?=.*[0-9])[a-z0-9#.!@$*&_]{8,20}$";
+        Pattern p = Pattern.compile(patron);
+        Matcher matcher = p.matcher(con);
+        if(matcher.matches()){
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * Método que valida una contraseña.
+     * @param con float a validar.
+     * @return Verdadero o falso si se ha validado el float.
+     */
+    public boolean validaFloat(String con){
+        String patron = "[+-]?([0-9]*[.])?[0-9]+";
         Pattern p = Pattern.compile(patron);
         Matcher matcher = p.matcher(con);
         if(matcher.matches()){
