@@ -189,6 +189,7 @@ public class Cuenta {
 
     /**
      * Metodo hash code
+     *
      * @return el hash
      */
     @Override
