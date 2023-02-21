@@ -83,24 +83,17 @@ public class TransferenciasDAO implements ITransferenciasDAO {
         }
     }
 
-    @Override
-    public Integer realizarTransferencia(Transferencia transferencia,Operacion operacion) throws PersistenciaException {
-            String transaccion = "START TRANSACTION;\n"
-                    + " UPDATE cuentas SET saldo = saldo - ? WHERE num_cuenta = ?;\n" // Cuenta origen
-                    + " UPDATE cuentas SET saldo = saldo + ? WHERE num_cuenta = ?;\n" // Cuenta destino
-                    + " COMMIT;";
-            try (
-                    Connection conexion = MANEJADOR_CONEXIONES.crearConexion(); PreparedStatement comando = conexion.prepareStatement(transaccion);) {
-                comando.setFloat(1, operacion.getMonto_pesos());
-                comando.setInt(2, operacion.getNum_cuenta_origen());
-                comando.setFloat(3, operacion.getMonto_pesos());
-                comando.setInt(4, transferencia.getNum_cuenta_destino());
-                ResultSet resultado = comando.executeQuery();
-                return 6; // Se realizó la transferencia exitosamente 
-            } catch (SQLException ex) {
-                LOG.log(Level.SEVERE, ex.getMessage());
-                return -1; // No se pudo realizar la transferencia
-            }
-        } 
+    public void realizarTransferencia(Integer num_cuenta_origen, Integer num_cuenta_destino, Float monto) throws PersistenciaException {
+        String transaccion = "CALL realizarTransferencia(?,?,?)";
+        try (
+                Connection conexion = MANEJADOR_CONEXIONES.crearConexion(); PreparedStatement comando = conexion.prepareStatement(transaccion);) {
+            comando.setInt(1, num_cuenta_origen);
+            comando.setInt(2, num_cuenta_destino);
+            comando.setFloat(3, monto);
+            comando.executeQuery();
+        } catch (SQLException ex) {
+            LOG.log(Level.SEVERE, ex.getMessage());
+            throw new PersistenciaException("No fue posible hacer la transferencia.");
+        }
     }
-
+}

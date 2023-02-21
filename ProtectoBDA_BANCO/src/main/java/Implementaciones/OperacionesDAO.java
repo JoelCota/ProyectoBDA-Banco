@@ -73,7 +73,7 @@ public class OperacionesDAO implements IOperacionesDAO {
             comando.executeUpdate();
             ResultSet llavesGeneradas = comando.getGeneratedKeys();
             if (llavesGeneradas.next()) {
-                // CONSULTAR ID Y FECHA
+                // CONSULTAR ID
                 Integer llavePrimaria = llavesGeneradas.getInt(Statement.RETURN_GENERATED_KEYS);
                 operacion.setFolio(llavePrimaria);
                 return operacion;
