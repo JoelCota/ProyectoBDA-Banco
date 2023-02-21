@@ -1,7 +1,6 @@
 C:\Users\aroco\OneDrive - potros.itson.edu.mx\Escritorio\Git\ProyectoBDA-Banco\ProtectoBDA_BANCO\src\main\java\Dominio\Cuenta.java
 C:\Users\aroco\OneDrive - potros.itson.edu.mx\Escritorio\Git\ProyectoBDA-Banco\ProtectoBDA_BANCO\src\main\java\Dominio\Retiro.java
 C:\Users\aroco\OneDrive - potros.itson.edu.mx\Escritorio\Git\ProyectoBDA-Banco\ProtectoBDA_BANCO\src\main\java\Implementaciones\ConexionBD.java
-C:\Users\aroco\OneDrive - potros.itson.edu.mx\Escritorio\Git\ProyectoBDA-Banco\ProtectoBDA_BANCO\src\main\java\Presentacion\frmCliente.java
 C:\Users\aroco\OneDrive - potros.itson.edu.mx\Escritorio\Git\ProyectoBDA-Banco\ProtectoBDA_BANCO\src\main\java\Presentacion\frmRegistrarCliente.java
 C:\Users\aroco\OneDrive - potros.itson.edu.mx\Escritorio\Git\ProyectoBDA-Banco\ProtectoBDA_BANCO\src\main\java\Validadores\Validadores.java
 C:\Users\aroco\OneDrive - potros.itson.edu.mx\Escritorio\Git\ProyectoBDA-Banco\ProtectoBDA_BANCO\src\main\java\Presentacion\frmBanco.java
@@ -10,13 +9,13 @@ C:\Users\aroco\OneDrive - potros.itson.edu.mx\Escritorio\Git\ProyectoBDA-Banco\P
 C:\Users\aroco\OneDrive - potros.itson.edu.mx\Escritorio\Git\ProyectoBDA-Banco\ProtectoBDA_BANCO\src\main\java\Implementaciones\ClientesDAO.java
 C:\Users\aroco\OneDrive - potros.itson.edu.mx\Escritorio\Git\ProyectoBDA-Banco\ProtectoBDA_BANCO\src\main\java\Presentacion\frmInterfazCliente.java
 C:\Users\aroco\OneDrive - potros.itson.edu.mx\Escritorio\Git\ProyectoBDA-Banco\ProtectoBDA_BANCO\src\main\java\Dominio\Transferencia.java
+C:\Users\aroco\OneDrive - potros.itson.edu.mx\Escritorio\Git\ProyectoBDA-Banco\ProtectoBDA_BANCO\src\main\java\Presentacion\frmInicioSesion.java
 C:\Users\aroco\OneDrive - potros.itson.edu.mx\Escritorio\Git\ProyectoBDA-Banco\ProtectoBDA_BANCO\src\main\java\Dominio\Operacion.java
 C:\Users\aroco\OneDrive - potros.itson.edu.mx\Escritorio\Git\ProyectoBDA-Banco\ProtectoBDA_BANCO\src\main\java\Interfaces\IConexionBD.java
 C:\Users\aroco\OneDrive - potros.itson.edu.mx\Escritorio\Git\ProyectoBDA-Banco\ProtectoBDA_BANCO\src\main\java\Excepciones\PersistenciaException.java
 C:\Users\aroco\OneDrive - potros.itson.edu.mx\Escritorio\Git\ProyectoBDA-Banco\ProtectoBDA_BANCO\src\main\java\Presentacion\frmRetiro.java
 C:\Users\aroco\OneDrive - potros.itson.edu.mx\Escritorio\Git\ProyectoBDA-Banco\ProtectoBDA_BANCO\src\main\java\Presentacion\frmActualizarCliente.java
-C:\Users\aroco\OneDrive - potros.itson.edu.mx\Escritorio\Git\ProyectoBDA-Banco\ProtectoBDA_BANCO\src\main\java\Implementaciones\CuentasDAO.java
-C:\Users\aroco\OneDrive - potros.itson.edu.mx\Escritorio\Git\ProyectoBDA-Banco\ProtectoBDA_BANCO\src\main\java\Interfaces\ICuentasDAO.java
+C:\Users\aroco\OneDrive - potros.itson.edu.mx\Escritorio\Git\ProyectoBDA-Banco\ProtectoBDA_BANCO\src\main\java\utils\ConfiguracionPaginado.java
 C:\Users\aroco\OneDrive - potros.itson.edu.mx\Escritorio\Git\ProyectoBDA-Banco\ProtectoBDA_BANCO\src\main\java\Dominio\Domicilio.java
 C:\Users\aroco\OneDrive - potros.itson.edu.mx\Escritorio\Git\ProyectoBDA-Banco\ProtectoBDA_BANCO\src\main\java\Dominio\Cliente.java
 C:\Users\aroco\OneDrive - potros.itson.edu.mx\Escritorio\Git\ProyectoBDA-Banco\ProtectoBDA_BANCO\src\main\java\Interfaces\IClientesDAO.java

@@ -112,9 +112,9 @@ public class ClientesDAO implements IClientesDAO {
                 Connection conexion = MANEJADOR_CONEXIONES.crearConexion();
                 PreparedStatement comando = conexion.prepareStatement(codigoSQL, Statement.RETURN_GENERATED_KEYS);) {
             // INSERTAR
-            comando.setString(1, cliente.getNombres());
-            comando.setString(2, cliente.getApellido_paterno());
-            comando.setString(3, cliente.getApellido_materno());
+            comando.setString(1, cliente.getNombres().toUpperCase());
+            comando.setString(2, cliente.getApellido_paterno().toUpperCase());
+            comando.setString(3, cliente.getApellido_materno().toUpperCase());
             comando.setString(4, cliente.getFecha_nacimiento());
             comando.setString(5, cliente.getContrasena());
             comando.setInt(6, cliente.getId_domicilio());
@@ -142,9 +142,9 @@ public class ClientesDAO implements IClientesDAO {
                 Connection conexion = MANEJADOR_CONEXIONES.crearConexion();
                 PreparedStatement comando = conexion.prepareStatement(codigoSQL, Statement.RETURN_GENERATED_KEYS);) {
             // INSERTAR
-            comando.setString(1, domicilio.getCalle());
+            comando.setString(1, domicilio.getCalle().toUpperCase());
             comando.setString(2, domicilio.getNumero());
-            comando.setString(3, domicilio.getColonia());
+            comando.setString(3, domicilio.getColonia().toUpperCase());
             comando.executeUpdate();
             ResultSet llavesGeneradas = comando.getGeneratedKeys();
             if (llavesGeneradas.next()) {
@@ -160,33 +160,6 @@ public class ClientesDAO implements IClientesDAO {
             throw new PersistenciaException("No se pudo insertar al domicilio: " + ex.getMessage());
         }
     }
-    
-     
-    
-    @Override
-    public List<Cuenta> consultarListaCuentas(ConfiguracionPaginado configPaginado,Cliente cliente) throws PersistenciaException{
-        String codigoSQL= "Select num_cuenta,saldo from cuentas where id_cliente=? limit ?";
-        List<Cuenta> listaCuentas= new LinkedList();
-        try(Connection conexion = MANEJADOR_CONEXIONES.crearConexion();
-            PreparedStatement comandoBase = conexion.prepareStatement(codigoSQL);){
-            comandoBase.setInt(2, configPaginado.getOffSet());
-            comandoBase.setInt(1, cliente.getId_cliente());
-            ResultSet resultado = comandoBase.executeQuery();
-            Cuenta cuenta=null;
-               while(resultado.next()){
-                Integer num_cuenta = resultado.getInt("num_cuenta");
-                Float saldo = resultado.getFloat("saldo");
-                cuenta = new Cuenta(num_cuenta,saldo);
-                listaCuentas.add(cuenta);
-            }
-            return listaCuentas;
-        }catch(SQLException ex){
-            System.err.println(ex.getMessage());
-            throw new PersistenciaException("Error al consultar la lista", ex);
-        }
-    }
-
-   
     @Override
     public Domicilio actualizarDomicilio(Domicilio domicilio) throws PersistenciaException {
         String codigoSQL = "UPDATE domicilios set calle=?, numero=?, colonia=? where id_domicilio=?";
@@ -194,8 +167,8 @@ public class ClientesDAO implements IClientesDAO {
                 Connection conexion = MANEJADOR_CONEXIONES.crearConexion();
                 PreparedStatement comando = conexion.prepareStatement(codigoSQL, Statement.RETURN_GENERATED_KEYS);) {
             // INSERTAR
-            comando.setString(1, domicilio.getCalle());
-            comando.setString(2, domicilio.getColonia());
+            comando.setString(1, domicilio.getCalle().toUpperCase());
+            comando.setString(2, domicilio.getColonia().toUpperCase());
             comando.setString(3, domicilio.getNumero());
             comando.setInt(4, domicilio.getId_domicilio());
             comando.executeUpdate();
@@ -215,9 +188,9 @@ public class ClientesDAO implements IClientesDAO {
         try (
                 Connection conexion = MANEJADOR_CONEXIONES.crearConexion();
                 PreparedStatement comando = conexion.prepareStatement(codigoSQL, Statement.RETURN_GENERATED_KEYS);) {
-            comando.setString(1, cliente.getNombres());
-            comando.setString(2, cliente.getApellido_paterno());
-            comando.setString(3, cliente.getApellido_materno());
+            comando.setString(1, cliente.getNombres().toUpperCase());
+            comando.setString(2, cliente.getApellido_paterno().toUpperCase());
+            comando.setString(3, cliente.getApellido_materno().toUpperCase());
             comando.setString(4, cliente.getFecha_nacimiento());
             comando.setString(5, cliente.getContrasena());
             comando.setInt(6, cliente.getId_cliente());
@@ -227,7 +200,7 @@ public class ClientesDAO implements IClientesDAO {
             }
         } catch (SQLException ex) {
             LOG.log(Level.SEVERE, ex.getMessage());
-            throw new PersistenciaException("No se pudo insertar al cliente: " + ex.getMessage());
+            throw new PersistenciaException("No se pudo actualizar al cliente: " + ex.getMessage());
         }
         return null;
     }
@@ -243,9 +216,9 @@ public class ClientesDAO implements IClientesDAO {
             Domicilio domicilio = null;
             if (resultado.next()) {
                 Integer idDomicilio = resultado.getInt("id_domicilio");
-                String calle = resultado.getString("calle");
+                String calle = resultado.getString("calle").toUpperCase();
                 String numero = resultado.getString("numero");
-                String colonia = resultado.getString("colonia");
+                String colonia = resultado.getString("colonia").toUpperCase();
                 domicilio=new Domicilio(idDomicilio,calle, numero, colonia);
             }
             return domicilio;
@@ -254,5 +227,95 @@ public class ClientesDAO implements IClientesDAO {
             return null;
         } 
     }
-   
+
+    @Override
+    public Cuenta insertarCuenta(Cuenta cuenta) throws PersistenciaException {
+              String codigoSQL = "INSERT INTO cuentas (saldo,id_cliente)"
+                         + " VALUES (?, ?)";
+        try (
+                Connection conexion = MANEJADOR_CONEXIONES.crearConexion();
+                PreparedStatement comando = conexion.prepareStatement(codigoSQL, Statement.RETURN_GENERATED_KEYS);) {
+            // INSERTAR
+            comando.setFloat(1, cuenta.getSaldo());
+            comando.setInt(2, cuenta.getId_cliente());
+            comando.executeUpdate();
+            ResultSet llavesGeneradas = comando.getGeneratedKeys();
+            if (llavesGeneradas.next()) {
+                // CONSULTAR ID
+                Integer llavePrimaria = llavesGeneradas.getInt(Statement.RETURN_GENERATED_KEYS);
+                cuenta.setId_cliente(llavePrimaria);
+                return cuenta;
+            }
+            LOG.log(Level.WARNING, "Se inserto la cuenta pero no se generó id.");
+            throw new PersistenciaException("Se inserto la cuenta pero no se generó id.");
+        } catch (SQLException ex) {
+            LOG.log(Level.SEVERE, ex.getMessage());
+            throw new PersistenciaException("No se pudo insertar la cuenta: " + ex.getMessage());
+        }
+    }
+
+    @Override
+    public Cuenta cancelarCuenta(Cuenta cuenta) throws PersistenciaException {
+          String codigoSQL = "UPDATE cuentas SET estado='Cancelada' where id_cliente=? and num_cuenta=?";
+        try (
+                Connection conexion = MANEJADOR_CONEXIONES.crearConexion();
+                PreparedStatement comando = conexion.prepareStatement(codigoSQL, Statement.RETURN_GENERATED_KEYS);) {
+            comando.setInt(1, cuenta.getId_cliente());
+            comando.setInt(2, cuenta.getNum_cuenta());
+            comando.executeUpdate();
+            if (comando.execute()) {
+                return cuenta;
+            }
+        } catch (SQLException ex) {
+            LOG.log(Level.SEVERE, ex.getMessage());
+            throw new PersistenciaException("No se pudo cancelar la cuenta: " + ex.getMessage());
+        }
+        return null;
+    }
+ 
+    //limite y paginado
+    @Override
+    public List<Cuenta> consultarListaCuentas(ConfiguracionPaginado configPaginado,Cliente cliente) throws PersistenciaException{
+        String codigoSQL= "Select num_cuenta,saldo,estado from cuentas where id_cliente=? order by estado";
+        List<Cuenta> listaCuentas= new LinkedList();
+        try(Connection conexion = MANEJADOR_CONEXIONES.crearConexion();
+            PreparedStatement comandoBase = conexion.prepareStatement(codigoSQL);){
+            comandoBase.setInt(1, cliente.getId_cliente());
+            ResultSet resultado = comandoBase.executeQuery();
+            Cuenta cuenta=null;
+               while(resultado.next()){
+                Integer num_cuenta = resultado.getInt("num_cuenta");
+                Float saldo = resultado.getFloat("saldo");
+                String estado=resultado.getString("estado");
+                cuenta = new Cuenta(num_cuenta,saldo,estado);
+                listaCuentas.add(cuenta);
+            }
+            return listaCuentas;
+        }catch(SQLException ex){
+            System.err.println(ex.getMessage());
+            throw new PersistenciaException("Error al consultar la lista", ex);
+        }
+    }
+     
+    //limite y paginado
+    @Override
+    public List<Cuenta> consultarListaCuentas(Cliente cliente) throws PersistenciaException{
+        String codigoSQL= "Select num_cuenta from cuentas where id_cliente=? and estado='Activa'";
+        List<Cuenta> listaCuentas= new LinkedList();
+        try(Connection conexion = MANEJADOR_CONEXIONES.crearConexion();
+            PreparedStatement comandoBase = conexion.prepareStatement(codigoSQL);){
+            comandoBase.setInt(1, cliente.getId_cliente());
+            ResultSet resultado = comandoBase.executeQuery();
+            Cuenta cuenta=null;
+               while(resultado.next()){
+                Integer num_cuenta = resultado.getInt("num_cuenta");
+                cuenta = new Cuenta(num_cuenta);
+                listaCuentas.add(cuenta);
+            }
+            return listaCuentas;
+        }catch(SQLException ex){
+            System.err.println(ex.getMessage());
+            throw new PersistenciaException("Error al consultar la lista", ex);
+        }
+    }
 }

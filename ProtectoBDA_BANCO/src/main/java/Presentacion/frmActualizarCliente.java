@@ -13,6 +13,7 @@ import Presentacion.frmInicioSesion;
 import java.awt.event.KeyEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -349,11 +350,14 @@ public class frmActualizarCliente extends javax.swing.JFrame {
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         actualizarDomicilio();
         actualizarCliente();
+        JOptionPane.showMessageDialog(this,"Cliente Actualizado Exitosamente \n Vuelva a Iniciar Sesion");
+        new frmInicioSesion(clientesDAO).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         dispose();
-        new frmBanco(clientesDAO).setVisible(true);
+        new frmInterfazCliente(clientesDAO,cliente).setVisible(true);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void txtContrasenaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtContrasenaKeyTyped

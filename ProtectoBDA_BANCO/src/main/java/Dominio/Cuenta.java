@@ -32,11 +32,28 @@ public class Cuenta {
         this.num_cuenta = num_cuenta;
         this.saldo = saldo;
     }
+
+    public Cuenta(Integer num_cuenta, Integer id_cliente) {
+        this.num_cuenta = num_cuenta;
+        this.id_cliente = id_cliente;
+    }
     
     public Cuenta(Integer num_cuenta) {
         this.num_cuenta = num_cuenta;
     }
 
+    public Cuenta(Float saldo, Integer id_cliente) {
+        this.saldo = saldo;
+        this.id_cliente = id_cliente;
+    }
+
+    public Cuenta(Integer num_cuenta, Float saldo, String estado) {
+        this.num_cuenta = num_cuenta;
+        this.saldo = saldo;
+        this.estado = estado;
+    }
+
+    
     public Cuenta(Integer num_cuenta, Date fecha_hora_apertura, Float saldo, String estado, Integer id_cliente) {
         this.num_cuenta = num_cuenta;
         this.fecha_hora_apertura = fecha_hora_apertura;
