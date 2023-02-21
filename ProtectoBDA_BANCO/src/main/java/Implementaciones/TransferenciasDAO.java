@@ -4,6 +4,7 @@
 package Implementaciones;
 
 // Importaciones
+import Dominio.Cliente;
 import Dominio.Cuenta;
 import Dominio.Operacion;
 import Dominio.Transferencia;
@@ -106,7 +107,7 @@ public class TransferenciasDAO implements ITransferenciasDAO {
                 comando.setInt(2, operacion.getNum_cuenta_origen());
                 comando.setFloat(3, operacion.getMonto_pesos());
                 comando.setInt(4, transferencia.getNum_cuenta_destino());
-                comando.executeQuery();
+                ResultSet resultado = comando.executeQuery();
                 return 6; // Se realizó la transferencia exitosamente 
             } catch (SQLException ex) {
                 LOG.log(Level.SEVERE, ex.getMessage());
