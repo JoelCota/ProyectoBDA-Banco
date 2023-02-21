@@ -3,8 +3,10 @@
  */
 package Implementaciones;
 
+// Importaciones
 import Dominio.Cliente;
 import Dominio.Cuenta;
+import Dominio.Operacion;
 import Dominio.Transferencia;
 import Excepciones.PersistenciaException;
 import Interfaces.IConexionBD;
@@ -14,6 +16,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,7 +35,7 @@ public class TransferenciasDAO implements ITransferenciasDAO {
     public TransferenciasDAO(IConexionBD manejadorConexiones) {
         this.MANEJADOR_CONEXIONES = manejadorConexiones;
     }
-    
+
     @Override
     public Transferencia insertar(Transferencia transferencia) throws PersistenciaException {
         String codigoSQL = "INSERT INTO Transferencias (ID, num_cuenta_destino)"
@@ -54,10 +57,10 @@ public class TransferenciasDAO implements ITransferenciasDAO {
             throw new PersistenciaException("Se inserto la transferencia pero no se generó ID.");
         } catch (SQLException ex) {
             LOG.log(Level.SEVERE, ex.getMessage());
-            throw new PersistenciaException("No se pudo insertar al transferencia: " + ex.getMessage());
+            throw new PersistenciaException("No se pudo insertar la transferencia: " + ex.getMessage());
         }
     }
-    
+
     @Override
     public Transferencia consultar(Integer id_transferencia) {
         String consulta = "SELECT id_transferencia, folio, num_cuenta_destino"
@@ -81,37 +84,35 @@ public class TransferenciasDAO implements ITransferenciasDAO {
     }
 
     @Override
-    public Transferencia realizarTransferencia(Cuenta cuentaOrigen, Cuenta cuentaDestino, Float monto) throws PersistenciaException {
-        String transaccion = "START TRANSACTION;\n"
-                + " UPDATE cuentas SET saldo = saldo - ? WHERE num_cuenta = ?;\n" // Cuenta origen
-                + " UPDATE cuentas SET saldo = saldo + ? WHERE num_cuenta = ?;\n" // Cuenta destino
-                + " COMMIT;";
-        try (
-                Connection conexion = MANEJADOR_CONEXIONES.crearConexion(); PreparedStatement comando = conexion.prepareStatement(transaccion);) {
-            comando.setFloat(1, monto);
-            comando.setInt(2, cuentaOrigen.getNum_cuenta());
-            comando.setFloat(3, monto);
-            comando.setInt(4, cuentaDestino.getNum_cuenta());
-            ResultSet resultado = comando.executeQuery();
-            Transferencia transferencia = null;
-            if (resultado.next()) {
-                
-                
-                Integer idCliente = resultado.getInt("id_cliente");
-                String nombres = resultado.getString("nombres");
-                String apellidoPaterno = resultado.getString("apellido_paterno");
-                String apellidoMaterno = resultado.getString("apellido_materno");
-                String fecha_nacimiento = resultado.getString("fecha_nacimiento");
-                Integer edad = resultado.getInt("edad");
-                Integer id_domicilio = resultado.getInt("id_domicilio");
-                cliente = new Cliente(idCliente, nombres, apellidoPaterno, apellidoMaterno, fecha_nacimiento, edad, id_domicilio);
+    public Integer realizarTransferencia(Transferencia transferencia) throws PersistenciaException {
+        OperacionesDAO opera = null;
+        CuentasDAO cuenta = null;
+        Operacion operacion = opera.consultar(transferencia.getFolio());
+        Cuenta cuentaOrigen = cuenta.consultar(operacion.getNum_cuenta_origen());
+        Cuenta cuentaDestino = cuenta.consultar(transferencia.getNum_cuenta_destino());
+        if (cuentaOrigen.getSaldo() == 0) return 0; // La cuenta origen tiene 0 pesos de saldo
+        else if (cuentaOrigen.getSaldo() > operacion.getMonto_pesos()) return 1; // El monto de transferencia es mayor al saldo de la cuenta
+        else if (Objects.equals(cuentaOrigen.getNum_cuenta(), cuentaDestino.getNum_cuenta())) return 2; // La cuenta de origen es la misma que la cuenta destino
+        else if ("Cancelada".equals(cuentaOrigen.getEstado())) return 3; // La cuenta de origen está cancelada
+        else if ("Cancelada".equals(cuentaDestino.getEstado())) return 4; // La cuenta de destino está cancelada
+        else if (operacion.getMonto_pesos() <= 0) return 5; // Si el monto a transferir es igual o menor a 0
+        else {
+            String transaccion = "START TRANSACTION;\n"
+                    + " UPDATE cuentas SET saldo = saldo - ? WHERE num_cuenta = ?;\n" // Cuenta origen
+                    + " UPDATE cuentas SET saldo = saldo + ? WHERE num_cuenta = ?;\n" // Cuenta destino
+                    + " COMMIT;";
+            try (
+                    Connection conexion = MANEJADOR_CONEXIONES.crearConexion(); PreparedStatement comando = conexion.prepareStatement(transaccion);) {
+                comando.setFloat(1, operacion.getMonto_pesos());
+                comando.setInt(2, operacion.getNum_cuenta_origen());
+                comando.setFloat(3, operacion.getMonto_pesos());
+                comando.setInt(4, transferencia.getNum_cuenta_destino());
+                ResultSet resultado = comando.executeQuery();
+                return 6; // Se realizó la transferencia exitosamente 
+            } catch (SQLException ex) {
+                LOG.log(Level.SEVERE, ex.getMessage());
+                return -1; // No se pudo realizar la transferencia
             }
-            return cliente;
-        } catch (SQLException ex) {
-            LOG.log(Level.SEVERE, ex.getMessage());
-            throw new PersistenciaException("No se pudo insertar al cliente: " + ex.getMessage());
-        }
+        } 
     }
-    
-    
 }

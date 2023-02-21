@@ -5,7 +5,6 @@
 package Dominio;
 
 // Importaciones
-import java.sql.Date;
 import java.util.Objects;
 
 /**
@@ -20,7 +19,7 @@ import java.util.Objects;
 public class Cuenta {
     // Atributos
     private Integer num_cuenta;
-    private Date fecha_hora_apertura;
+    private String fecha_hora_apertura;
     private Float saldo;
     private String estado; 
     private Integer id_cliente;
@@ -54,7 +53,7 @@ public class Cuenta {
     }
 
     
-    public Cuenta(Integer num_cuenta, Date fecha_hora_apertura, Float saldo, String estado, Integer id_cliente) {
+    public Cuenta(Integer num_cuenta, String fecha_hora_apertura, Float saldo, String estado, Integer id_cliente) {
         this.num_cuenta = num_cuenta;
         this.fecha_hora_apertura = fecha_hora_apertura;
         this.saldo = saldo;
@@ -62,7 +61,7 @@ public class Cuenta {
         this.id_cliente = id_cliente;
     }
 
-    public Cuenta(Date fecha_hora_apertura, Float saldo, String estado, Integer id_cliente) {
+    public Cuenta (String fecha_hora_apertura, Float saldo, String estado, Integer id_cliente) {
         this.fecha_hora_apertura = fecha_hora_apertura;
         this.saldo = saldo;
         this.estado = estado;
@@ -77,11 +76,11 @@ public class Cuenta {
         this.num_cuenta = num_cuenta;
     }
 
-    public Date getFecha_hora_apertura() {
+    public String getFecha_hora_apertura() {
         return fecha_hora_apertura;
     }
 
-    public void setFecha_hora_apertura(Date fecha_hora_apertura) {
+    public void setFecha_hora_apertura (String fecha_hora_apertura) {
         this.fecha_hora_apertura = fecha_hora_apertura;
     }
 

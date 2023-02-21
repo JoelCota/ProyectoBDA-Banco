@@ -19,7 +19,7 @@ import Excepciones.PersistenciaException;
  */
 public interface IOperacionesDAO {
     
-    Operacion consultar (Integer folio);
+    Operacion consultar(Integer folio);
     
-    Operacion insertar (Operacion operacion) throws PersistenciaException;
+    Operacion insertar(Operacion operacion) throws PersistenciaException;
 }

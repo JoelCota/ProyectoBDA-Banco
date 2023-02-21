@@ -22,5 +22,5 @@ public interface ITransferenciasDAO {
     
     Transferencia insertar(Transferencia transferencia) throws PersistenciaException;
     
-    Transferencia realizarTransferencia(Cuenta cuentaOrigen, Cuenta cuentaMonto, Float monto) throws PersistenciaException;
+    Integer realizarTransferencia(Transferencia transferencia) throws PersistenciaException;
 }

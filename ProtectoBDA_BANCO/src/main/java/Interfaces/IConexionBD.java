@@ -18,5 +18,6 @@ import java.sql.SQLException;
  * 15/02/2023 01:12:13 PM
  */
 public interface IConexionBD {
+    
     Connection crearConexion() throws SQLException;
 }
