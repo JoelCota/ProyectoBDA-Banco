@@ -12,6 +12,7 @@ import Interfaces.ICuentasDAO;
 import Interfaces.IDomicilioDAO;
 import Interfaces.IOperacionesDAO;
 import Interfaces.ITransferenciasDAO;
+import Validadores.Validadores;
 import java.awt.event.KeyEvent;
 import static java.lang.Float.parseFloat;
 import java.util.logging.Level;
@@ -47,6 +48,8 @@ public class frmCuenta extends javax.swing.JFrame {
     
     
     private void insertarCuenta() {
+        Validadores validador=new Validadores();
+        if (validador.validaFloat(this.txtSaldo.getText())) {
         Cuenta cuentaNueva=new Cuenta(parseFloat(this.txtSaldo.getText()),this.cliente.getId_cliente());
         try {
             cuentasDAO.insertarCuenta(cuentaNueva);
@@ -56,6 +59,10 @@ public class frmCuenta extends javax.swing.JFrame {
                    
         } catch (PersistenciaException ex) {
             Logger.getLogger(frmCuenta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "El saldo es incorrecto");
         }
     }
 
