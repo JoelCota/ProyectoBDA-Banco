@@ -5,56 +5,17 @@
  */
 package Presentacion;
 
-import Dominio.Cliente;
-import Dominio.Cuenta;
-import Excepciones.PersistenciaException;
-import Interfaces.IClientesDAO;
-import Interfaces.ICuentasDAO;
-import Interfaces.IDomicilioDAO;
-import Interfaces.IOperacionesDAO;
-import Interfaces.ITransferenciasDAO;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author Joel Lopez
  */
 public class frmTransferencia extends javax.swing.JFrame {
 
-    private final Cliente cliente;
-    private final IClientesDAO clientesDAO;
-    private final ICuentasDAO cuentasDAO;
-    private final ITransferenciasDAO transferenciasDAO;
-    private final IOperacionesDAO operacionesDAO;
-    private final IDomicilioDAO domicilioDAO;
-    private static final Logger LOG = Logger.getLogger(frmInterfazCliente.class.getName());
-
-    public frmTransferencia(Cliente cliente, IClientesDAO clientesDAO, ICuentasDAO cuentasDAO, ITransferenciasDAO transferenciasDAO, IOperacionesDAO operacionesDAO, IDomicilioDAO domicilioDAO) {
-        this.cliente = cliente;
-        this.clientesDAO = clientesDAO;
-        this.cuentasDAO = cuentasDAO;
-        this.transferenciasDAO = transferenciasDAO;
-        this.operacionesDAO = operacionesDAO;
-        this.domicilioDAO = domicilioDAO;
+    /**
+     * Creates new form TransferenciaForm
+     */
+    public frmTransferencia() {
         initComponents();
-        cargarComboBox();
-
-    }
-
-    public void cargarComboBox() {
-        int cuentas;
-        this.cbxCuentas.removeAllItems();
-        try {
-            List<Cuenta> listaCuentas = this.cuentasDAO.consultarListaCuentas(cliente);
-            for (Cuenta cuenta : listaCuentas) {
-                cuentas = cuenta.getNum_cuenta();
-                this.cbxCuentas.addItem(String.valueOf(cuentas));
-            }
-        } catch (PersistenciaException ex) {
-            LOG.log(Level.SEVERE, ex.getMessage());
-        }
     }
 
     /**
@@ -165,10 +126,11 @@ public class frmTransferencia extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEnviarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        frmInterfazCliente interfaz = new frmInterfazCliente(cliente, clientesDAO, cuentasDAO, transferenciasDAO, operacionesDAO, domicilioDAO);
-        interfaz.setVisible(true);
-        this.dispose();
+       frmInterfazCliente interfaz = new frmInterfazCliente();
+       interfaz.setVisible(true);
+       this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
