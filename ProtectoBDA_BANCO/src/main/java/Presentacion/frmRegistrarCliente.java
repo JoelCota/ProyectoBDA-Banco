@@ -80,15 +80,16 @@ public class frmRegistrarCliente extends javax.swing.JFrame {
     }
 
     private void mostrarMensajeClienteGuardado(Cliente cliente) {
-        JOptionPane.showMessageDialog(this, "Se insertó el cliente: " + cliente.getId_cliente() + "\n Nombre: " + cliente.getNombres());
+        JOptionPane.showMessageDialog(this, "Se insertó el cliente: " + cliente.getId_cliente() + "\n Nombre: " + cliente.getNombres()
+                + "\n ID Domicilio: " + cliente.getId_domicilio());
         this.txtApellidoMaterno.setText("");
-         this.txtApellidoPaterno.setText("");
-         this.txtCalle.setText("");
-         this.txtColonia.setText("");
-         this.txtNombre.setText("");
-         this.txtNoCasa.setText("");
-         this.txtContrasena.setText("");
-         this.datePicker1.setText("");
+        this.txtApellidoPaterno.setText("");
+        this.txtCalle.setText("");
+        this.txtColonia.setText("");
+        this.txtNombre.setText("");
+        this.txtNoCasa.setText("");
+        this.txtContrasena.setText("");
+        this.datePicker1.setText("");
     }
 
     private void mostrarErrorAlGuardarCliente() {

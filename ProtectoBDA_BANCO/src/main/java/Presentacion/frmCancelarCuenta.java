@@ -8,12 +8,10 @@ import Dominio.Cliente;
 import Dominio.Cuenta;
 import Excepciones.PersistenciaException;
 import Interfaces.IClientesDAO;
-import static java.lang.Float.parseFloat;
 import static java.lang.Integer.parseInt;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.scene.control.ComboBox;
 import javax.swing.JOptionPane;
 
 /**

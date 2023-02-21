@@ -5,7 +5,6 @@
 package Dominio;
 
 // Importaciones
-import java.sql.Date;
 import java.util.Objects;
 
 /**
@@ -20,22 +19,27 @@ import java.util.Objects;
 public class Operacion {
     // Atributos
     private Integer folio;
-    private Date fecha_hora;
+    private String fecha_hora;
     private Float monto_pesos;
     private Integer num_cuenta_origen;
 
     public Operacion() {
     }
 
-    public Operacion(Integer folio, Date fecha_hora, Float monto_pesos, Integer num_cuenta_origen) {
+    public Operacion(Integer folio, String fecha_hora, Float monto_pesos, Integer num_cuenta_origen) {
         this.folio = folio;
         this.fecha_hora = fecha_hora;
         this.monto_pesos = monto_pesos;
         this.num_cuenta_origen = num_cuenta_origen;
     }
 
-    public Operacion(Date fecha_hora, Float monto_pesos, Integer num_cuenta_origen) {
+    public Operacion(String fecha_hora, Float monto_pesos, Integer num_cuenta_origen) {
         this.fecha_hora = fecha_hora;
+        this.monto_pesos = monto_pesos;
+        this.num_cuenta_origen = num_cuenta_origen;
+    }
+
+    public Operacion(Float monto_pesos, Integer num_cuenta_origen) {
         this.monto_pesos = monto_pesos;
         this.num_cuenta_origen = num_cuenta_origen;
     }
@@ -48,11 +52,11 @@ public class Operacion {
         this.folio = folio;
     }
 
-    public Date getFecha_hora() {
+    public String getFecha_hora() {
         return fecha_hora;
     }
 
-    public void setFecha_hora(Date fecha_hora) {
+    public void setFecha_hora(String fecha_hora) {
         this.fecha_hora = fecha_hora;
     }
 

@@ -32,7 +32,7 @@ public class Banco {
     public static void main(String[] args) {
       
         IConexionBD manejadorConexiones = new ConexionBD(
-                "jdbc:mysql://localhost/banco","root","13553Lop?"
+                "jdbc:mysql://localhost/banco","root","233295"
         );
         IClientesDAO clientesDAO = new ClientesDAO(manejadorConexiones);
         new frmBanco(clientesDAO).setVisible(true);
