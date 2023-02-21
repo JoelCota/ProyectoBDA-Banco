@@ -46,7 +46,6 @@ public class frmTransferencia extends javax.swing.JFrame {
         this.domicilioDAO = domicilioDAO;
         initComponents();
         cargarComboBox();
-
     }
 
     public void cargarComboBox() {
@@ -68,14 +67,13 @@ public class frmTransferencia extends javax.swing.JFrame {
         int cuentaDestino = parseInt(this.txtCuentaDestino.getText());
         float montoTransferencia = Float.parseFloat(this.txtSaldo.getText());
         try {
-            int folio = transferenciasDAO.realizarTransferencia(cbxCuentaOrigen, cuentaDestino, montoTransferencia);
-            Transferencia transferencia = new Transferencia(folio, cuentaDestino);
-            transferenciasDAO.insertar(transferencia);
+            transferenciasDAO.realizarTransferencia(cbxCuentaOrigen, cuentaDestino, montoTransferencia);
             JOptionPane.showMessageDialog(this, "Se realizo la transaccion correctamente");
             new frmInterfazCliente(cliente, clientesDAO, cuentasDAO, transferenciasDAO, operacionesDAO, domicilioDAO).setVisible(true);
             this.dispose();
         } catch (PersistenciaException ex) {
             Logger.getLogger(frmTransferencia.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(rootPane, "La transferencia no se pudo realizar");
         }
     }
 

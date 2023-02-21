@@ -19,20 +19,22 @@ public class Retiro {
     private Integer id_retiro;
     private Integer contrasena;
     private String estado;
+    private String fechaHora;
     private Integer folio;
     private Operacion operacion;
     
     public Retiro() {
     }
 
-    public Retiro(Integer id_retiro, Integer contrasena, String estado, Integer folio, Operacion operacion) {
+    public Retiro(Integer id_retiro, Integer contrasena, String estado, String fechaHora, Integer folio, Operacion operacion) {
         this.id_retiro = id_retiro;
         this.contrasena = contrasena;
         this.estado = estado;
+        this.fechaHora = fechaHora;
         this.folio = folio;
         this.operacion = operacion;
     }
-    
+
     public Retiro(Integer id_retiro, Integer contrasena, String estado, Integer folio) {
         this.id_retiro = id_retiro;
         this.contrasena = contrasena;
@@ -89,6 +91,14 @@ public class Retiro {
 
     public void setFolio(Integer folio) {
         this.folio = folio;
+    }
+
+    public String getFechaHora() {
+        return fechaHora;
+    }
+
+    public void setFechaHora(String fechaHora) {
+        this.fechaHora = fechaHora;
     }
 
     @Override

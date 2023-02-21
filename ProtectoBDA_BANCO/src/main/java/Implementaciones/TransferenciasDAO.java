@@ -84,24 +84,32 @@ public class TransferenciasDAO implements ITransferenciasDAO {
     }
 
     @Override
-    public Integer realizarTransferencia(Integer num_cuenta_origen, Integer num_cuenta_destino, Float monto) throws PersistenciaException {
-        String transaccion = "CALL realizarTransferencia(?,?,?)";
+    public void realizarTransferencia(Integer num_cuenta_origen, Integer num_cuenta_destino, Float monto) throws PersistenciaException {
+        String transaccion = "call realizarTransferencia(?,?,?)";
         try (
-                Connection conexion = MANEJADOR_CONEXIONES.crearConexion(); PreparedStatement comando = conexion.prepareStatement(transaccion);) {
+                Connection conexion = MANEJADOR_CONEXIONES.crearConexion();
+                PreparedStatement comando = conexion.prepareStatement(transaccion);) {
             comando.setInt(1, num_cuenta_origen);
             comando.setInt(2, num_cuenta_destino);
             comando.setFloat(3, monto);
             comando.executeQuery();
-            ResultSet llavesGeneradas = comando.getGeneratedKeys();
-            if (llavesGeneradas.next()) {
-                // CONSULTAR ID
-                Integer llavePrimaria = llavesGeneradas.getInt(Statement.RETURN_GENERATED_KEYS);
-                return llavePrimaria;
-            }
-            throw new PersistenciaException("No fue posible hacer la transferencia.");
         } catch (SQLException ex) {
             LOG.log(Level.SEVERE, ex.getMessage());
-            throw new PersistenciaException("No fue posible hacer la transferencia.");
+        }
+    }
+
+    @Override
+    public void insertarCuentaDestino(Integer folio, Integer num_cuenta_destino) throws PersistenciaException {
+        String codigoSQL = "INSERT INTO Transferencias (num_cuenta_destino)"
+                + " VALUES (?) WHERE folio = ?";
+        try (
+                Connection conexion = MANEJADOR_CONEXIONES.crearConexion(); PreparedStatement comando = conexion.prepareStatement(codigoSQL, Statement.RETURN_GENERATED_KEYS);) {
+            // INSERTAR
+            comando.setInt(1, num_cuenta_destino);
+            comando.setInt(2, folio);
+        } catch (SQLException ex) {
+            LOG.log(Level.SEVERE, ex.getMessage());
+            throw new PersistenciaException("No se pudo insertar la transferencia: " + ex.getMessage());
         }
     }
 }
