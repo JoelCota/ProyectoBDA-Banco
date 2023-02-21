@@ -17,7 +17,6 @@ import java.sql.SQLException;
  * ID: 00000233295
  * @author Joel Antonio Lopez Cota 
  * ID: 00000228926
- * 15/02/2023 01:13:52 PM
  */
 public class ConexionBD implements IConexionBD {
 

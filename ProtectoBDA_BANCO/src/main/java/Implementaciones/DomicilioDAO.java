@@ -4,10 +4,10 @@
  */
 package Implementaciones;
 
+import Interfaces.IConexionBD;
 import Interfaces.IDomicilioDAO;
 import Dominio.Domicilio;
 import Excepciones.PersistenciaException;
-import Interfaces.IConexionBD;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,8 +17,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * Esta clase permite implementar los métodos para acceder y consultar a los datos
+ * de Cuentas.
  *
- * @author aroco
+ * @author Brandon Figueroa Ugalde
+ * ID: 00000233295
+ * @author Joel Antonio Lopez Cota 
+ * ID: 00000228926
  */
 public class DomicilioDAO implements IDomicilioDAO{
       

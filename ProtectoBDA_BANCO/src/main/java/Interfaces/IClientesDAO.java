@@ -25,6 +25,7 @@ public interface IClientesDAO {
      * @return un atributo de tipo cliente con los atributos del cliente consultado
      */
     Cliente consultar(Integer id_cliente);
+    
     /**
      * Metodo que permite insertar un cliente en la base de datos
      * @param cliente es el cliente a insertar
@@ -32,6 +33,7 @@ public interface IClientesDAO {
      * @throws PersistenciaException Se genera en caso de error
      */
     Cliente insertar(Cliente cliente) throws PersistenciaException;
+    
     /**
      * Metodo que permite iniciar sesion buscando los datos en la base de datos
      * @param id_cliente es el id del cliente a iniciar sesion
@@ -39,6 +41,7 @@ public interface IClientesDAO {
      * @return el cliente formado con todos sus atributos
      */
     Cliente iniciarSesion(Integer id_cliente, String contrasena);
+    
     /**
      * Metodo que permite actualizar el cliente en base a otro cliente
      * @param cliente es el atributo cliente que servira para actualizar los datos

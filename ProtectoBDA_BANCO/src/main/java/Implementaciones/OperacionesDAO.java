@@ -3,14 +3,12 @@
 package Implementaciones;
 
 // Importaciones
+import Interfaces.IOperacionesDAO;
+import Interfaces.IConexionBD;
 import Implementaciones.*;
 import Dominio.Operacion;
 import Dominio.Transferencia;
 import Excepciones.PersistenciaException;
-import Interfaces.IConexionBD;
-import Interfaces.IConexionBD;
-import Interfaces.IOperacionesDAO;
-import Interfaces.IOperacionesDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

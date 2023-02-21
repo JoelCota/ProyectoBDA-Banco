@@ -10,7 +10,10 @@ import java.util.Objects;
 /**
  * Esta clase permite crear objetos de tipo Transferencia.
  *
- * @author Brandon Figueroa Ugalde ID: 00000233295 16/02/2023 12:00:30 AM
+ * @author Brandon Figueroa Ugalde
+ * ID: 00000233295
+ * @author Joel Antonio Lopez Cota 
+ * ID: 00000228926
  */
 public class Transferencia {
 

@@ -9,7 +9,10 @@ import java.util.Objects;
 /**
  * Esta clase permite crear objetos de tipo Retiro.
  *
- * @author Brandon Figueroa Ugalde ID: 00000233295 16/02/2023 12:03:24 AM
+ * @author Brandon Figueroa Ugalde
+ * ID: 00000233295
+ * @author Joel Antonio Lopez Cota 
+ * ID: 00000228926
  */
 public class Retiro {
 

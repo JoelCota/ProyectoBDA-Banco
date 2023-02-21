@@ -5,11 +5,11 @@
 package Implementaciones;
 
 // Importaciones
+import Interfaces.IConexionBD;
+import Interfaces.ICuentasDAO;
 import Dominio.Cliente;
 import Dominio.Cuenta;
 import Excepciones.PersistenciaException;
-import Interfaces.IConexionBD;
-import Interfaces.ICuentasDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,9 +25,10 @@ import utils.ConfiguracionPaginado;
  * Esta clase permite implementar los métodos para acceder y consultar a los datos
  * de Cuentas.
  *
- * @author Brandon Figueroa Ugalde ID: 00000233295
- * @author Joel Antonio Lopez Cota ID: 00000228926 
- * 26/01/2023 01:46:55 PM
+ * @author Brandon Figueroa Ugalde
+ * ID: 00000233295
+ * @author Joel Antonio Lopez Cota 
+ * ID: 00000228926
  */
 public class CuentasDAO implements ICuentasDAO {
     

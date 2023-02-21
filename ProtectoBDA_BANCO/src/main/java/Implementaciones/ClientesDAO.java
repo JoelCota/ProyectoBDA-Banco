@@ -4,11 +4,11 @@
 package Implementaciones;
 
 // Importaciones
+import Interfaces.IConexionBD;
+import Interfaces.IClientesDAO;
 import Dominio.Cliente;
 import Dominio.Cuenta;
 import Dominio.Domicilio;
-import Interfaces.IClientesDAO;
-import Interfaces.IConexionBD;
 import Excepciones.PersistenciaException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,15 +25,22 @@ import utils.ConfiguracionPaginado;
  * Esta clase permite implementar los métodos para acceder y consultar a los datos
  * de Clientes.
  *
- * @author Brandon Figueroa Ugalde ID: 00000233295
- * @author Joel Antonio Lopez Cota ID: 00000228926 
- * 26/01/2023 01:46:55 PM
+ * @author Brandon Figueroa Ugalde
+ * ID: 00000233295
+ * @author Joel Antonio Lopez Cota 
+ * ID: 00000228926
  */
 public class ClientesDAO implements IClientesDAO {
 
+    // Atributos
     private static final Logger LOG = Logger.getLogger(ClientesDAO.class.getName());
     public final IConexionBD MANEJADOR_CONEXIONES;
 
+    /**
+    * Constructor que crea y maneja la conexión a la base de datos
+    * 
+    * @param manejadorConexiones Manejador de conexiones
+    */
     public ClientesDAO(IConexionBD manejadorConexiones) {
         this.MANEJADOR_CONEXIONES = manejadorConexiones;
     }
