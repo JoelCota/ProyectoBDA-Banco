@@ -9,6 +9,10 @@ import Dominio.Cliente;
 import Dominio.Cuenta;
 import Excepciones.PersistenciaException;
 import Interfaces.IClientesDAO;
+import Interfaces.ICuentasDAO;
+import Interfaces.IDomicilioDAO;
+import Interfaces.IOperacionesDAO;
+import Interfaces.ITransferenciasDAO;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,39 +25,37 @@ import utils.ConfiguracionPaginado;
  * @author Joel Lopez
  */
 public class frmInterfazCliente extends javax.swing.JFrame {
-
     private final Cliente cliente;
-    private final IClientesDAO clientesDAO;
+   private final IClientesDAO clientesDAO;
+    private final ICuentasDAO cuentasDAO;
+    private final ITransferenciasDAO transferenciasDAO;
+    private final IOperacionesDAO operacionesDAO;
+    private final IDomicilioDAO domicilioDAO;
     private final ConfiguracionPaginado configPaginado;
     private static final Logger LOG = Logger.getLogger(frmInterfazCliente.class.getName());
 
-    
-    /**
-     * Creates new form InterfazClienteForm
-     *
-     * @param clientesDAO
-     * @param cliente
-     */
-    public frmInterfazCliente(IClientesDAO clientesDAO, Cliente cliente) {
-        this.clientesDAO = clientesDAO;
+    public frmInterfazCliente(Cliente cliente, IClientesDAO clientesDAO, ICuentasDAO cuentasDAO, ITransferenciasDAO transferenciasDAO, IOperacionesDAO operacionesDAO, IDomicilioDAO domicilioDAO) {
         this.cliente = cliente;
-        System.out.println(cliente);
-        initComponents();
+        this.clientesDAO = clientesDAO;
+        this.cuentasDAO = cuentasDAO;
+        this.transferenciasDAO = transferenciasDAO;
+        this.operacionesDAO = operacionesDAO;
+        this.domicilioDAO = domicilioDAO;
+         initComponents();
         this.configPaginado = new ConfiguracionPaginado(1, 5);
         this.cargarTablaCuentas();
-
     }
 
     private void cargarTablaCuentas() {
         try {
-            List<Cuenta> listaCuentas = this.clientesDAO.consultarListaCuentas(configPaginado,cliente);
+            List<Cuenta> listaCuentas = this.cuentasDAO.consultarListaCuentas(configPaginado, cliente);
             DefaultTableModel modeloTabla = (DefaultTableModel) this.tblCuentas.getModel();
             modeloTabla.setRowCount(0);
             for (Cuenta cuenta : listaCuentas) {
                 Object[] fila = {
-                   cuenta.getNum_cuenta(),
-                   cuenta.getSaldo(),
-                   cuenta.getEstado()
+                    cuenta.getNum_cuenta(),
+                    cuenta.getSaldo(),
+                    cuenta.getEstado()
                 };
                 modeloTabla.addRow(fila);
             }
@@ -210,36 +212,36 @@ public class frmInterfazCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnActualizarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarDatosActionPerformed
-        frmActualizarCliente actualizar = new frmActualizarCliente(cliente,clientesDAO);
+        frmActualizarCliente actualizar = new frmActualizarCliente(cliente,clientesDAO,cuentasDAO,transferenciasDAO,operacionesDAO,domicilioDAO);
         actualizar.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnActualizarDatosActionPerformed
 
     private void btnTransferenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransferenciaActionPerformed
-        frmTransferencia transf = new frmTransferencia();
+        frmTransferencia transf = new frmTransferencia(cliente,clientesDAO,cuentasDAO,transferenciasDAO,operacionesDAO,domicilioDAO);
         transf.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnTransferenciaActionPerformed
 
     private void btnRetiroSinTarjetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRetiroSinTarjetaActionPerformed
-        frmRetiro retiro = new frmRetiro();
+        frmRetiro retiro = new frmRetiro(cliente,clientesDAO,cuentasDAO,transferenciasDAO,operacionesDAO,domicilioDAO);
         retiro.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnRetiroSinTarjetaActionPerformed
 
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
-        frmInicioSesion cliente = new frmInicioSesion(clientesDAO);
+        frmInicioSesion cliente = new frmInicioSesion(clientesDAO,cuentasDAO,transferenciasDAO,operacionesDAO,domicilioDAO);
         cliente.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
     private void btnNuevaCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaCuentaActionPerformed
-        new frmCuenta(cliente,clientesDAO).setVisible(true);
+        new frmCuenta(cliente,clientesDAO,cuentasDAO,transferenciasDAO,operacionesDAO,domicilioDAO).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnNuevaCuentaActionPerformed
 
     private void btnCancelarCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarCuentaActionPerformed
-       new frmCancelarCuenta(cliente,clientesDAO).setVisible(true);
+        new frmCancelarCuenta(cliente,clientesDAO,cuentasDAO,transferenciasDAO,operacionesDAO,domicilioDAO).setVisible(true);
     }//GEN-LAST:event_btnCancelarCuentaActionPerformed
 
 

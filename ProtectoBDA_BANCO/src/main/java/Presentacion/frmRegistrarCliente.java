@@ -11,6 +11,10 @@ import Excepciones.PersistenciaException;
 import Implementaciones.ConexionBD;
 import Interfaces.IClientesDAO;
 import Interfaces.IConexionBD;
+import Interfaces.ICuentasDAO;
+import Interfaces.IDomicilioDAO;
+import Interfaces.IOperacionesDAO;
+import Interfaces.ITransferenciasDAO;
 import java.awt.event.KeyEvent;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
@@ -26,17 +30,22 @@ public class frmRegistrarCliente extends javax.swing.JFrame {
 
     private static final Logger LOG = Logger.getLogger(frmRegistrarCliente.class.getName());
     private final IClientesDAO clientesDAO;
+    private final ICuentasDAO cuentasDAO;
+    private final ITransferenciasDAO transferenciasDAO;
+    private final IOperacionesDAO operacionesDAO;
+    private final IDomicilioDAO domicilioDAO;
 
-    /**
-     * Creates new form ClientesForm
-     *
-     * @param clientesDAO
-     */
-    public frmRegistrarCliente(IClientesDAO clientesDAO) {
-        this.setTitle("Agregar cliente");
+
+
+    public frmRegistrarCliente(IClientesDAO clientesDAO, ICuentasDAO cuentasDAO, ITransferenciasDAO transferenciasDAO, IOperacionesDAO operacionesDAO, IDomicilioDAO domicilioDAO) {
         this.clientesDAO = clientesDAO;
+        this.cuentasDAO = cuentasDAO;
+        this.transferenciasDAO = transferenciasDAO;
+        this.operacionesDAO = operacionesDAO;
+        this.domicilioDAO = domicilioDAO;
         initComponents();
     }
+
 
     private Cliente extraerDatosCliente() {
         String nombres = this.txtNombre.getText();
@@ -59,7 +68,7 @@ public class frmRegistrarCliente extends javax.swing.JFrame {
     public Domicilio guardarDomicilio() {
         try {
             Domicilio domicilio = this.extraerDatosDomicilio();
-            Domicilio domicilioGuardado = clientesDAO.insertarDomicilio(domicilio);
+            Domicilio domicilioGuardado = domicilioDAO.insertarDomicilio(domicilio);
             return domicilioGuardado;
         } catch (PersistenciaException ex) {
             ex.getMessage();
@@ -320,7 +329,7 @@ public class frmRegistrarCliente extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         dispose();
-        new frmBanco(clientesDAO).setVisible(true);
+        new frmBanco(clientesDAO,cuentasDAO,transferenciasDAO,operacionesDAO,domicilioDAO).setVisible(true);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed

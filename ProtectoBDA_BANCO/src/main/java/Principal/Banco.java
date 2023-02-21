@@ -7,8 +7,16 @@ package Principal;
 // Importaciones
 import Implementaciones.ClientesDAO;
 import Implementaciones.ConexionBD;
+import Implementaciones.CuentasDAO;
+import Implementaciones.DomicilioDAO;
+import Implementaciones.OperacionesDAO;
+import Implementaciones.TransferenciasDAO;
 import Interfaces.IClientesDAO;
 import Interfaces.IConexionBD;
+import Interfaces.ICuentasDAO;
+import Interfaces.IDomicilioDAO;
+import Interfaces.IOperacionesDAO;
+import Interfaces.ITransferenciasDAO;
 import Presentacion.frmBanco;
 
 /**
@@ -34,8 +42,12 @@ public class Banco {
         IConexionBD manejadorConexiones = new ConexionBD(
                 "jdbc:mysql://localhost/banco","root","233295"
         );
+        IDomicilioDAO domicilioDAO= new DomicilioDAO(manejadorConexiones);
+        ICuentasDAO cuentasDAO= new CuentasDAO(manejadorConexiones);
+        ITransferenciasDAO transferenciasDAO=new TransferenciasDAO(manejadorConexiones);
+        IOperacionesDAO operacionesDAO=new OperacionesDAO(manejadorConexiones);
         IClientesDAO clientesDAO = new ClientesDAO(manejadorConexiones);
-        new frmBanco(clientesDAO).setVisible(true);
+        new frmBanco(clientesDAO,cuentasDAO,transferenciasDAO,operacionesDAO,domicilioDAO).setVisible(true);
         
     }
 }

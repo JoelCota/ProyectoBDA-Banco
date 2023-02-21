@@ -5,8 +5,13 @@
  */
 package Presentacion;
 
+import Implementaciones.OperacionesDAO;
 import Interfaces.IClientesDAO;
 import Interfaces.IConexionBD;
+import Interfaces.ICuentasDAO;
+import Interfaces.IDomicilioDAO;
+import Interfaces.IOperacionesDAO;
+import Interfaces.ITransferenciasDAO;
 import Presentacion.frmInicioSesion;
 import Presentacion.frmRegistrarCliente;
 import java.util.logging.Logger;
@@ -19,15 +24,23 @@ public class frmBanco extends javax.swing.JFrame {
 
     private static final Logger LOG = Logger.getLogger(frmBanco.class.getName());
     private final IClientesDAO clientesDAO;
-    /**
-     * Creates new form BancoForm
-     * @param clientesDAO
-     */
-    public frmBanco(IClientesDAO clientesDAO) {
+    private final ICuentasDAO cuentasDAO;
+    private final ITransferenciasDAO transferenciasDAO;
+    private final IOperacionesDAO operacionesDAO;
+    private final IDomicilioDAO domicilioDAO;
+
+    public frmBanco(IClientesDAO clientesDAO, ICuentasDAO cuentasDAO, ITransferenciasDAO transferenciasDAO, IOperacionesDAO operacionesDAO, IDomicilioDAO domicilioDAO) {
         this.clientesDAO = clientesDAO;
-        initComponents();
+        this.cuentasDAO = cuentasDAO;
+        this.transferenciasDAO = transferenciasDAO;
+        this.operacionesDAO = operacionesDAO;
+        this.domicilioDAO = domicilioDAO;
+          initComponents();
     }
-    
+
+    /**
+  
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -81,7 +94,7 @@ public class frmBanco extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(108, 108, 108)
                         .addComponent(btnRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -92,7 +105,7 @@ public class frmBanco extends javax.swing.JFrame {
                     .addComponent(btnNoCliente1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         pack();
@@ -100,21 +113,20 @@ public class frmBanco extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroActionPerformed
-      frmRegistrarCliente registro = new frmRegistrarCliente(this.clientesDAO);
-      registro.setVisible(true);
-      this.setVisible(false);
+        frmRegistrarCliente registro = new frmRegistrarCliente(clientesDAO,cuentasDAO,transferenciasDAO,operacionesDAO,domicilioDAO);
+        registro.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_btnRegistroActionPerformed
 
     private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
-      frmInicioSesion cliente = new frmInicioSesion(this.clientesDAO);
-      cliente.setVisible(true);
-      this.setVisible(false);
+        frmInicioSesion cliente = new frmInicioSesion(clientesDAO,cuentasDAO,transferenciasDAO,operacionesDAO,domicilioDAO);
+        cliente.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_btnClienteActionPerformed
 
     private void btnNoCliente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNoCliente1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnNoCliente1ActionPerformed
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
