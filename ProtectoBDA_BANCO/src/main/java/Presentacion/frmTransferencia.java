@@ -62,17 +62,18 @@ public class frmTransferencia extends javax.swing.JFrame {
             LOG.log(Level.SEVERE, ex.getMessage());
         }
     }
-    
-    public void realizarTransferencia(){
-          int cbxCuentaOrigen =parseInt(this.cbxCuentas.getItemAt(this.cbxCuentas.getSelectedIndex()));
-          Operacion operacion=new Operacion(parseFloat(this.txtSaldo.getText()),cbxCuentaOrigen,"Transferencia");
+
+    public void realizarTransferencia() {
+        int cbxCuentaOrigen = parseInt(this.cbxCuentas.getItemAt(this.cbxCuentas.getSelectedIndex()));
+        int cuentaDestino = parseInt(this.txtCuentaDestino.getText());
+        float montoTransferencia = Float.parseFloat(this.txtSaldo.getText());
         try {
-            Operacion nuevaOperacion= operacionesDAO.insertar(operacion);
-             Transferencia transferencia=new Transferencia(parseInt(this.txtCuentaDestino.getText()),nuevaOperacion.getFolio());
-         transferenciasDAO.realizarTransferencia(transferenciasDAO.insertar(transferencia),nuevaOperacion);
-            JOptionPane.showMessageDialog(this,"Se realizo la transaccion correctamente");
-            new frmInterfazCliente(cliente,clientesDAO,cuentasDAO,transferenciasDAO,operacionesDAO,domicilioDAO).setVisible(true);
-             this.dispose();
+            int folio = transferenciasDAO.realizarTransferencia(cbxCuentaOrigen, cuentaDestino, montoTransferencia);
+            Transferencia transferencia = new Transferencia(folio, cuentaDestino);
+            transferenciasDAO.insertar(transferencia);
+            JOptionPane.showMessageDialog(this, "Se realizo la transaccion correctamente");
+            new frmInterfazCliente(cliente, clientesDAO, cuentasDAO, transferenciasDAO, operacionesDAO, domicilioDAO).setVisible(true);
+            this.dispose();
         } catch (PersistenciaException ex) {
             Logger.getLogger(frmTransferencia.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -188,7 +189,7 @@ public class frmTransferencia extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
-      realizarTransferencia();
+        realizarTransferencia();
     }//GEN-LAST:event_btnEnviarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -198,7 +199,7 @@ public class frmTransferencia extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void txtCuentaDestinoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCuentaDestinoKeyTyped
-         char txt=evt.getKeyChar();
+        char txt = evt.getKeyChar();
         if (!(Character.isDigit(txt))) {
             evt.consume();
         }

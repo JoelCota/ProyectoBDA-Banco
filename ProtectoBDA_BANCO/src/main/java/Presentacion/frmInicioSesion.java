@@ -42,13 +42,14 @@ public class frmInicioSesion extends javax.swing.JFrame {
     
     private void inicioSesion(Integer numeroCuenta,String contrasena){
         Cliente cliente=clientesDAO.iniciarSesion(numeroCuenta, contrasena);
-        if (!clientesDAO.iniciarSesion(numeroCuenta, contrasena).equals(this)) {
-           frmInterfazCliente  frmICliente= new frmInterfazCliente(cliente,clientesDAO,cuentasDAO,transferenciasDAO,operacionesDAO,domicilioDAO);
-           frmICliente.setVisible(true);
-           this.dispose();
-        }
-        else{
-            JOptionPane.showMessageDialog(rootPane, "Error al iniciar sesion");
+        try {
+           if (!clientesDAO.iniciarSesion(numeroCuenta, contrasena).equals(this)) {
+               frmInterfazCliente  frmICliente= new frmInterfazCliente(cliente,clientesDAO,cuentasDAO,transferenciasDAO,operacionesDAO,domicilioDAO);
+               frmICliente.setVisible(true);
+               this.dispose();
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(rootPane, "Contraseña y/o usuario incorrecto");
         }
     }
     /**
@@ -142,7 +143,7 @@ public class frmInicioSesion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIniciarSesionClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionClienteActionPerformed
-        Integer id_cliente=Integer.parseInt(this.txtNumeroCliente.getText());
+        Integer id_cliente=Integer.valueOf(this.txtNumeroCliente.getText());
         String contrasena=this.pswCliente.getText();
         inicioSesion(id_cliente,contrasena);
     }//GEN-LAST:event_btnIniciarSesionClienteActionPerformed
