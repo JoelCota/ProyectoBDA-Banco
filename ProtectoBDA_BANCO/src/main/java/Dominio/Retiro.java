@@ -9,10 +9,8 @@ import java.util.Objects;
 /**
  * Esta clase permite crear objetos de tipo Retiro.
  *
- * @author Brandon Figueroa Ugalde
- * ID: 00000233295
- * @author Joel Antonio Lopez Cota 
- * ID: 00000228926
+ * @author Brandon Figueroa Ugalde ID: 00000233295
+ * @author Joel Antonio Lopez Cota ID: 00000228926
  */
 public class Retiro {
 
@@ -73,8 +71,10 @@ public class Retiro {
         this.estado = estado;
         this.folio = folio;
     }
-  /**
+
+    /**
      * Constructor que inicializa los valores del paramentro
+     *
      * @param contrasena es la contraseña del retiro
      * @param folio es el folio del retiro
      */
@@ -82,71 +82,91 @@ public class Retiro {
         this.contrasena = contrasena;
         this.folio = folio;
     }
+
     /**
      * Metodo que permite accedeer a la operacion
+     *
      * @return la operacion a la que permite el retiro
      */
     public Operacion getOperacion() {
         return operacion;
     }
+
     /**
      * Metodo que permtie setear la operacion
+     *
      * @param operacion es la operacion que se desea setear
      */
     public void setOperacion(Operacion operacion) {
         this.operacion = operacion;
     }
+
     /**
      * Metodo que permite acceder al id del retirno
+     *
      * @return el id del retiro
      */
     public Integer getId_retiro() {
         return id_retiro;
     }
+
     /**
      * Metodo que permite setear el id del retirno
+     *
      * @param id_retiro es el id a setear
      */
     public void setId_retiro(Integer id_retiro) {
         this.id_retiro = id_retiro;
     }
+
     /**
      * Metodo que permite acceder a la contraseña del retiro
+     *
      * @return la contraseña del retiro
      */
     public Integer getContrasena() {
         return contrasena;
     }
+
     /**
      * Metodo que permite setear la contraseña
+     *
      * @param contrasena la contraseña a setear
      */
     public void setContrasena(Integer contrasena) {
         this.contrasena = contrasena;
     }
+
     /**
      * Metodo que permite acceder al estado del retiro
+     *
      * @return el estado del retiro
      */
     public String getEstado() {
         return estado;
     }
+
     /**
      * Metodo que permite setear el estado del retiro
+     *
      * @param estado es el estado a setear
      */
     public void setEstado(String estado) {
         this.estado = estado;
     }
+
     /**
      * Metodo que permite accceder al folio del retiro
+     *
      * @return el folio del retiro
      */
     public Integer getFolio() {
         return folio;
     }
+
     /**
      * Metodo que permite setear el folio del retiro
+     *
      * @param folio es el folio del retiro
      */
     public void setFolio(Integer folio) {
