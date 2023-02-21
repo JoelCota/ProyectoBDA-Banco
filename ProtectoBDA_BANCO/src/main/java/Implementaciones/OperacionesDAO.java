@@ -1,14 +1,15 @@
-/**
- * OperacionesDAO.java
- */
+
 
 package Implementaciones;
 
 // Importaciones
+import Implementaciones.*;
 import Dominio.Operacion;
 import Dominio.Transferencia;
 import Excepciones.PersistenciaException;
 import Interfaces.IConexionBD;
+import Interfaces.IConexionBD;
+import Interfaces.IOperacionesDAO;
 import Interfaces.IOperacionesDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

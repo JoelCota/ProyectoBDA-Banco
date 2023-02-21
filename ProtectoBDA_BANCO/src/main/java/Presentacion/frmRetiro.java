@@ -5,6 +5,12 @@
  */
 package Presentacion;
 
+import Dominio.Cliente;
+import Interfaces.IClientesDAO;
+import Interfaces.ICuentasDAO;
+import Interfaces.IDomicilioDAO;
+import Interfaces.IOperacionesDAO;
+import Interfaces.ITransferenciasDAO;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,13 +18,23 @@ import javax.swing.JOptionPane;
  * @author Joel Lopez
  */
 public class frmRetiro extends javax.swing.JFrame {
+  private final Cliente cliente;
+   private final IClientesDAO clientesDAO;
+    private final ICuentasDAO cuentasDAO;
+    private final ITransferenciasDAO transferenciasDAO;
+    private final IOperacionesDAO operacionesDAO;
+    private final IDomicilioDAO domicilioDAO;
 
-    /**
-     * Creates new form GeneradorRegistroSinTarjeta
-     */
-    public frmRetiro() {
-        initComponents();
+    public frmRetiro(Cliente cliente, IClientesDAO clientesDAO, ICuentasDAO cuentasDAO, ITransferenciasDAO transferenciasDAO, IOperacionesDAO operacionesDAO, IDomicilioDAO domicilioDAO) {
+        this.cliente = cliente;
+        this.clientesDAO = clientesDAO;
+        this.cuentasDAO = cuentasDAO;
+        this.transferenciasDAO = transferenciasDAO;
+        this.operacionesDAO = operacionesDAO;
+        this.domicilioDAO = domicilioDAO;
+         initComponents();
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -113,7 +129,7 @@ public class frmRetiro extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGenerarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-      frmInterfazCliente interfaz=new frmInterfazCliente();
+      frmInterfazCliente interfaz=new frmInterfazCliente(cliente,clientesDAO,cuentasDAO,transferenciasDAO,operacionesDAO,domicilioDAO);
        interfaz.setVisible(true);
        this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed

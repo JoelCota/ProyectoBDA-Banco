@@ -8,6 +8,10 @@ import Dominio.Cliente;
 import Dominio.Cuenta;
 import Excepciones.PersistenciaException;
 import Interfaces.IClientesDAO;
+import Interfaces.ICuentasDAO;
+import Interfaces.IDomicilioDAO;
+import Interfaces.IOperacionesDAO;
+import Interfaces.ITransferenciasDAO;
 import java.awt.event.KeyEvent;
 import static java.lang.Float.parseFloat;
 import java.util.logging.Level;
@@ -21,23 +25,33 @@ import javax.swing.JOptionPane;
 public class frmCuenta extends javax.swing.JFrame {
 
     private final Cliente cliente;
-    private final IClientesDAO clientesDAO;
+   private final IClientesDAO clientesDAO;
+    private final ICuentasDAO cuentasDAO;
+    private final ITransferenciasDAO transferenciasDAO;
+    private final IOperacionesDAO operacionesDAO;
+    private final IDomicilioDAO domicilioDAO;
     private static final Logger LOG = Logger.getLogger(frmInterfazCliente.class.getName());
 
-    public frmCuenta(Cliente cliente, IClientesDAO clientesDAO) {
+ 
+
+    public frmCuenta(Cliente cliente, IClientesDAO clientesDAO, ICuentasDAO cuentasDAO, ITransferenciasDAO transferenciasDAO, IOperacionesDAO operacionesDAO, IDomicilioDAO domicilioDAO) {
         this.cliente = cliente;
         this.clientesDAO = clientesDAO;
-                initComponents();
-
+        this.cuentasDAO = cuentasDAO;
+        this.transferenciasDAO = transferenciasDAO;
+        this.operacionesDAO = operacionesDAO;
+        this.domicilioDAO = domicilioDAO;
+        initComponents();
     }
+
     
     
     private void insertarCuenta() {
         Cuenta cuentaNueva=new Cuenta(parseFloat(this.txtSaldo.getText()),this.cliente.getId_cliente());
         try {
-            clientesDAO.insertarCuenta(cuentaNueva);
+            cuentasDAO.insertarCuenta(cuentaNueva);
             JOptionPane.showMessageDialog(this,"Se agrego la cuenta correctamente");
-            new frmInterfazCliente(clientesDAO,cliente).setVisible(true);
+            new frmInterfazCliente(cliente,clientesDAO,cuentasDAO,transferenciasDAO,operacionesDAO,domicilioDAO).setVisible(true);
          this.dispose();
                    
         } catch (PersistenciaException ex) {
@@ -141,7 +155,7 @@ public class frmCuenta extends javax.swing.JFrame {
     }//GEN-LAST:event_txtSaldoKeyTyped
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        new frmInterfazCliente(clientesDAO,cliente).setVisible(true);
+        new frmInterfazCliente(cliente,clientesDAO,cuentasDAO,transferenciasDAO,operacionesDAO,domicilioDAO).setVisible(true);
          this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 

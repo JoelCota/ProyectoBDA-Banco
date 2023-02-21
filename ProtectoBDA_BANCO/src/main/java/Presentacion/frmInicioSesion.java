@@ -6,11 +6,11 @@
 package Presentacion;
 
 import Dominio.Cliente;
-import Implementaciones.ClientesDAO;
-import Implementaciones.ConexionBD;
 import Interfaces.IClientesDAO;
-import Interfaces.IConexionBD;
-import Presentacion.frmInterfazCliente;
+import Interfaces.ICuentasDAO;
+import Interfaces.IDomicilioDAO;
+import Interfaces.IOperacionesDAO;
+import Interfaces.ITransferenciasDAO;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,21 +18,32 @@ import javax.swing.JOptionPane;
  * @author Joel Lopez
  */
 public class frmInicioSesion extends javax.swing.JFrame {
+    
+    private final IClientesDAO clientesDAO;
+    private final ICuentasDAO cuentasDAO;
+    private final ITransferenciasDAO transferenciasDAO;
+    private final IOperacionesDAO operacionesDAO;
+    private final IDomicilioDAO domicilioDAO;
 
-    IClientesDAO clientesDAO;
-
-    /**
-     * Creates new form ClientesForm
-     */
-    public frmInicioSesion(IClientesDAO clientesDAO) {
-        this.clientesDAO=clientesDAO;
+    public frmInicioSesion(IClientesDAO clientesDAO, ICuentasDAO cuentasDAO, ITransferenciasDAO transferenciasDAO, IOperacionesDAO operacionesDAO, IDomicilioDAO domicilioDAO) {
+        this.clientesDAO = clientesDAO;
+        this.cuentasDAO = cuentasDAO;
+        this.transferenciasDAO = transferenciasDAO;
+        this.operacionesDAO = operacionesDAO;
+        this.domicilioDAO = domicilioDAO;
         initComponents();
+
     }
+
+    frmInicioSesion(frmInicioSesion cliente, IClientesDAO clientesDAO, ICuentasDAO cuentasDAO, ITransferenciasDAO transferenciasDAO, IOperacionesDAO operacionesDAO, IDomicilioDAO domicilioDAO) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+   
     
     private void inicioSesion(Integer numeroCuenta,String contrasena){
         Cliente cliente=clientesDAO.iniciarSesion(numeroCuenta, contrasena);
         if (!clientesDAO.iniciarSesion(numeroCuenta, contrasena).equals(this)) {
-           frmInterfazCliente  frmICliente= new frmInterfazCliente(clientesDAO,cliente);
+           frmInterfazCliente  frmICliente= new frmInterfazCliente(cliente,clientesDAO,cuentasDAO,transferenciasDAO,operacionesDAO,domicilioDAO);
            frmICliente.setVisible(true);
            this.dispose();
         }
@@ -137,7 +148,7 @@ public class frmInicioSesion extends javax.swing.JFrame {
     }//GEN-LAST:event_btnIniciarSesionClienteActionPerformed
 
     private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
-        frmBanco banco = new frmBanco(clientesDAO);
+        frmBanco banco = new frmBanco(clientesDAO,cuentasDAO,transferenciasDAO,operacionesDAO,domicilioDAO);
         banco.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAtrasActionPerformed

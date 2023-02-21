@@ -8,6 +8,10 @@ import Dominio.Cliente;
 import Dominio.Cuenta;
 import Excepciones.PersistenciaException;
 import Interfaces.IClientesDAO;
+import Interfaces.ICuentasDAO;
+import Interfaces.IDomicilioDAO;
+import Interfaces.IOperacionesDAO;
+import Interfaces.ITransferenciasDAO;
 import static java.lang.Integer.parseInt;
 import java.util.List;
 import java.util.logging.Level;
@@ -19,22 +23,31 @@ import javax.swing.JOptionPane;
  * @author aroco
  */
 public class frmCancelarCuenta extends javax.swing.JFrame {
-    private final Cliente cliente;
-    private final IClientesDAO clientesDAO;
+     private final Cliente cliente;
+   private final IClientesDAO clientesDAO;
+    private final ICuentasDAO cuentasDAO;
+    private final ITransferenciasDAO transferenciasDAO;
+    private final IOperacionesDAO operacionesDAO;
+    private final IDomicilioDAO domicilioDAO;
     private static final Logger LOG = Logger.getLogger(frmInterfazCliente.class.getName());
 
-    public frmCancelarCuenta(Cliente cliente, IClientesDAO clientesDAO) {
+    public frmCancelarCuenta(Cliente cliente, IClientesDAO clientesDAO, ICuentasDAO cuentasDAO, ITransferenciasDAO transferenciasDAO, IOperacionesDAO operacionesDAO, IDomicilioDAO domicilioDAO) {
         this.cliente = cliente;
         this.clientesDAO = clientesDAO;
+        this.cuentasDAO = cuentasDAO;
+        this.transferenciasDAO = transferenciasDAO;
+        this.operacionesDAO = operacionesDAO;
+        this.domicilioDAO = domicilioDAO;
           initComponents();
           cargarComboBox();
     }
+
     
     public void cargarComboBox(){
         int cuentas;
           this.cbxCuentas.removeAllItems();
      try {
-            List<Cuenta> listaCuentas = this.clientesDAO.consultarListaCuentas(cliente);
+            List<Cuenta> listaCuentas = this.cuentasDAO.consultarListaCuentas(cliente);
             for (Cuenta cuenta : listaCuentas) {
                  cuentas=cuenta.getNum_cuenta();
               this.cbxCuentas.addItem(String.valueOf(cuentas));
@@ -48,9 +61,9 @@ public class frmCancelarCuenta extends javax.swing.JFrame {
         String cbxTexto = this.cbxCuentas.getItemAt(this.cbxCuentas.getSelectedIndex());
         Cuenta cuenta=new Cuenta(parseInt(cbxTexto),this.cliente.getId_cliente());
         try {
-            clientesDAO.cancelarCuenta(cuenta);
+            cuentasDAO.cancelarCuenta(cuenta);
             JOptionPane.showMessageDialog(this,"Se cancelo la cuenta correctamente");
-            new frmInterfazCliente(clientesDAO,cliente).setVisible(true);
+            new frmInterfazCliente(cliente,clientesDAO,cuentasDAO,transferenciasDAO,operacionesDAO,domicilioDAO).setVisible(true);
              this.dispose();
                    
         } catch (PersistenciaException ex) {
@@ -124,7 +137,7 @@ public class frmCancelarCuenta extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarCuentaActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        new frmInterfazCliente(clientesDAO,cliente).setVisible(true);
+        new frmInterfazCliente(cliente,clientesDAO,cuentasDAO,transferenciasDAO,operacionesDAO,domicilioDAO).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 

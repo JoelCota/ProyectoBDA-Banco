@@ -9,6 +9,10 @@ import Dominio.Cliente;
 import Dominio.Domicilio;
 import Excepciones.PersistenciaException;
 import Interfaces.IClientesDAO;
+import Interfaces.ICuentasDAO;
+import Interfaces.IDomicilioDAO;
+import Interfaces.IOperacionesDAO;
+import Interfaces.ITransferenciasDAO;
 import Presentacion.frmInicioSesion;
 import java.awt.event.KeyEvent;
 import java.util.logging.Level;
@@ -20,16 +24,25 @@ import javax.swing.JOptionPane;
  * @author Joel Lopez
  */
 public class frmActualizarCliente extends javax.swing.JFrame {
-
-    private final Cliente cliente;
-     private final IClientesDAO clientesDAO;
+ private final Cliente cliente;
+   private final IClientesDAO clientesDAO;
+    private final ICuentasDAO cuentasDAO;
+    private final ITransferenciasDAO transferenciasDAO;
+    private final IOperacionesDAO operacionesDAO;
+    private final IDomicilioDAO domicilioDAO;
       private static final Logger LOG = Logger.getLogger(frmInterfazCliente.class.getName());
 
-    public frmActualizarCliente(Cliente cliente, IClientesDAO clientesDAO) {
+    public frmActualizarCliente(Cliente cliente, IClientesDAO clientesDAO, ICuentasDAO cuentasDAO, ITransferenciasDAO transferenciasDAO, IOperacionesDAO operacionesDAO, IDomicilioDAO domicilioDAO) {
         this.cliente = cliente;
         this.clientesDAO = clientesDAO;
-        initComponents();
+        this.cuentasDAO = cuentasDAO;
+        this.transferenciasDAO = transferenciasDAO;
+        this.operacionesDAO = operacionesDAO;
+        this.domicilioDAO = domicilioDAO;
+         initComponents();
     }
+
+    
 
      private Cliente extraerDatosCliente() {
          String nombres,apellido_paterno,apellido_materno,fecha,contrasena;
@@ -65,7 +78,7 @@ public class frmActualizarCliente extends javax.swing.JFrame {
 
     public Domicilio extraerDatosDomicilio() {
         String calle, numero, colonia;
-        Domicilio domicilio=clientesDAO.consultarDomicilio(cliente.getId_domicilio());
+        Domicilio domicilio=domicilioDAO.consultarDomicilio(cliente.getId_domicilio());
         if (this.txtCalle.getText().isEmpty()) {
           calle=domicilio.getCalle();
         }else{
@@ -103,7 +116,7 @@ public class frmActualizarCliente extends javax.swing.JFrame {
     
     private void actualizarDomicilio() {
            try {
-            clientesDAO.actualizarDomicilio(extraerDatosDomicilio());
+            domicilioDAO.actualizarDomicilio(extraerDatosDomicilio());
         } catch (PersistenciaException ex) {
             Logger.getLogger(frmActualizarCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -351,13 +364,13 @@ public class frmActualizarCliente extends javax.swing.JFrame {
         actualizarDomicilio();
         actualizarCliente();
         JOptionPane.showMessageDialog(this,"Cliente Actualizado Exitosamente \n Vuelva a Iniciar Sesion");
-        new frmInicioSesion(clientesDAO).setVisible(true);
+        new frmInicioSesion(clientesDAO,cuentasDAO,transferenciasDAO,operacionesDAO,domicilioDAO).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         dispose();
-        new frmInterfazCliente(clientesDAO,cliente).setVisible(true);
+        new frmInterfazCliente(cliente,clientesDAO,cuentasDAO,transferenciasDAO,operacionesDAO,domicilioDAO).setVisible(true);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void txtContrasenaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtContrasenaKeyTyped
